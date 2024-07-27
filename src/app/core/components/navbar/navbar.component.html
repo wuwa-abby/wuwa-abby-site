@@ -33,4 +33,10 @@
             </div>
         </ng-template>
     </ng-template>
+    <ng-template pTemplate="end">
+        <a pRipple class="flex align-items-center p-menuitem-link me-4 text-reset" [class.fw-semibold]="isHomeRoute"
+            routerLink="/settings">
+            <i class="bi bi-gear"></i>
+        </a>
+    </ng-template>
 </p-menubar>

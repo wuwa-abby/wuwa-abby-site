@@ -64,14 +64,5 @@ export class NavbarService {
 				},
 			],
 		},
-		{
-			label: 'Settings',
-			icon: 'bi bi-gear',
-			routerLink: 'settings',
-			styleClass:
-				this.activeRoute === '/settings'
-					? 'fw-semibold text-decoration-underline'
-					: '',
-		},
 	];
 }

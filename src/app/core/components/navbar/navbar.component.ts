@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
 	) {}
 
 	public isHomeRoute: boolean = false;
+	public isSettingsRoute: boolean = false;
 
 	public get items() {
 		return this.service.navbarItems;
@@ -40,9 +41,11 @@ export class NavbarComponent implements OnInit {
 		this.router.events
 			.pipe(filter((event) => event instanceof NavigationEnd))
 			.subscribe((event) => {
-				const routeWithoutQuery = (event as NavigationEnd).url.split(/[?#]/)[0];
+				const routeWithoutQuery =
+					(event as NavigationEnd).url.split(/[?#]/)[0] ?? '/';
 				this.service.activeRoute = routeWithoutQuery;
 				this.isHomeRoute = routeWithoutQuery === '/';
+				this.isSettingsRoute = routeWithoutQuery === '/settings';
 
 				if (isPlatformBrowser(this.platformId)) {
 					this.cookieService.getCookieConsent();
