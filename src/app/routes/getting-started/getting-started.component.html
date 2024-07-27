@@ -1,0 +1,63 @@
+<div id="landing__hero" class="d-flex justify-content-center align-items-center select-none">
+    <div id="landing__hero-text" class="text-center">
+        <h1 class="text-6xl">
+            <a href="#track">Track</a>,
+            <a href="#plan">plan</a> and
+            <a href="#manage">manage</a> your wishes with ease.
+        </h1>
+        <p class="text-2xl w-8 mx-auto">
+            WuWa Abby will help you to keep track of your past wishes, plan upcoming banners, manage your favorite
+            resonators and much more.
+        </p>
+        <p-button label="Get started" icon="pi pi-angle-right" routerLink="/import" />
+        <p-button label="I need more!" [text]="true" class="ms-2" (onClick)="scrollToMore()" />
+    </div>
+</div>
+
+<div id="track" class="container mb-8">
+    <div class="row">
+        <div class="col order-1 align-content-center">
+            <h2 class="text-4xl">Track your wishes</h2>
+            <p class="text-2xl">
+                Keep a detailed record of your wish history and manage your convenes effectively.
+            </p>
+        </div>
+        <div class="col-auto order-2">
+            <p-skeleton width="28rem" height="16rem" borderRadius="16px" class="float-end" />
+        </div>
+    </div>
+</div>
+
+@defer
+{
+<div id="plan" class="container my-8">
+    <div class="row">
+        <div class="col order-2 align-content-center text-center">
+            <h2 class="text-4xl">View Detailed Stats</h2>
+            <p class="text-2xl">
+                Get insights into your wish stats and pity rates to optimize your planning.
+            </p>
+        </div>
+        <div class="col-auto order-1">
+            <p-skeleton width="28rem" height="16rem" borderRadius="16px" class="float-end" />
+        </div>
+    </div>
+</div>
+}
+
+@defer
+{
+<div id="manage" class="container mt-8 mb-4">
+    <div class="row">
+        <div class="col order-1 align-content-center">
+            <h2 class="text-4xl">Multiple Profiles</h2>
+            <p class="text-2xl">
+                Create and manage multiple profiles for various accounts with ease.
+            </p>
+        </div>
+        <div class="col-auto order-2">
+            <p-skeleton width="28rem" height="16rem" borderRadius="16px" class="float-end" />
+        </div>
+    </div>
+</div>
+}
