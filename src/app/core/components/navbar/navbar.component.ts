@@ -1,5 +1,9 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {
+  CommonModule,
+  isPlatformBrowser,
+  NgOptimizedImage,
+} from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { MenubarModule } from 'primeng/menubar';
@@ -8,6 +12,7 @@ import { filter } from 'rxjs';
 
 import { NavbarService } from '@app/core/services/navbar.service';
 import { PreferencesService } from '@app/core/services/preferences.service';
+import { CookieService } from '@app/core/services/cookie.service';
 
 @Component({
   selector: 'abby-navbar',
@@ -20,7 +25,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     private service: NavbarService,
     private router: Router,
-    public prefService: PreferencesService
+    public prefService: PreferencesService,
+    private cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   public isHomeRoute: boolean = false;
@@ -35,7 +42,10 @@ export class NavbarComponent implements OnInit {
       .subscribe((event) => {
         this.service.activeRoute = (event as NavigationEnd).url;
         this.isHomeRoute = this.service.activeRoute === '/';
-        console.debug('NavbarComponent: activeRoute', this.service.activeRoute);
+
+        if (isPlatformBrowser(this.platformId)) {
+          this.cookieService.getCookieConsent();
+        }
       });
   }
 }

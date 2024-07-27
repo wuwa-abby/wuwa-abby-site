@@ -1,5 +1,6 @@
 <abby-navbar></abby-navbar>
 <div class="site__content">
     <router-outlet />
+    <p-toast (onClose)="onToastClose($event)" />
 </div>
 <abby-footer></abby-footer>
