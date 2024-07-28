@@ -18,7 +18,7 @@
     </div>
 
     <div class="card flex justify-content-center col-12">
-        <p-stepper [(activeStep)]="activeStep" [linear]="true" class="min-w-full">
+        <p-stepper [(activeStep)]="activeStep" [linear]="true" class="w-full">
             <p-stepperPanel header="Platform">
                 <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
                     <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
@@ -29,15 +29,30 @@
                                 'surface-border': index > activeStep
                             }">
                             <i class="pi pi-desktop"></i>
-                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 0">Platform</p>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 0">
+                                Platform
+                            </p>
                         </span>
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
-                    <div class="flex flex-column h-12rem">
-                        <div
-                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
-                            Content I
+                    <div>
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-4">
+                            <form [formGroup]="importForm">
+                                <p-selectButton [options]=" platformOptions" formControlName="platform"
+                                    optionLabel="label" optionValue="value" optionDisabled="disabled" class="mx-auto"
+                                    [allowEmpty]="false" />
+                            </form>
+
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'and'">
+                                <abby-import-steps-android></abby-import-steps-android>
+                            </div>
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'win'">
+                                <abby-import-steps-windows></abby-import-steps-windows>
+                            </div>
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'apple'">
+                                <abby-import-steps-apple></abby-import-steps-apple>
+                            </div>
                         </div>
                     </div>
                     <div class="flex pt-4 justify-content-start">
@@ -56,7 +71,7 @@
                                 'surface-border': index > activeStep
                             }">
                             <i class="pi pi-cloud-download"></i>
-                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 1">Import</p>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 1">Import</p>
                         </span>
                     </button>
                 </ng-template>
@@ -85,7 +100,7 @@
                                 'surface-border': index > activeStep
                             }">
                             <i class="pi pi-check"></i>
-                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 2">Done</p>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 2">Done</p>
                         </span>
                     </button>
                 </ng-template>
