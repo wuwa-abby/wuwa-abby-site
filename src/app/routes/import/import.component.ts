@@ -37,12 +37,12 @@ export class ImportComponent {
 
 	public readonly platformOptions = [
 		{ label: 'Windows', icon: 'pi pi-microsoft', value: 'win' },
-		{ label: 'Android', icon: 'pi pi-mobile', value: 'and' },
+		{ label: 'Android', icon: 'pi pi-android', value: 'and' },
 		{ label: 'iOS', icon: 'pi pi-apple', value: 'apple' },
 	];
 
 	public importForm = new FormGroup({
-		platform: new FormControl('win'),
+		platform: new FormControl('and'),
 	});
 	public activeStep: number = 0;
 }
