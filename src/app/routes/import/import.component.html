@@ -22,8 +22,9 @@
             <p-stepperPanel header="Platform">
                 <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
                     <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
                         <span
-                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
                             [ngClass]="{
                                 'bg-primary border-primary': index <= activeStep,
                                 'surface-border': index > activeStep
@@ -33,11 +34,15 @@
                                 Platform
                             </p>
                         </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-desktop d-block d-md-none"
+                            aria-label="Select your Wuthering Waves platform"></i>
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
                     <div>
-                        <div class="border-2 border-dashed surface-border border-round surface-ground p-4">
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
                             <form [formGroup]="importForm">
                                 <p-selectButton [options]=" platformOptions" formControlName="platform"
                                     optionLabel="label" optionValue="value" optionDisabled="disabled" class="mx-auto"
@@ -64,8 +69,9 @@
             <p-stepperPanel header="Import">
                 <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
                     <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
                         <span
-                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
                             [ngClass]="{
                                 'bg-primary border-primary': index <= activeStep,
                                 'surface-border': index > activeStep
@@ -73,13 +79,16 @@
                             <i class="pi pi-cloud-download"></i>
                             <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 1">Import</p>
                         </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-cloud-download d-block d-md-none"
+                            aria-label="Import your Wuthering Waves convene history"></i>
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
                     let-index="index">
                     <div class="flex flex-column h-12rem">
-                        <div
-                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
                             Content II
                         </div>
                     </div>
@@ -93,8 +102,9 @@
             <p-stepperPanel header="Done">
                 <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
                     <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
                         <span
-                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
                             [ngClass]="{
                                 'bg-primary border-primary': index <= activeStep,
                                 'surface-border': index > activeStep
@@ -102,12 +112,15 @@
                             <i class="pi pi-check"></i>
                             <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 2">Done</p>
                         </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-check d-block d-md-none"
+                            aria-label="Save your profile with Wubby (optional)"></i>
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
                     <div class="flex flex-column h-12rem">
-                        <div
-                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
                             Content III
                         </div>
                     </div>

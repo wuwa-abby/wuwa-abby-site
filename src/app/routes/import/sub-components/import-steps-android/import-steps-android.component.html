@@ -1,9 +1,72 @@
-<p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem excepturi accusantium et, laboriosam beatae dolorem
-    ipsam fugit totam. Nihil harum laudantium recusandae asperiores cumque minus maxime voluptate labore illo excepturi.
-    Quo illum praesentium blanditiis quod eum id perspiciatis at, deleniti a, eius in. Enim, harum quis ea velit minus
-    quisquam architecto reprehenderit. Expedita quos, quae aut nihil tenetur illo similique.
-    Commodi eligendi quaerat, numquam assumenda aspernatur ad adipisci qui molestiae! Magnam debitis consectetur eos
-    quibusdam aut, quia velit facere, explicabo voluptatibus consequuntur vero sint adipisci nam rerum tenetur autem
-    deleniti.
-</p>
+<div class="grid">
+    <div class="col-12 md:col-4">
+        <p-panel [toggleable]="true" toggler="header">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-user"></i>
+                    <span class="font-bold">
+                        Prerequisites
+                    </span>
+                </div>
+            </ng-template>
+            <div class="d-flex align-items-center">
+                <p class="me-2">
+                    Make sure you have installed and setup <span class="fw-bold">ADB (Android Debugging Bridge)</span>
+                    on your machines!
+                </p>
+
+                <img ngSrc="images/emotes/T_ChatEmo_A_04.webp" alt="YangYang Okay emote" height="64" width="64"
+                    priority>
+            </div>
+        </p-panel>
+    </div>
+
+    <div class="col-12 md:col-4">
+        <p-panel [toggleable]="true" toggler="header">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-list-check"></i>
+                    <span class="font-bold">
+                        Steps
+                    </span>
+                </div>
+            </ng-template>
+            <ul>
+                <li>Ensure <span class="fw-bolder">ADB</span> is installed properly configured.</li>
+                <li>Copy the command below</li>
+                <li>Open your terminal and paste the command below</li>
+                <li>Press <code>Enter</code></li>
+            </ul>
+        </p-panel>
+    </div>
+
+    <div class="col-12 md:col-4">
+        <p-panel [toggleable]="true" [collapsed]="true" toggler="header">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-lock"></i>
+                    <span class="font-bold">
+                        Safety Assurance
+                    </span>
+                </div>
+            </ng-template>
+            <div class="d-flex align-items-center">
+                <p class="me-2">
+                    Rest assured, Wubby confirms these scripts are designed solely to extract the URL needed to import
+                    your game history. They do not make any changes to your device or access any personal information.
+                </p>
+
+                <img ngSrc="images/emotes/T_ChatEmo_F_01.webp" alt="Danjin Okay emote" height="64" width="64" priority>
+            </div>
+        </p-panel>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quasi laborum maiores earum soluta
+            alias!
+            Perspiciatis, nam reprehenderit. Mollitia vel veritatis minima cum soluta quaerat sint non dolor temporibus.
+            Illum?
+        </div>
+    </div>
+</div>
