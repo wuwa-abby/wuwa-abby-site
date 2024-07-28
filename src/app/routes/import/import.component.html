@@ -1,0 +1,108 @@
+<div class="page__title">
+    <h1 class="text-5xl">Import History</h1>
+</div>
+
+<div class="page__content grid mt-2">
+    <div class="card flex justify-content-center col-12 lg:col-8">
+        <p-fieldset legend="About Importing" [toggleable]="true">
+            <div class="d-flex align-items-center">
+                <p class="me-2">
+                    Wubby needs to know your history URL to help you import your data. This will be a one time process
+                    to
+                    setup your default profile, you can always create more profiles as you need 'em!
+                </p>
+
+                <img ngSrc="images/emotes/T_ChatEmo_F_03.webp" alt="Danjin Happy emote" height="64" width="64" priority>
+            </div>
+        </p-fieldset>
+    </div>
+
+    <div class="card flex justify-content-center col-12">
+        <p-stepper [(activeStep)]="activeStep" [linear]="true" class="min-w-full">
+            <p-stepperPanel header="Platform">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <span
+                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-desktop"></i>
+                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 0">Platform</p>
+                        </span>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                    <div class="flex flex-column h-12rem">
+                        <div
+                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                            Content I
+                        </div>
+                    </div>
+                    <div class="flex pt-4 justify-content-start">
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Import">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <span
+                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-cloud-download"></i>
+                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 1">Import</p>
+                        </span>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                    let-index="index">
+                    <div class="flex flex-column h-12rem">
+                        <div
+                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                            Content II
+                        </div>
+                    </div>
+                    <div class="flex pt-4 justify-content-start">
+                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" class="ms-2"
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Done">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <span
+                            class="border-round border-2 h-3rem px-4 inline-flex align-items-center justify-content-center"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-check"></i>
+                            <p id="stepper__step-title-text" class="ms-2" *ngIf="activeStep === 2">Done</p>
+                        </span>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+                    <div class="flex flex-column h-12rem">
+                        <div
+                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                            Content III
+                        </div>
+                    </div>
+                    <div class="flex pt-4 justify-content-start">
+                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button label="Complete" icon="pi pi-home" iconPos="right" class="ms-2"
+                            (onClick)="prefService.onHomeClick()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+        </p-stepper>
+    </div>
+</div>
