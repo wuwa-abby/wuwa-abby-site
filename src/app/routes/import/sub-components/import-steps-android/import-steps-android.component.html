@@ -63,8 +63,10 @@
 
     <div class="col-12">
         <div class="card w-full">
-            <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here" class="w-full"
-                [(ngModel)]="url"></textarea>
+            <form [formGroup]="form">
+                <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..." class="w-full"
+                    formControlName="historyUrl"></textarea>
+            </form>
         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@ import { PreferencesService } from '@app/core/services/preferences.service';
 import { ImportStepsAndroidComponent } from './sub-components/import-steps-android/import-steps-android.component';
 import { ImportStepsWindowsComponent } from './sub-components/import-steps-windows/import-steps-windows.component';
 import { ImportStepsAppleComponent } from './sub-components/import-steps-apple/import-steps-apple.component';
+import { ImportService } from './import.service';
 
 @Component({
 	selector: 'abby-import',
@@ -33,7 +34,10 @@ import { ImportStepsAppleComponent } from './sub-components/import-steps-apple/i
 	styleUrl: './import.component.scss',
 })
 export class ImportComponent {
-	constructor(public prefService: PreferencesService) {}
+	constructor(
+		public prefService: PreferencesService,
+		private service: ImportService
+	) {}
 
 	public readonly platformOptions = [
 		{ label: 'Windows', icon: 'pi pi-microsoft', value: 'win' },
@@ -41,9 +45,9 @@ export class ImportComponent {
 		{ label: 'iOS', icon: 'pi pi-apple', value: 'apple' },
 	];
 
-	public importForm = new FormGroup({
-		platform: new FormControl('and'),
-		historyUrl: new FormControl(''),
-	});
 	public activeStep: number = 0;
+
+	public get importForm(): FormGroup {
+		return this.service.importForm;
+	}
 }
