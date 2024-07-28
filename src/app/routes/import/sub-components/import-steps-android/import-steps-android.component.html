@@ -62,11 +62,9 @@
     </div>
 
     <div class="col-12">
-        <div class="card">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quasi laborum maiores earum soluta
-            alias!
-            Perspiciatis, nam reprehenderit. Mollitia vel veritatis minima cum soluta quaerat sint non dolor temporibus.
-            Illum?
+        <div class="card w-full">
+            <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here" class="w-full"
+                [(ngModel)]="url"></textarea>
         </div>
     </div>
 </div>

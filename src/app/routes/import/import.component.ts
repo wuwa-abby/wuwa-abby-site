@@ -43,6 +43,7 @@ export class ImportComponent {
 
 	public importForm = new FormGroup({
 		platform: new FormControl('and'),
+		historyUrl: new FormControl(''),
 	});
 	public activeStep: number = 0;
 }
