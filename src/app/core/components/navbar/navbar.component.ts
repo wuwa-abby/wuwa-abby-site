@@ -1,7 +1,7 @@
 import {
-  CommonModule,
-  isPlatformBrowser,
-  NgOptimizedImage,
+	CommonModule,
+	isPlatformBrowser,
+	NgOptimizedImage,
 } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
@@ -15,37 +15,41 @@ import { PreferencesService } from '@app/core/services/preferences.service';
 import { CookieService } from '@app/core/services/cookie.service';
 
 @Component({
-  selector: 'abby-navbar',
-  standalone: true,
-  imports: [CommonModule, MenubarModule, BadgeModule, NgOptimizedImage],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+	selector: 'abby-navbar',
+	standalone: true,
+	imports: [CommonModule, MenubarModule, BadgeModule, NgOptimizedImage],
+	templateUrl: './navbar.component.html',
+	styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
-  constructor(
-    private service: NavbarService,
-    private router: Router,
-    public prefService: PreferencesService,
-    private cookieService: CookieService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+	constructor(
+		private service: NavbarService,
+		private router: Router,
+		public prefService: PreferencesService,
+		private cookieService: CookieService,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {}
 
-  public isHomeRoute: boolean = false;
+	public isHomeRoute: boolean = false;
+	public isSettingsRoute: boolean = false;
 
-  public get items() {
-    return this.service.navbarItems;
-  }
+	public get items() {
+		return this.service.navbarItems;
+	}
 
-  public ngOnInit(): void {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event) => {
-        this.service.activeRoute = (event as NavigationEnd).url;
-        this.isHomeRoute = this.service.activeRoute === '/';
+	public ngOnInit(): void {
+		this.router.events
+			.pipe(filter((event) => event instanceof NavigationEnd))
+			.subscribe((event) => {
+				const routeWithoutQuery =
+					(event as NavigationEnd).url.split(/[?#]/)[0] ?? '/';
+				this.service.activeRoute = routeWithoutQuery;
+				this.isHomeRoute = routeWithoutQuery === '/';
+				this.isSettingsRoute = routeWithoutQuery === '/settings';
 
-        if (isPlatformBrowser(this.platformId)) {
-          this.cookieService.getCookieConsent();
-        }
-      });
-  }
+				if (isPlatformBrowser(this.platformId)) {
+					this.cookieService.getCookieConsent();
+				}
+			});
+	}
 }

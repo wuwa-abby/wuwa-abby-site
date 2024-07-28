@@ -1,0 +1,15 @@
+:host {
+	overflow-x: hidden;
+
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+#landing__hero {
+	height: 90vh;
+}

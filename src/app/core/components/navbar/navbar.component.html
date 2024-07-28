@@ -1,9 +1,9 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
         <a pRipple class="flex align-items-center p-menuitem-link">
-            <img ngSrc="meta/meta-icon.png" alt="WuWa Abby Logo" width="48" height="48" priority>
+            <img ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
             <span class="ms-2" [class.fw-semibold]="isHomeRoute" (click)="prefService.onHomeClick($event)">
-                Wuwa Abby
+                Wubby
             </span>
         </a>
     </ng-template>
@@ -32,5 +32,11 @@
                 <span class="pi pi-fw pi-angle-down ms-2"></span>
             </div>
         </ng-template>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <a pRipple class="flex align-items-center p-menuitem-link me-4 text-reset" [class.fw-semibold]="isHomeRoute"
+            routerLink="/settings">
+            <i class="bi bi-gear"></i>
+        </a>
     </ng-template>
 </p-menubar>
