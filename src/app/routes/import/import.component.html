@@ -62,7 +62,7 @@
                     </div>
                     <div class="flex pt-4 justify-content-start">
                         <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                            (onClick)="nextCallback.emit()" />
+                            [disabled]="importForm.invalid || importForm.pristine" (onClick)="nextCallback.emit()" />
                     </div>
                 </ng-template>
             </p-stepperPanel>

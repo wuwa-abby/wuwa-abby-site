@@ -34,7 +34,7 @@
             <ul>
                 <li>Ensure <span class="fw-bolder">ADB</span> is installed properly configured.</li>
                 <li>Copy the command below</li>
-                <li>Open your terminal and paste the command below</li>
+                <li>Open your terminal and paste the command you copied.</li>
                 <li>Press <code>Enter</code></li>
             </ul>
         </p-panel>
@@ -64,8 +64,10 @@
     <div class="col-12">
         <div class="card w-full">
             <form [formGroup]="form">
-                <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..." class="w-full"
-                    formControlName="historyUrl"></textarea>
+                <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..."
+                    [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl"
+                    (change)="onChange()"></textarea>
+                <p-messages [(value)]="message" [enableService]="false" />
             </form>
         </div>
     </div>
