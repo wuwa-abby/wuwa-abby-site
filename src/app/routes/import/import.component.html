@@ -62,7 +62,7 @@
                     </div>
                     <div class="flex pt-4 justify-content-start">
                         <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                            [disabled]="importForm.invalid || importForm.pristine" (onClick)="nextCallback.emit()" />
+                            (onClick)="nextCallback.emit()" />
                     </div>
                 </ng-template>
             </p-stepperPanel>
@@ -87,15 +87,20 @@
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
                     let-index="index">
-                    <div class="flex flex-column h-12rem">
-                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
-                            Content II
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
+                        <div class="card w-full">
+                            <form [formGroup]="importForm">
+                                <textarea rows="4" pInputTextarea [autoResize]="true"
+                                    placeholder="Enter the URL here..." [class]="getInvalidClass()"
+                                    [class.w-full]="true" formControlName="historyUrl" (change)="onChange()"></textarea>
+                                <p-messages [(value)]="message" [enableService]="false" />
+                            </form>
                         </div>
                     </div>
-                    <div class="flex pt-4 justify-content-start">
+                    <div class="flex mt-2 md:mt-4 justify-content-start">
                         <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
                         <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" class="ms-2"
-                            (onClick)="nextCallback.emit()" />
+                            [disabled]="importForm.invalid || importForm.pristine" (onClick)="nextCallback.emit()" />
                     </div>
                 </ng-template>
             </p-stepperPanel>

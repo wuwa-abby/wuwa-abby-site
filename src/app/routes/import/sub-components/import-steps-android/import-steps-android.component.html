@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-12 md:col-4">
-        <p-panel [toggleable]="true" [collapsed]="true" toggler="header">
+        <p-panel [toggleable]="true" toggler="header">
             <ng-template pTemplate="header">
                 <div class="flex align-items-center gap-2">
                     <i class="pi pi-lock"></i>
@@ -61,14 +61,5 @@
         </p-panel>
     </div>
 
-    <div class="col-12">
-        <div class="card w-full">
-            <form [formGroup]="form">
-                <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..."
-                    [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl"
-                    (change)="onChange()"></textarea>
-                <p-messages [(value)]="message" [enableService]="false" />
-            </form>
-        </div>
-    </div>
+
 </div>
