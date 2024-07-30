@@ -1,8 +1,25 @@
 <div class="card w-full">
-    <form [formGroup]="importForm">
+    <div class="mb-4" *ngIf="showLoading">
+        <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" *ngIf="!progress.total && !progressPercent" />
+        <p-progressBar [value]="progressPercent" [showValue]="true" [style]="{height: '20px'}" *ngIf="progress.total" />
+    </div>
+
+    <form [formGroup]="importForm" id="importForm" (submit)="onFormSubmit()">
         <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..."
-            [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl"
-            (change)="onChange()"></textarea>
+            [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl" (change)="onChange()"
+            autofocus></textarea>
         <p-messages [(value)]="message" [enableService]="false" />
+
+        <p-button label="Get History" icon="pi pi-copy" type="submit" styleClass="mt-2"
+            [loading]="progress.cur !== progress.total ? 'loading' : undefined"
+            [disabled]="importForm.invalid || importForm.pristine"></p-button>
     </form>
+
+    <div class="mt-4 fadein" *ngIf="historySummary">
+        <h2>Your Summary</h2>
+
+        <div class="surface-ground p-2 lg:px-4">
+            <div [innerHTML]="historySummary.template"></div>
+        </div>
+    </div>
 </div>
