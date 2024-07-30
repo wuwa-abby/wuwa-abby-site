@@ -1,0 +1,42 @@
+[
+    {
+        "range": {
+            "min": 0,
+            "max": 999
+        },
+        "templates": [
+            "Keep Going, Player! You've started your journey with {{total}} wishes across different banners. Among them, you have {{5-count}} dazzling 5-stars and {{4-count}} sparkling 4-stars. Even Aalto would be impressed by your progress! Keep summoning, and more treasures await you!",
+            "Great Start, Rover! You have made {{total}} wishes so far, including {{5-count}} magnificent 5-stars and {{4-count}} shimmering 4-stars. Taoqi would be cheering you on! Continue exploring the convenes, and may your next wish be legendary!"
+        ]
+    },
+    {
+        "range": {
+            "min": 1000,
+            "max": 4999
+        },
+        "templates": [
+            "Impressive Summoner! With {{total}} wishes across various banners, you've earned {{5-count}} brilliant 5-stars and {{4-count}} glittering 4-stars. Jinhsi would definitely be proud of your achievements. Keep up the amazing summoning, and may your next pull bring you even greater treasures!",
+            "Wow! With {{total}} wishes, including {{5-count}} stunning 5-stars and {{4-count}} radiant 4-stars, you've made significant progress. Verina would say you're on the right track! Keep wishing, and may fortune favor you with legendary pulls from the next banner!"
+        ]
+    },
+    {
+        "range": {
+            "min": 5000,
+            "max": 9999
+        },
+        "templates": [
+            "Incredible! You've wished {{total}} times and obtained {{5-count}} dazzling 5-stars and {{4-count}} sparkling 4-stars from various convenes. Yangyang would be amazed by your dedication. Keep the wishes flowing, and may your next pull be even more extraordinary!",
+            "Fantastic! With {{total}} wishes, you've hit the jackpot with {{5-count}} magnificent 5-stars and {{4-count}} shimmering 4-stars. Mortefi would commend your luck. Keep summoning, and may your next wish from the banner be a rare gem!"
+        ]
+    },
+    {
+        "range": {
+            "min": 10000,
+            "max": 999999
+        },
+        "templates": [
+            "Legendary Summoner! You've made {{total}} wishes and earned {{5-count}} brilliant 5-stars and {{4-count}} radiant 4-stars from different banners. Even Chixia would say you're a master of the convene! Keep up the legendary summoning, and may your next pull be your best yet!",
+            "Phenomenal! You have cast {{total}} wishes, obtaining {{5-count}} dazzling 5-stars and {{4-count}} sparkling 4-stars. Jianxin would be envious of your collection. Keep the adventure going, and may your next wish bring even greater rewards from the convene!"
+        ]
+    }
+]
