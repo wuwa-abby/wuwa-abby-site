@@ -61,6 +61,7 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/highlight.js/styles/github-dark.min.css",
               "src/styles.scss"
             ],
             "scripts": [],

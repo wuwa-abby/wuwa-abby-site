@@ -61,5 +61,38 @@
         </p-panel>
     </div>
 
-
+    <div class="col-12">
+        <p-panel [toggleable]="true" toggler="header">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-code"></i>
+                    <span class="font-bold">
+                        Command
+                    </span>
+                </div>
+            </ng-template>
+            <div class="grid">
+                <div class="col-12 hidden md:block">
+                    <p-messages [value]="warningMessage" [closable]="true"></p-messages>
+                    <pre><code [highlight]="bashScript" language="sh"></code></pre>
+                </div>
+                <div class="col-12 block md:hidden">
+                    <p-messages [value]="warningMessage" [closable]="true"></p-messages>
+                    <p-inplace>
+                        <ng-template pTemplate="display">
+                            <span>View Command Content</span>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <span>
+                                <pre><code [highlight]="bashScript" language="sh"></code></pre>
+                            </span>
+                        </ng-template>
+                    </p-inplace>
+                </div>
+                <div class="col-auto">
+                    <p-button label="Copy Command" icon="pi pi-copy" class="w-full" (click)="copyCommand()"></p-button>
+                </div>
+            </div>
+        </p-panel>
+    </div>
 </div>
