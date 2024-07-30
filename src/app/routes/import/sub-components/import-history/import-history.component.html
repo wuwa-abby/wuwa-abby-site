@@ -16,7 +16,7 @@
     </form>
 
     <div class="mt-4 fadein" *ngIf="historySummary">
-        <h2>Your Summary</h2>
+        <h2 id="summary-title">Your Summary</h2>
 
         <div class="surface-ground p-2 lg:px-4">
             <div [innerHTML]="historySummary.template"></div>

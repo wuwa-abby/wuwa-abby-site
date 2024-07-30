@@ -173,5 +173,12 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 				'{{4-count}}',
 				`<span class="text-indigo-300">${this.historySummary[4].total}</span>`
 			);
+
+		setTimeout(() => {
+			const elem = document.getElementById('summary-title');
+			if (elem) {
+				elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		}, 500);
 	}
 }
