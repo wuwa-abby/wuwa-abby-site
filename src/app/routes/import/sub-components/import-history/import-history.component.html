@@ -1,0 +1,8 @@
+<div class="card w-full">
+    <form [formGroup]="importForm">
+        <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..."
+            [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl"
+            (change)="onChange()"></textarea>
+        <p-messages [(value)]="message" [enableService]="false" />
+    </form>
+</div>
