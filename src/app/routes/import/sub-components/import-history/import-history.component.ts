@@ -28,6 +28,7 @@ import { data } from './summary-text-templates.json';
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
+
 		PanelModule,
 		InputTextareaModule,
 		MessagesModule,

@@ -1,4 +1,7 @@
-<div class="card w-full">
+<div class="w-full">
+    <p class="text-2xl my-1">Buckle up!</p>
+    <p class="mt-2">Wubby is about to perform some magic and get your history from the URL you provide. 🧙‍♂️</p>
+
     <div class="mb-4" *ngIf="showLoading">
         <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" *ngIf="!progress.total && !progressPercent" />
         <p-progressBar [value]="progressPercent" [showValue]="true" [style]="{height: '20px'}" *ngIf="progress.total" />
@@ -10,16 +13,23 @@
             autofocus></textarea>
         <p-messages [(value)]="message" [enableService]="false" />
 
-        <p-button label="Get History" icon="pi pi-copy" type="submit" styleClass="mt-2"
-            [loading]="progress.cur !== progress.total ? 'loading' : undefined"
+        <p-button label="Let the ritual begin!" ariaLabel="Get my history" icon="pi pi-sparkles" type="submit"
+            styleClass="mt-2" [loading]="progress.cur !== progress.total ? 'loading' : undefined"
             [disabled]="importForm.invalid || importForm.pristine || historySummary"></p-button>
     </form>
 
-    <div class="mt-4 fadein" *ngIf="historySummary">
-        <h2 id="summary-title">Your Summary</h2>
+    <p-panel id="summary-title" header="Spoilers!" [collapsed]="true" [toggleable]="true" toggler="header"
+        styleClass="mt-4 fadein" *ngIf="historySummary">
+        <!-- bigger text on tablet and bigger devices -->
+        <p class="hidden md:block">
+            Here's a quick little summary of your history. If you want to see the full details, you will have to give
+            Wubby a cookie! 🍪
+        </p>
+        <!-- small text on mobile so it doesn't take up too much space -->
+        <p class="block md:hidden">
+            A quick tiny summary of your history. Wubby wants a cookie if you want to see more! 🍪
+        </p>
 
-        <div class="surface-ground p-2 lg:px-4">
-            <div [innerHTML]="historySummary.template"></div>
-        </div>
-    </div>
+        <div [innerHTML]="historySummary.template"></div>
+    </p-panel>
 </div>
