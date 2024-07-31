@@ -118,11 +118,50 @@
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
-                    <div class="flex flex-column h-12rem">
-                        <div
-                            class="border-2 border-dashed surface-border border-round surface-ground p-2 sm:px-0 md:p-4">
-                            Content III
-                        </div>
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 sm:px-0 md:p-4">
+                        <p class="text-2xl my-1">You're all set!</p>
+                        <p class="mt-2">But before you go, Wubby would like to ask you a few questions...</p>
+
+                        <p-panel header="Remember me!" [toggleable]="true" toggler="header" styleClass="mb-2 md:mb-3">
+                            <p class="text-2xl my-1">Would you like to save this profile for future use?</p>
+                            <!-- bigger text on tablet and bigger devices -->
+                            <p class="hidden md:block">
+                                Have trouble committing to one single account? Wubby can save your profile for
+                                future
+                                use! This means you can import your data with a single click!
+                            </p>
+                            <!-- small text on mobile so it doesn't take up too much space -->
+                            <p class="block md:hidden">
+                                Wubby can remember this account so you can import your data
+                                with a single click!
+                            </p>
+
+                            <div class="mt-2">
+                                <p-toggleButton [(ngModel)]="saveProfile" [onLabel]="'Yes please!'"
+                                    [offLabel]="'I\'ll look around for now'" [onIcon]="'pi pi-check'"
+                                    [offIcon]="'pi pi-times'" ariaLabel="Do you want to save a profile?" />
+                            </div>
+                        </p-panel>
+
+                        <p-panel header="Make me famous~" [toggleable]="true" toggler="header">
+                            <p class="text-2xl my-1">Feelin' lucky?</p>
+                            <!-- bigger text on tablet and bigger devices -->
+                            <p class="hidden md:block">
+                                Wubby can compare your data with other users to help improve the service! And you
+                                can compare your stats with others too!
+                            </p>
+                            <!-- small text on mobile so it doesn't take up too much space -->
+                            <p class="block md:hidden">
+                                Would you like Wubby to compare your data with other users to help improve the
+                                service?
+                            </p>
+
+                            <div class="mt-2">
+                                <p-toggleButton [(ngModel)]="shareHistory" [onLabel]="'Of course!'"
+                                    [offLabel]="'I\'m a spy!'" [onIcon]="'pi pi-check'" [offIcon]="'pi pi-times'"
+                                    ariaLabel="Do you want to save a profile?" />
+                            </div>
+                        </p-panel>
                     </div>
                     <div class="flex pt-4 justify-content-start">
                         <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />

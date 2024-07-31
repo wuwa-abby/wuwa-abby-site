@@ -1,12 +1,13 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FieldsetModule } from 'primeng/fieldset';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 import { PreferencesService } from '@app/core/services/preferences.service';
 
@@ -21,13 +22,16 @@ import { ImportService } from './import.service';
 	standalone: true,
 	imports: [
 		CommonModule,
-		FieldsetModule,
 		NgOptimizedImage,
 		ReactiveFormsModule,
+		FormsModule,
+
+		FieldsetModule,
 		SelectButtonModule,
 		StepperModule,
 		ButtonModule,
 		PanelModule,
+		ToggleButtonModule,
 
 		ImportStepsAndroidComponent,
 		ImportStepsWindowsComponent,
@@ -49,7 +53,10 @@ export class ImportComponent {
 		{ label: 'iOS', icon: 'pi pi-apple', value: 'apple' },
 	];
 
-	public activeStep: number = 0;
+	// note: the first step starts at index 0 and not 1.
+	public activeStep: number = 2;
+	public saveProfile: boolean = true;
+	public shareHistory: boolean = true;
 
 	public get importForm(): FormGroup {
 		return this.service.importForm;
