@@ -123,6 +123,8 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 	}
 
 	public onFormSubmit() {
+		if (this.importForm.invalid || this.importForm.pristine) return;
+
 		this.showLoading = true;
 		this.service.importHistory();
 	}

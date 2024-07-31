@@ -12,7 +12,7 @@
 
         <p-button label="Get History" icon="pi pi-copy" type="submit" styleClass="mt-2"
             [loading]="progress.cur !== progress.total ? 'loading' : undefined"
-            [disabled]="importForm.invalid || importForm.pristine"></p-button>
+            [disabled]="importForm.invalid || importForm.pristine || historySummary"></p-button>
     </form>
 
     <div class="mt-4 fadein" *ngIf="historySummary">
