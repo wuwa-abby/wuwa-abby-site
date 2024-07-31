@@ -14,6 +14,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SplitterModule } from 'primeng/splitter';
+import { DividerModule } from 'primeng/divider';
 import { Message } from 'primeng/api';
 
 import { ResourceHistoryDTO } from '@app/core/types/kuro-history.type';
@@ -35,6 +36,7 @@ import { data } from './summary-text-templates.json';
 		ButtonModule,
 		ProgressBarModule,
 		SplitterModule,
+		DividerModule,
 	],
 	templateUrl: './import-history.component.html',
 	styleUrl: './import-history.component.scss',
@@ -83,6 +85,7 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 					// ignore if history is empty
 					if (!history || !history.length) return;
 
+					this.importForm.patchValue({ isHistoryImported: true });
 					this.calculateSummary(history);
 				}
 			);

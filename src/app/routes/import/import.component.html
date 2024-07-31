@@ -98,9 +98,10 @@
                     </div>
                     <div class="flex mt-2 md:mt-4 justify-content-start">
                         <p-button label="Oops, forgot something" ariaLabel="Switch to platform tab"
-                            icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                            icon="pi pi-arrow-left" severity="secondary" (onClick)="prevCallback.emit()" />
                         <p-button label="I got a 🍪" ariaLabel="Switch to save profile tab" icon="pi pi-arrow-right"
-                            iconPos="right" class="ms-2" [disabled]="importForm.invalid || importForm.pristine"
+                            iconPos="right" class="ms-2"
+                            [disabled]="importForm.invalid || importForm.pristine || !importForm.get('isHistoryImported')?.value"
                             (onClick)="nextCallback.emit()" />
                     </div>
                 </ng-template>
@@ -171,7 +172,8 @@
                         </p-panel>
                     </div>
                     <div class="flex pt-4 justify-content-start">
-                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
+                            (onClick)="prevCallback.emit()" />
                         <p-button label="Complete" icon="pi pi-home" iconPos="right" class="ms-2"
                             (onClick)="prefService.onHomeClick()" />
                     </div>

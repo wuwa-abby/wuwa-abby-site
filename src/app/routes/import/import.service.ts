@@ -27,6 +27,7 @@ export class ImportService {
 				/https:\/\/aki-gm-resources-oversea\.aki-game\.net\/aki\/gacha\/index\.html#\/record\?.*/
 			),
 		]),
+		isHistoryImported: new FormControl<boolean>(false),
 	});
 
 	/**
