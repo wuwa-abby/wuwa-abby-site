@@ -29,9 +29,9 @@ export class ImportStepsAndroidComponent {
 	public readonly warningMessage: Message[] = [
 		{
 			severity: 'warn',
-			summary: 'Heads up!',
+			summary: '',
 			detail:
-				'This command will download and execute a script from the internet. Wubby strongly recommends you to review any command/script before running it.',
+				'This command will download and execute a script from the internet. Wubby strongly recommends you to review any command/scripts before running them.',
 		},
 	];
 
