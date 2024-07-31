@@ -54,7 +54,7 @@ export class ImportComponent {
 	];
 
 	// note: the first step starts at index 0 and not 1.
-	public activeStep: number = 2;
+	public activeStep: number = 0;
 	public saveProfile: boolean = true;
 	public shareHistory: boolean = true;
 
