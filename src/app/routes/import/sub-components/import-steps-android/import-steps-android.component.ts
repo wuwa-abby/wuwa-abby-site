@@ -6,7 +6,6 @@ import { ButtonModule } from 'primeng/button';
 import { InplaceModule } from 'primeng/inplace';
 import { MessagesModule } from 'primeng/messages';
 import { Message, MessageService } from 'primeng/api';
-import { DeferModule } from 'primeng/defer';
 import { Highlight } from 'ngx-highlightjs';
 
 @Component({
@@ -20,7 +19,6 @@ import { Highlight } from 'ngx-highlightjs';
 		Highlight,
 		InplaceModule,
 		MessagesModule,
-		DeferModule,
 	],
 	templateUrl: './import-steps-android.component.html',
 	styleUrl: './import-steps-android.component.scss',

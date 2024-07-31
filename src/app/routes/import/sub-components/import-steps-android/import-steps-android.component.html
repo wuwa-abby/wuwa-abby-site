@@ -73,11 +73,15 @@
             </ng-template>
             <div class="grid">
                 <div class="col-12 hidden md:block">
+                    @defer {
                     <p-messages [value]="warningMessage" [enableService]="false" [closable]="true"></p-messages>
+                    }
                     <pre class="mb-0"><code [highlight]="bashScript" language="sh"></code></pre>
                 </div>
                 <div class="col-12 block md:hidden">
-                    <p-messages [value]="warningMessage" [enableService]="false" [closable]="true" pDefer></p-messages>
+                    @defer {
+                    <p-messages [value]="warningMessage" [enableService]="false" [closable]="true"></p-messages>
+                    }
                     <p-inplace>
                         <ng-template pTemplate="display">
                             <span>View Command Content</span>
