@@ -3,7 +3,7 @@
 </div>
 
 <div class="page__content grid mt-2">
-    <div class="card flex justify-content-center col-12 lg:col-8">
+    <div class="col-12 lg:col-8">
         <p-fieldset legend="About Importing" [toggleable]="true">
             <div class="d-flex align-items-center">
                 <p class="me-2">
@@ -17,7 +17,7 @@
         </p-fieldset>
     </div>
 
-    <div class="card flex justify-content-center col-12">
+    <div class="card flex justify-content-center col-12 mt-4">
         <p-stepper [(activeStep)]="activeStep" [linear]="true" class="w-full">
             <p-stepperPanel header="Platform">
                 <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
@@ -42,10 +42,9 @@
                 </ng-template>
                 <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
                     <div>
-                        <div
-                            class="border-2 border-dashed surface-border border-round surface-ground p-2 sm:px-0 md:p-4">
-                            <p class="text-2xl my-1">Select your platform</p>
-                            <p class="mt-2">
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
+                            <p class="text-2xl my-1 mx-sm-2">Select your platform</p>
+                            <p class="mt-2 mx-sm-2">
                                 Wubby needs to know which platform so it can help you import your data correctly!
                             </p>
 
@@ -66,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex pt-4 justify-content-start">
+                    <div class="mt-4">
                         <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
                             (onClick)="nextCallback.emit()" />
                     </div>
@@ -93,10 +92,10 @@
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
                     let-index="index">
-                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 sm:px-0 md:p-4">
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
                         <abby-import-history></abby-import-history>
                     </div>
-                    <div class="flex mt-2 md:mt-4 justify-content-start">
+                    <div class="mt-2 md:mt-4">
                         <p-button label="Oops, forgot something" ariaLabel="Switch to platform tab"
                             icon="pi pi-arrow-left" severity="secondary" (onClick)="prevCallback.emit()" />
                         <p-button label="I got a 🍪" ariaLabel="Switch to save profile tab" icon="pi pi-arrow-right"
@@ -126,7 +125,7 @@
                     </button>
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
-                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 sm:px-0 md:p-4">
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
                         <p class="text-2xl my-1">You're all set!</p>
                         <p class="mt-2">But before you go, Wubby would like to ask you a few questions...</p>
 
@@ -171,7 +170,7 @@
                             </div>
                         </p-panel>
                     </div>
-                    <div class="flex pt-4 justify-content-start">
+                    <div class="mt-4">
                         <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
                             (onClick)="prevCallback.emit()" />
                         <p-button label="Complete" icon="pi pi-home" iconPos="right" class="ms-2"
