@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FieldsetModule } from 'primeng/fieldset';
@@ -12,13 +12,14 @@ import { MessageService } from 'primeng/api';
 
 import { PreferencesService } from '@app/core/services/preferences.service';
 import { ProfileService } from '@app/core/services/profile.service';
+import { StorageService } from '@app/core/services/storage.service';
+import { ResourceHistoryDTO } from '@app/core/types/kuro-history.type';
 
 import { ImportStepsAndroidComponent } from './sub-components/import-steps-android/import-steps-android.component';
 import { ImportStepsWindowsComponent } from './sub-components/import-steps-windows/import-steps-windows.component';
 import { ImportStepsAppleComponent } from './sub-components/import-steps-apple/import-steps-apple.component';
 import { ImportHistoryComponent } from './sub-components/import-history/import-history.component';
 import { ImportService } from './import.service';
-import { StorageService } from '@app/core/services/storage.service';
 
 @Component({
 	selector: 'abby-import',
@@ -44,7 +45,7 @@ import { StorageService } from '@app/core/services/storage.service';
 	templateUrl: './import.component.html',
 	styleUrl: './import.component.scss',
 })
-export class ImportComponent {
+export class ImportComponent implements OnInit {
 	constructor(
 		public prefService: PreferencesService,
 		private service: ImportService,
@@ -64,8 +65,16 @@ export class ImportComponent {
 	public saveProfile: boolean = true;
 	public shareHistory: boolean = true;
 
+	private historyRecords: ResourceHistoryDTO[] = [];
+
 	public get importForm(): FormGroup {
 		return this.service.importForm;
+	}
+
+	public ngOnInit() {
+		this.service.onHistoryReceived.subscribe((data) => {
+			this.historyRecords = data;
+		});
 	}
 
 	public onCompleteFlow() {
@@ -95,15 +104,8 @@ export class ImportComponent {
 	}
 
 	private async setProfileIdInHistoryRecords(profileId: number) {
-		const historyRecords = await this.storageService
+		await this.storageService
 			.getGachaMemoryTable()
-			.filter((record) => !record.profileId)
-			.toArray();
-
-		for (const record of historyRecords) {
-			record.profileId = profileId;
-		}
-
-		await this.storageService.getGachaMemoryTable().bulkPut(historyRecords);
+			.bulkPut(this.historyRecords.map((record) => ({ ...record, profileId })));
 	}
 }

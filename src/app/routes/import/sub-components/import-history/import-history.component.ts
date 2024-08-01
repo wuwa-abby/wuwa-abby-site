@@ -87,7 +87,6 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 
 					this.importForm.patchValue({ isHistoryImported: true });
 					this.calculateSummary(history);
-					this.service.saveHistory(history);
 				}
 			);
 		}
