@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
 
 import { firstValueFrom } from 'rxjs';
 
@@ -9,12 +10,17 @@ import {
 	HistoryResponseDTO,
 	ResourceHistoryDTO,
 } from '@app/core/types/kuro-history.type';
+import { StorageService } from '@app/core/services/storage.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ImportService {
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private storageService: StorageService,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {}
 
 	public onHistoryReceived = new EventEmitter<ResourceHistoryDTO[]>();
 	public onHistoryProgress = new EventEmitter<{ cur: number; total: number }>();
@@ -92,6 +98,30 @@ export class ImportService {
 		}
 
 		this.onHistoryReceived.emit(history);
+	}
+
+	/**
+	 * Save the history data to the local storage. This method will not save the data if the platform is not a browser.
+	 *
+	 * @param history The history data to be saved.
+	 * @returns void
+	 */
+	public async saveHistory(history: ResourceHistoryDTO[]) {
+		if (!isPlatformBrowser(this.platformId)) {
+			return;
+		}
+
+		const gachaMemoryStore = this.storageService.getGachaMemoryStore();
+
+		const lastRecord = await gachaMemoryStore.orderBy('time').reverse().first();
+
+		if (lastRecord) {
+			const lastRecordTime = new Date(lastRecord.time);
+
+			history = history.filter((r) => new Date(r.time) > lastRecordTime);
+		}
+
+		await gachaMemoryStore.bulkAdd(history);
 	}
 
 	/**

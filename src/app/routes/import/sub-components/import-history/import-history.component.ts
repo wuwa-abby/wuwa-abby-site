@@ -22,7 +22,6 @@ import { ResourceHistoryDTO } from '@app/core/types/kuro-history.type';
 import { ImportService } from '../../import.service';
 
 import { data } from './summary-text-templates.json';
-import { CookieService } from '@app/core/services/cookie.service';
 
 @Component({
 	selector: 'abby-import-history',
@@ -45,7 +44,6 @@ import { CookieService } from '@app/core/services/cookie.service';
 export class ImportHistoryComponent implements OnInit, OnDestroy {
 	constructor(
 		private service: ImportService,
-		private cookieService: CookieService,
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
@@ -89,6 +87,7 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 
 					this.importForm.patchValue({ isHistoryImported: true });
 					this.calculateSummary(history);
+					this.service.saveHistory(history);
 				}
 			);
 		}
@@ -188,13 +187,5 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 				elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		}, 500);
-	}
-
-	private saveHistoryTemporarily(history: ResourceHistoryDTO[]) {
-		if (isPlatformBrowser(this.platformId)) {
-			localStorage.setItem('_temp-import-history', JSON.stringify(history));
-		} else {
-			this.cookieService.set('_temp-import-history', JSON.stringify(history));
-		}
 	}
 }
