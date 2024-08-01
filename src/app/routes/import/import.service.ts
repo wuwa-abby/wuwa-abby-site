@@ -111,7 +111,7 @@ export class ImportService {
 			return;
 		}
 
-		const gachaMemoryStore = this.storageService.getGachaMemoryStore();
+		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
 
 		const lastRecord = await gachaMemoryStore.orderBy('time').reverse().first();
 
@@ -130,7 +130,7 @@ export class ImportService {
 	 * @param url History URL from the game.
 	 * @returns Object with the data extracted from the URL.
 	 */
-	private getUrlData(url: string): HistoryPayloadDTO | undefined {
+	public getUrlData(url: string): HistoryPayloadDTO | undefined {
 		if (!url) return undefined;
 
 		return {

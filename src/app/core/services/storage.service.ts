@@ -4,6 +4,7 @@ import Dexie, { Table } from 'dexie';
 
 import { GachaMemoryTable } from '../model/gacha-history.table';
 import { GeneralMemoryTable } from '../model/general-data.table';
+import { UserProfileTable } from '../model/user-profile.table';
 
 @Injectable({
 	providedIn: 'root',
@@ -13,8 +14,10 @@ export class StorageService extends Dexie {
 		super('wubby-memory');
 		this.version(1).stores({
 			gacha:
-				'++id,cardPoolType,cardPoolId,qualityLevel,resourceType,name,count,time,pity',
+				'++id,cardPoolType,cardPoolId,qualityLevel,resourceType,name,count,time,pity,profileId',
 			memory: 'key,value',
+			profiles:
+				'++id,profileName,profileImage,inGameID,server,lastUpdateDate,isActive',
 		});
 
 		this.open()
@@ -28,6 +31,7 @@ export class StorageService extends Dexie {
 
 	public generalMemoryTable!: Table<GeneralMemoryTable, string>;
 	public gachaMemoryStore!: Table<GachaMemoryTable, number>;
+	public userProfileTable!: Table<UserProfileTable, number>;
 
 	public get db(): Dexie {
 		return this;
@@ -37,7 +41,11 @@ export class StorageService extends Dexie {
 		return this.table('memory');
 	}
 
-	public getGachaMemoryStore(): Table<GachaMemoryTable, number> {
+	public getGachaMemoryTable(): Table<GachaMemoryTable, number> {
 		return this.table('gacha');
+	}
+
+	public getUserProfileTable(): Table<UserProfileTable, number> {
+		return this.table('profiles');
 	}
 }

@@ -8,14 +8,17 @@ import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MessageService } from 'primeng/api';
 
 import { PreferencesService } from '@app/core/services/preferences.service';
+import { ProfileService } from '@app/core/services/profile.service';
 
 import { ImportStepsAndroidComponent } from './sub-components/import-steps-android/import-steps-android.component';
 import { ImportStepsWindowsComponent } from './sub-components/import-steps-windows/import-steps-windows.component';
 import { ImportStepsAppleComponent } from './sub-components/import-steps-apple/import-steps-apple.component';
 import { ImportHistoryComponent } from './sub-components/import-history/import-history.component';
 import { ImportService } from './import.service';
+import { StorageService } from '@app/core/services/storage.service';
 
 @Component({
 	selector: 'abby-import',
@@ -44,7 +47,10 @@ import { ImportService } from './import.service';
 export class ImportComponent {
 	constructor(
 		public prefService: PreferencesService,
-		private service: ImportService
+		private service: ImportService,
+		private profileService: ProfileService,
+		private toastService: MessageService,
+		private storageService: StorageService
 	) {}
 
 	public readonly platformOptions = [
@@ -60,5 +66,44 @@ export class ImportComponent {
 
 	public get importForm(): FormGroup {
 		return this.service.importForm;
+	}
+
+	public onCompleteFlow() {
+		if (this.saveProfile) {
+			debugger;
+			const { playerId } = this.service.getUrlData(
+				this.importForm.get('historyUrl')?.value
+			)!;
+
+			this.profileService
+				.createProfile(
+					parseInt(playerId),
+					this.importForm.get('historyUrl')?.value
+				)
+				.then((profile) => {
+					this.toastService.add({
+						severity: 'success',
+						summary: 'Profile Created',
+						detail: 'Your profile has been created successfully.',
+					});
+
+					this.setProfileIdInHistoryRecords(profile.profileId!);
+				});
+		}
+
+		this.prefService.onHomeClick();
+	}
+
+	private async setProfileIdInHistoryRecords(profileId: number) {
+		const historyRecords = await this.storageService
+			.getGachaMemoryTable()
+			.filter((record) => !record.profileId)
+			.toArray();
+
+		for (const record of historyRecords) {
+			record.profileId = profileId;
+		}
+
+		await this.storageService.getGachaMemoryTable().bulkPut(historyRecords);
 	}
 }
