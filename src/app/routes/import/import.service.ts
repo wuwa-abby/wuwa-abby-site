@@ -26,7 +26,7 @@ export class ImportService {
 	public onHistoryProgress = new EventEmitter<{ cur: number; total: number }>();
 
 	public importForm = new FormGroup({
-		platform: new FormControl<string>('and'),
+		platform: new FormControl<string>('win'),
 		historyUrl: new FormControl<string | undefined>(undefined, [
 			Validators.required,
 			Validators.pattern(
