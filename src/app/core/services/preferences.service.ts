@@ -10,7 +10,8 @@ export class PreferencesService {
 	constructor(private router: Router, private cookieService: CookieService) {
 		const cookie = this.cookieService.get('userPreferences');
 
-		if (cookie) this.userPreferences = JSON.parse(cookie);
+		if (cookie)
+			this.userPreferences = JSON.parse(cookie) as Record<string, any>;
 		else this.setDefaultPreferences();
 	}
 
@@ -30,6 +31,14 @@ export class PreferencesService {
 
 	public remove(key: string): void {
 		delete this.userPreferences[key];
+		this.cookieService.set(
+			'userPreferences',
+			JSON.stringify(this.userPreferences)
+		);
+	}
+
+	public addUpdate(key: string, value: any): void {
+		this.userPreferences[key] = value;
 		this.cookieService.set(
 			'userPreferences',
 			JSON.stringify(this.userPreferences)

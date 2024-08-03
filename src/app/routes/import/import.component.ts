@@ -79,7 +79,6 @@ export class ImportComponent implements OnInit {
 
 	public onCompleteFlow() {
 		if (this.saveProfile) {
-			debugger;
 			const { playerId } = this.service.getUrlData(
 				this.importForm.get('historyUrl')?.value
 			)!;
@@ -96,16 +95,18 @@ export class ImportComponent implements OnInit {
 						detail: 'Your profile has been created successfully.',
 					});
 
-					this.setProfileIdInHistoryRecords(profile.profileId!);
+					this.saveOrUpdateHistory(profile.profileId!);
 				});
 		}
 
+		this.prefService.addUpdate('participateGlobal', this.shareHistory);
 		this.prefService.onHomeClick();
 	}
 
-	private async setProfileIdInHistoryRecords(profileId: number) {
+	private async saveOrUpdateHistory(profileId: number) {
+		await this.storageService.getGachaMemoryTable().clear();
 		await this.storageService
 			.getGachaMemoryTable()
-			.bulkPut(this.historyRecords.map((record) => ({ ...record, profileId })));
+			.bulkAdd(this.historyRecords.map((record) => ({ ...record, profileId })));
 	}
 }
