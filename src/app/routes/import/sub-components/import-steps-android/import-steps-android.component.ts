@@ -5,6 +5,7 @@ import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { InplaceModule } from 'primeng/inplace';
 import { MessagesModule } from 'primeng/messages';
+import { TagModule } from 'primeng/tag';
 import { Message, MessageService } from 'primeng/api';
 import { Highlight } from 'ngx-highlightjs';
 
@@ -19,6 +20,7 @@ import { Highlight } from 'ngx-highlightjs';
 		Highlight,
 		InplaceModule,
 		MessagesModule,
+		TagModule,
 	],
 	templateUrl: './import-steps-android.component.html',
 	styleUrl: './import-steps-android.component.scss',
