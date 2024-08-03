@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
+import { NotFoundComponent } from '@routes/not-found/not-found.component';
 
 export const routes: Routes = [
 	{
@@ -19,6 +20,6 @@ export const routes: Routes = [
 	{
 		path: '**',
 		pathMatch: 'full',
-		redirectTo: '',
+		component: NotFoundComponent,
 	},
 ];
