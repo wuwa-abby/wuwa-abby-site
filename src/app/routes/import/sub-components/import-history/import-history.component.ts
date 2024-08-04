@@ -18,6 +18,7 @@ import { DividerModule } from 'primeng/divider';
 import { Message } from 'primeng/api';
 
 import { ResourceHistoryDTO } from '@app/core/types/kuro-history.type';
+import { getInvalidClass } from '@app/core/helpers/primeng-func.helper';
 
 import { ImportService } from '../../import.service';
 
@@ -97,9 +98,10 @@ export class ImportHistoryComponent implements OnInit, OnDestroy {
 		if (this.historyDataSub) this.historyDataSub.unsubscribe();
 	}
 
-	public getInvalidClass = this.service.getInvalidUrlCSSClass.bind(
-		this.service
-	);
+	public getInvalidClass() {
+		const control = this.importForm.get('historyUrl');
+		return getInvalidClass(control!);
+	}
 
 	public onChange() {
 		if (this.changeTimeout) clearTimeout(this.changeTimeout);

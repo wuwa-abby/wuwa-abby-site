@@ -48,6 +48,7 @@ export class NavbarComponent implements OnInit {
 				this.isSettingsRoute = routeWithoutQuery === '/settings';
 
 				if (isPlatformBrowser(this.platformId)) {
+					window.scrollTo(0, 0);
 					this.cookieService.getCookieConsent();
 				}
 			});

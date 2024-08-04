@@ -11,6 +11,7 @@ import {
 	ResourceHistoryDTO,
 } from '@app/core/types/kuro-history.type';
 import { StorageService } from '@app/core/services/storage.service';
+import { getInvalidClass } from '@app/core/helpers/primeng-func.helper';
 
 @Injectable({
 	providedIn: 'root',
@@ -33,22 +34,13 @@ export class ImportService {
 				/https:\/\/aki-gm-resources-oversea\.aki-game\.net\/aki\/gacha\/index\.html#\/record\?.*/
 			),
 		]),
+		adbPath: new FormControl<string | undefined>(undefined, [
+			Validators.pattern(
+				/^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/
+			),
+		]),
 		isHistoryImported: new FormControl<boolean>(false),
 	});
-
-	/**
-	 * Get the CSS class for the URL
-	 *
-	 * @returns string
-	 */
-	public getInvalidUrlCSSClass() {
-		const control = this.importForm.get('historyUrl');
-		if (control?.pristine || control?.valid) {
-			return undefined;
-		}
-
-		return 'ng-dirty ng-invalid';
-	}
 
 	/**
 	 * Get History data from Kuro server API.

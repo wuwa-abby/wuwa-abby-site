@@ -15,8 +15,7 @@ body {
 	margin-bottom: 1rem;
 }
 
-code {
-	max-width: 100%;
+code:not(.nostyle) {
 	display: block;
 	overflow-x: auto;
 	white-space: pre-wrap;
