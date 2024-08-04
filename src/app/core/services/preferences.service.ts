@@ -8,11 +8,7 @@ import { CookieService } from './cookie.service';
 })
 export class PreferencesService {
 	constructor(private router: Router, private cookieService: CookieService) {
-		const cookie = this.cookieService.get('userPreferences');
-
-		if (cookie)
-			this.userPreferences = JSON.parse(cookie) as Record<string, any>;
-		else this.setDefaultPreferences();
+		this.reloadPref(true);
 	}
 
 	private userPreferences: Record<string, any> = {};
@@ -30,6 +26,8 @@ export class PreferencesService {
 	}
 
 	public remove(key: string): void {
+		this.reloadPref();
+
 		delete this.userPreferences[key];
 		this.cookieService.set(
 			'userPreferences',
@@ -37,12 +35,28 @@ export class PreferencesService {
 		);
 	}
 
-	public addUpdate(key: string, value: any): void {
+	public set(key: string, value: any): void {
+		this.reloadPref();
+
 		this.userPreferences[key] = value;
 		this.cookieService.set(
 			'userPreferences',
 			JSON.stringify(this.userPreferences)
 		);
+	}
+
+	public get(key: string): any {
+		this.reloadPref();
+
+		return this.userPreferences[key];
+	}
+
+	private reloadPref(set: boolean = false): void {
+		const cookie = this.cookieService.get('userPreferences');
+
+		if (cookie)
+			this.userPreferences = JSON.parse(cookie) as Record<string, any>;
+		else if (set) this.setDefaultPreferences();
 	}
 
 	private setDefaultPreferences(): void {

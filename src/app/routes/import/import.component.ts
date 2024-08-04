@@ -99,7 +99,7 @@ export class ImportComponent implements OnInit {
 				});
 		}
 
-		this.prefService.addUpdate('participateGlobal', this.shareHistory);
+		this.prefService.set('participateGlobal', this.shareHistory);
 		this.prefService.onHomeClick();
 	}
 
