@@ -54,13 +54,14 @@
               }
             ],
             "styles": [
+              "public/css/bootstrap-grid.css",
+              "public/css/bootstrap-utilities.min.css",
               "node_modules/primeng/resources/themes/aura-dark-noir/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css",
-              "public/css/bootstrap-grid.css",
-              "public/css/bootstrap-utilities.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/highlight.js/styles/github-dark.min.css",
               "src/styles.scss"
             ],
             "scripts": [],

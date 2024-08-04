@@ -1,0 +1,37 @@
+<div class="w-full">
+    <p class="text-2xl my-1">Buckle up!</p>
+    <p class="mt-2">Wubby is about to perform some magic and get your history from the URL you provide. 🧙‍♂️</p>
+
+    <div class="mb-4" *ngIf="showLoading">
+        <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" *ngIf="!progress.total && !progressPercent" />
+        <p-progressBar [value]="progressPercent" [showValue]="true" [style]="{height: '20px'}" *ngIf="progress.total" />
+    </div>
+
+    <form [formGroup]="importForm" id="importForm" (submit)="onFormSubmit()">
+        <textarea rows="4" pInputTextarea [autoResize]="true" placeholder="Enter the URL here..."
+            [class]="getInvalidClass()" [class.w-full]="true" formControlName="historyUrl" (change)="onChange()"
+            autofocus></textarea>
+        <p-messages [(value)]="message" [enableService]="false" />
+
+        <p-button label="Let the ritual begin!" ariaLabel="Get my history" icon="pi pi-sparkles" type="submit"
+            styleClass="mt-2" [loading]="progress.cur !== progress.total ? 'loading' : undefined"
+            [disabled]="importForm.invalid || importForm.pristine || historySummary"></p-button>
+    </form>
+
+    <p-panel id="summary-title" header="Spoilers!" [collapsed]="true" [toggleable]="true" toggler="header"
+        styleClass="mt-4 fadein" *ngIf="historySummary">
+        <!-- bigger text on tablet and bigger devices -->
+        <p class="hidden md:block">
+            Here's a quick little summary of your history. If you want to see the full details, you will have to give
+            Wubby a cookie! 🍪
+        </p>
+        <!-- small text on mobile so it doesn't take up too much space -->
+        <p class="block md:hidden">
+            A quick tiny summary of your history. Wubby wants a cookie if you want to see more! 🍪
+        </p>
+
+        <p-divider></p-divider>
+
+        <div [innerHTML]="historySummary.template"></div>
+    </p-panel>
+</div>

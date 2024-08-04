@@ -1,0 +1,183 @@
+<div class="page__title">
+    <h1 class="text-5xl">Import History</h1>
+</div>
+
+<div class="page__content grid mt-2">
+    <div class="col-12 lg:col-8">
+        <p-fieldset legend="About Importing" [toggleable]="true">
+            <div class="d-flex align-items-center">
+                <p class="me-2">
+                    Wubby needs to know your history URL to help you import your data. This will be a one time process
+                    to
+                    setup your default profile, you can always create more profiles as you need 'em!
+                </p>
+
+                <img ngSrc="images/emotes/T_ChatEmo_F_03.webp" alt="Danjin Happy emote" height="64" width="64" priority>
+            </div>
+        </p-fieldset>
+    </div>
+
+    <div class="card flex justify-content-center col-12 mt-4">
+        <p-stepper [(activeStep)]="activeStep" [linear]="true" class="w-full">
+            <p-stepperPanel header="Platform">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
+                        <span
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-desktop"></i>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 0">
+                                Platform
+                            </p>
+                        </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-desktop d-block d-md-none"
+                            aria-label="Select your Wuthering Waves platform"></i>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                    <div>
+                        <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
+                            <p class="text-2xl my-1 mx-sm-2">Select your platform</p>
+                            <p class="mt-2 mx-sm-2">
+                                Wubby needs to know which platform so it can help you import your data correctly!
+                            </p>
+
+                            <form [formGroup]="importForm">
+                                <p-selectButton [options]=" platformOptions" formControlName="platform"
+                                    optionLabel="label" optionValue="value" optionDisabled="disabled" class="mx-auto"
+                                    [allowEmpty]="false" />
+                            </form>
+
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'and'">
+                                <abby-import-steps-android></abby-import-steps-android>
+                            </div>
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'win'">
+                                <abby-import-steps-windows></abby-import-steps-windows>
+                            </div>
+                            <div class="mt-4 px-2" *ngIf="importForm.get('platform')?.value === 'apple'">
+                                <abby-import-steps-apple></abby-import-steps-apple>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Import">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
+                        <span
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-cloud-download"></i>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 1">Import</p>
+                        </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-cloud-download d-block d-md-none"
+                            aria-label="Import your Wuthering Waves convene history"></i>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                    let-index="index">
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
+                        <abby-import-history></abby-import-history>
+                    </div>
+                    <div class="mt-2 md:mt-4">
+                        <p-button label="Oops, forgot something" ariaLabel="Switch to platform tab"
+                            icon="pi pi-arrow-left" severity="secondary" (onClick)="prevCallback.emit()" />
+                        <p-button label="I got a 🍪" ariaLabel="Switch to save profile tab" icon="pi pi-arrow-right"
+                            iconPos="right" class="ms-2"
+                            [disabled]="importForm.invalid || importForm.pristine || !importForm.get('isHistoryImported')?.value"
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Done">
+                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
+                        <!-- wide view button -->
+                        <span
+                            class="border-round border-2 h-3rem px-4 align-items-center justify-content-center d-none d-md-inline-flex"
+                            [ngClass]="{
+                                'bg-primary border-primary': index <= activeStep,
+                                'surface-border': index > activeStep
+                            }">
+                            <i class="pi pi-check"></i>
+                            <p id="stepper__step-title-text" class="ms-2 fadein" *ngIf="activeStep === 2">Done</p>
+                        </span>
+
+                        <!-- mobile button -->
+                        <i class="pi pi-check d-block d-md-none"
+                            aria-label="Save your profile with Wubby (optional)"></i>
+                    </button>
+                </ng-template>
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+                    <div class="border-2 border-dashed surface-border border-round surface-ground p-2 md:p-4">
+                        <p class="text-2xl my-1">You're all set!</p>
+                        <p class="mt-2">But before you go, Wubby would like to ask you a few questions...</p>
+
+                        <p-panel header="Remember me!" [toggleable]="true" toggler="header" styleClass="mb-2 md:mb-3">
+                            <p class="text-2xl my-1">Would you like to save this profile for future use?</p>
+                            <!-- bigger text on tablet and bigger devices -->
+                            <p class="hidden md:block">
+                                Have trouble committing to one single account? Wubby can save your profile for
+                                future
+                                use! This means you can import your data with a single click!
+                            </p>
+                            <!-- small text on mobile so it doesn't take up too much space -->
+                            <p class="block md:hidden">
+                                Wubby can remember this account so you can import your data
+                                with a single click!
+                            </p>
+
+                            <div class="mt-2">
+                                <p-toggleButton [(ngModel)]="saveProfile" [onLabel]="'Yes please!'"
+                                    [offLabel]="'I\'ll look around for now'" [onIcon]="'pi pi-check'"
+                                    [offIcon]="'pi pi-times'" ariaLabel="Do you want to save a profile?" />
+                            </div>
+                        </p-panel>
+
+                        <p-panel header="Make me famous~" [toggleable]="true" toggler="header">
+                            <p class="text-2xl my-1">Feelin' lucky?</p>
+                            <!-- bigger text on tablet and bigger devices -->
+                            <p class="hidden md:block">
+                                Wubby can compare your data with other users to help improve the service! And you
+                                can compare your stats with others too!
+                            </p>
+                            <!-- small text on mobile so it doesn't take up too much space -->
+                            <p class="block md:hidden">
+                                Would you like Wubby to compare your data with other users to help improve the
+                                service?
+                            </p>
+
+                            <div class="mt-2">
+                                <p-toggleButton [(ngModel)]="shareHistory" [onLabel]="'Of course!'"
+                                    [offLabel]="'I\'m a spy!'" [onIcon]="'pi pi-check'" [offIcon]="'pi pi-times'"
+                                    ariaLabel="Do you want to save a profile?" />
+                            </div>
+                        </p-panel>
+                    </div>
+                    <div class="mt-4">
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
+                            (onClick)="prevCallback.emit()" />
+                        <p-button label="Complete" icon="pi pi-home" iconPos="right" class="ms-2"
+                            (onClick)="onCompleteFlow()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+        </p-stepper>
+    </div>
+</div>

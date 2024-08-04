@@ -1,0 +1,52 @@
+{
+    "data": [
+        {
+            "range": {
+                "min": -99999999999,
+                "max": 999
+            },
+            "templates": [
+                "<h3 class=\"mb-0 text-xl\">Keep Going, Player!</h3><p class=\"line-height-2 mt-2\">You've started your journey with <span class=\"text-2xl\">{{total}} wishes</span> across different banners. Among them, you have <span class=\"text-2xl\">{{5-count}}</span> dazzling <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> sparkling <span class=\"text-2xl text-indigo-300\">4-stars</span>. Even Aalto would be impressed by your progress! Keep summoning, and more treasures await you!</p>",
+                "<h3 class=\"mb-0 text-xl\">Great Start, Rover!</h3><p class=\"line-height-2 mt-2\">You have made <span class=\"text-2xl\">{{total}} wishes</span> so far, including <span class=\"text-2xl\">{{5-count}}</span> magnificent <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> shimmering <span class=\"text-2xl text-indigo-300\">4-stars</span>. Continue exploring the convenes, and may your next wish be legendary!</p>",
+                "<h3 class=\"mb-0 text-xl\">Nice Effort!</h3><p class=\"line-height-2 mt-2\">You've made <span class=\"text-2xl\">{{total}} wishes</span> and collected <span class=\"text-2xl\">{{5-count}}</span> shiny <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> brilliant <span class=\"text-2xl text-indigo-300\">4-stars</span> so far. Keep wishing and may your next pull be even more exciting!</p>",
+                "<h3 class=\"mb-0 text-xl\">Good Start!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, you've managed to get <span class=\"text-2xl\">{{5-count}}</span> amazing <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> impressive <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep making wishes, and see what other wonders you might uncover!</p>"
+            ]
+        },
+        {
+            "range": {
+                "min": 1000,
+                "max": 4999
+            },
+            "templates": [
+                "<h3 class=\"mb-0 text-xl\">Impressive Summoner!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span> across various banners, you've earned <span class=\"text-2xl\">{{5-count}}</span> brilliant <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> glittering <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep up the amazing summoning, and may your next pull bring you even greater treasures!</p>",
+                "<h3 class=\"mb-0 text-xl\">Wow!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, including <span class=\"text-2xl\">{{5-count}}</span> stunning <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> radiant <span class=\"text-2xl text-indigo-300\">4-stars</span>, you've made significant progress. Keep wishing, and may fortune favor you with legendary pulls from the next banner!</p>",
+                "<h3 class=\"mb-0 text-xl\">Fantastic Progress!</h3><p class=\"line-height-2 mt-2\">You've accumulated <span class=\"text-2xl\">{{total}} wishes</span>, achieving <span class=\"text-2xl\">{{5-count}}</span> impressive <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> notable <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep going, and may your next summon be even more extraordinary!</p>",
+                "<h3 class=\"mb-0 text-xl\">Solid Performance!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, you've pulled <span class=\"text-2xl\">{{5-count}}</span> spectacular <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> exceptional <span class=\"text-2xl text-indigo-300\">4-stars</span>. Continue your summoning adventure, and let's see what else the convenes have in store for you!</p>"
+            ]
+        },
+        {
+            "range": {
+                "min": 5000,
+                "max": 9999
+            },
+            "templates": [
+                "<h3 class=\"mb-0 text-xl\">Incredible!</h3><p class=\"line-height-2 mt-2\">You've wished <span class=\"text-2xl\">{{total}} times</span> and obtained <span class=\"text-2xl\">{{5-count}}</span> dazzling <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> sparkling <span class=\"text-2xl text-indigo-300\">4-stars</span> from various convenes. Keep the wishes flowing, and may your next pull be even more extraordinary!</p>",
+                "<h3 class=\"mb-0 text-xl\">Fantastic!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, you've hit the jackpot with <span class=\"text-2xl\">{{5-count}}</span> magnificent <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> shimmering <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep summoning, and may your next wish from the banner be a rare gem!</p>",
+                "<h3 class=\"mb-0 text-xl\">Remarkable!</h3><p class=\"line-height-2 mt-2\">You've made a total of <span class=\"text-2xl\">{{total}} wishes</span>, achieving <span class=\"text-2xl\">{{5-count}}</span> incredible <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> stunning <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep wishing and may the next convene bring you even more surprises!</p>",
+                "<h3 class=\"mb-0 text-xl\">Awesome!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, you've obtained <span class=\"text-2xl\">{{5-count}}</span> extraordinary <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> exceptional <span class=\"text-2xl text-indigo-300\">4-stars</span>. Continue the adventure, and let's see what incredible pulls await you next!</p>"
+            ]
+        },
+        {
+            "range": {
+                "min": 10000,
+                "max": 9999999999999
+            },
+            "templates": [
+                "<h3 class=\"mb-0 text-xl\">Legendary Summoner!</h3><p class=\"line-height-2 mt-2\">You've made <span class=\"text-2xl\">{{total}} wishes</span> and earned <span class=\"text-2xl\">{{5-count}}</span> brilliant <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> radiant <span class=\"text-2xl text-indigo-300\">4-stars</span> from different banners. Keep up the legendary summoning, and may your next pull be your best yet!</p>",
+                "<h3 class=\"mb-0 text-xl\">Phenomenal!</h3><p class=\"line-height-2 mt-2\">You have cast <span class=\"text-2xl\">{{total}} wishes</span>, obtaining <span class=\"text-2xl\">{{5-count}}</span> dazzling <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> sparkling <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep the adventure going, and may your next wish bring even greater rewards from the convene!</p>",
+                "<h3 class=\"mb-0 text-xl\">Epic Achievement!</h3><p class=\"line-height-2 mt-2\">With <span class=\"text-2xl\">{{total}} wishes</span>, you've secured <span class=\"text-2xl\">{{5-count}}</span> incredible <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> outstanding <span class=\"text-2xl text-indigo-300\">4-stars</span>. Keep up the excellent summoning, and let's see what other legendary items await you!</p>",
+                "<h3 class=\"mb-0 text-xl\">Ultimate Summoner!</h3><p class=\"line-height-2 mt-2\">You've made a grand total of <span class=\"text-2xl\">{{total}} wishes</span>, with <span class=\"text-2xl\">{{5-count}}</span> impressive <span class=\"text-2xl text-yellow-500\">5-stars</span> and <span class=\"text-2xl\">{{4-count}}</span> remarkable <span class=\"text-2xl text-indigo-300\">4-stars</span> to show for it. Continue on your path, and may your next convene be your most rewarding yet!</p>"
+            ]
+        }
+    ]
+}
