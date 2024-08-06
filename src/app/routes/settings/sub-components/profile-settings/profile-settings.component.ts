@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -14,6 +20,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProfileService } from '@core/services/profile.service';
 import { UserProfileDTO } from '@core/types/user-profile.type';
 
+import { KURO_HISTORY_URL_REGEX } from '@core/helpers/kuro.helper';
+
 @Component({
 	selector: 'abby-profile-settings',
 	standalone: true,
@@ -21,6 +29,7 @@ import { UserProfileDTO } from '@core/types/user-profile.type';
 		NgOptimizedImage,
 		CommonModule,
 		RouterModule,
+		ReactiveFormsModule,
 
 		PanelModule,
 		ButtonModule,
@@ -39,7 +48,18 @@ export class ProfileSettingsComponent implements OnInit {
 
 	public profiles: UserProfileDTO[] = [];
 	public isLoadingProfiles = true;
-	public layout: 'list' | 'grid' = 'list';
+	public isLoadingSetActive = false;
+
+	public createProfileForm: FormGroup = new FormGroup({
+		profileName: new FormControl<string | undefined>(undefined, [
+			Validators.required,
+			Validators.maxLength(24),
+		]),
+		historyUrl: new FormControl<string | undefined>(undefined, [
+			Validators.required,
+			Validators.pattern(KURO_HISTORY_URL_REGEX),
+		]),
+	});
 
 	public ngOnInit(): void {
 		this.getProfiles();
@@ -57,20 +77,10 @@ export class ProfileSettingsComponent implements OnInit {
 		this.isLoadingProfiles = false;
 	}
 
-	public counterArray(n: number): number[] {
-		return Array(n);
-	}
-
-	public getSeverity(profile: UserProfileDTO) {
-		switch (profile.server) {
-			case 'NA':
-				return 'success';
-			case 'EU':
-				return 'warning';
-			case 'KR':
-				return 'danger';
-			default:
-				return 'secondary';
-		}
+	public async setActiveProfile(profile: UserProfileDTO): Promise<void> {
+		this.isLoadingSetActive = true;
+		await this.service.setActiveProfile(profile.profileId!);
+		profile.isActive = true;
+		this.isLoadingSetActive = false;
 	}
 }

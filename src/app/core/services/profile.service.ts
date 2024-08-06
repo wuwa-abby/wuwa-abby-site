@@ -62,7 +62,8 @@ export class ProfileService {
 	public async createProfile(
 		playerId: number,
 		historyUrl: string,
-		name?: string
+		name?: string,
+		setActive: boolean = false
 	) {
 		const existingProfile = await this.table
 			.where('inGameID')
@@ -81,6 +82,8 @@ export class ProfileService {
 
 		const id = await this.addProfile(historyUrl, newProfile);
 		newProfile.profileId = id;
+
+		if (setActive) await this.setActiveProfile(id);
 
 		return newProfile;
 	}

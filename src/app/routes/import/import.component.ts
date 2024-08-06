@@ -92,7 +92,9 @@ export class ImportComponent implements OnInit, AfterViewInit {
 			this.profileService
 				.createProfile(
 					parseInt(playerId),
-					this.importForm.get('historyUrl')?.value
+					this.importForm.get('historyUrl')?.value,
+					undefined,
+					true
 				)
 				.then((profile) => {
 					this.toastService.add({
