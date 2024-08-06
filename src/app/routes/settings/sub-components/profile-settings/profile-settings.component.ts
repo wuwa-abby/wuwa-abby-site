@@ -7,6 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { ProfileService } from '@core/services/profile.service';
 import { UserProfileDTO } from '@core/types/user-profile.type';
@@ -24,6 +27,9 @@ import { UserProfileDTO } from '@core/types/user-profile.type';
 		DataViewModule,
 		SkeletonModule,
 		TagModule,
+		IconFieldModule,
+		InputIconModule,
+		InputTextModule,
 	],
 	templateUrl: './profile-settings.component.html',
 	styleUrl: './profile-settings.component.scss',
@@ -32,6 +38,7 @@ export class ProfileSettingsComponent implements OnInit {
 	constructor(private service: ProfileService) {}
 
 	public profiles: UserProfileDTO[] = [];
+	public isLoadingProfiles = true;
 	public layout: 'list' | 'grid' = 'list';
 
 	public ngOnInit(): void {
@@ -46,6 +53,8 @@ export class ProfileSettingsComponent implements OnInit {
 				profile.historyUrlBase64
 			);
 		}
+
+		this.isLoadingProfiles = false;
 	}
 
 	public counterArray(n: number): number[] {
