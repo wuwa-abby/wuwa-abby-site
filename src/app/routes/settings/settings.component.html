@@ -1,1 +1,22 @@
-<p>settings works!</p>
+<div>
+    <h1 class="text-5xl">Settings</h1>
+</div>
+
+<div>
+    <p-panel [toggleable]="true" toggler="header">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2">
+                <i class="pi pi-users"></i>
+                <span class="font-bold">
+                    Profiles
+                </span>
+            </div>
+        </ng-template>
+        <div class="flex">
+            <p-button label="Save new account" icon="pi pi-plus" iconPos="right" routerLink="/import"
+                [queryParams]="{focus: 'platform', block: 'start'}" />
+        </div>
+
+
+    </p-panel>
+</div>
