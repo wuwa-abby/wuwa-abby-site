@@ -29,10 +29,7 @@ export class ProfileService {
 			.get(id);
 		if (!profile) return undefined;
 
-		profile.historyUrl = Buffer.from(
-			profile.historyUrlBase64,
-			'base64'
-		).toString();
+		profile.historyUrl = this.parseHistoryUrl(profile.historyUrlBase64);
 
 		return profile;
 	}
@@ -112,5 +109,11 @@ export class ProfileService {
 		}
 
 		await this.storageService.getUserProfileTable().bulkPut(profiles);
+	}
+
+	public parseHistoryUrl(base64Url: string): string {
+		if (!base64Url) return '';
+
+		return Buffer.from(base64Url, 'base64').toString();
 	}
 }

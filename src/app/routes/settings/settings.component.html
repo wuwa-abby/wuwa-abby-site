@@ -1,22 +1,20 @@
-<div>
+<div class="page__title">
     <h1 class="text-5xl">Settings</h1>
 </div>
 
-<div>
-    <p-panel [toggleable]="true" toggler="header">
-        <ng-template pTemplate="header">
-            <div class="flex align-items-center gap-2">
-                <i class="pi pi-users"></i>
-                <span class="font-bold">
-                    Profiles
-                </span>
-            </div>
-        </ng-template>
-        <div class="flex">
-            <p-button label="Save new account" icon="pi pi-plus" iconPos="right" routerLink="/import"
-                [queryParams]="{focus: 'platform', block: 'start'}" />
-        </div>
-
-
-    </p-panel>
+<div class="page__content">
+    <p-tabView styleClass="surface-ground">
+        <p-tabPanel header="Overview" rightIcon="pi pi-wrench">
+            <p class="surface-ground">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates magni suscipit sit impedit non
+                ipsam, perferendis error veritatis perspiciatis fugiat accusamus praesentium nesciunt beatae. Explicabo
+                sint placeat animi velit ex.
+            </p>
+        </p-tabPanel>
+        <p-tabPanel header="Profiles" rightIcon="pi pi-users">
+            <ng-template pTemplate="content">
+                <abby-profile-settings></abby-profile-settings>
+            </ng-template>
+        </p-tabPanel>
+    </p-tabView>
 </div>
