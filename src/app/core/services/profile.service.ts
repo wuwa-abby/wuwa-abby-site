@@ -44,12 +44,13 @@ export class ProfileService {
 
 	public async updateProfile(
 		id: number,
-		historyUrl: string,
-		profile: UserProfileTable
+		profile: UserProfileTable,
+		historyUrl?: string
 	) {
 		if (historyUrl)
 			profile.historyUrlBase64 = Buffer.from(historyUrl).toString('base64');
-		else throw new Error('Profile history URL is required');
+		else if (!profile.historyUrlBase64)
+			throw new Error('Profile history URL is required');
 
 		return await this.storageService.getUserProfileTable().update(id, profile);
 	}
@@ -81,7 +82,7 @@ export class ProfileService {
 		};
 
 		const id = await this.addProfile(historyUrl, newProfile);
-		newProfile.profileId = id;
+		newProfile.id = id;
 
 		if (setActive) await this.setActiveProfile(id);
 
@@ -108,7 +109,7 @@ export class ProfileService {
 		const profiles = await this.getAllProfiles();
 
 		for (const profile of profiles) {
-			profile.isActive = profile.profileId === id;
+			profile.isActive = profile.id === id;
 		}
 
 		await this.storageService.getUserProfileTable().bulkPut(profiles);

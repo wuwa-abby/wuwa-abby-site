@@ -103,7 +103,7 @@ export class ImportComponent implements OnInit, AfterViewInit {
 						detail: 'Your profile has been created successfully.',
 					});
 
-					this.saveOrUpdateHistory(profile.profileId!);
+					this.saveOrUpdateHistory(profile.id!);
 				});
 		}
 

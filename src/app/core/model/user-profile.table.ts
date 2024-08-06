@@ -1,5 +1,5 @@
 export interface UserProfileTable {
-	profileId?: number;
+	id?: number;
 	profileName: string;
 	profileImage?: string;
 	inGameID: number;
