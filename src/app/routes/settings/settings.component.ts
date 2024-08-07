@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
@@ -15,11 +16,29 @@ import { ProfileSettingsComponent } from './sub-components/profile-settings/prof
 	styleUrl: './settings.component.scss',
 })
 export class SettingsComponent implements OnInit {
-	constructor(private prefService: PreferencesService) {}
+	constructor(
+		private prefService: PreferencesService,
+		private route: ActivatedRoute,
+		private router: Router
+	) {}
 
-	ngOnInit(): void {}
+	public activeTabIdx: number = 0;
+
+	ngOnInit(): void {
+		this.activeTabIdx =
+			parseInt(this.route.snapshot.queryParams['watching']) || 0;
+	}
 
 	public onChangeTheme(theme: string): void {
 		this.prefService.set('theme', theme);
+	}
+
+	public onTabChange(event: any): void {
+		this.activeTabIdx = event.index;
+
+		this.router.navigate([], {
+			queryParams: { watching: this.activeTabIdx },
+			queryParamsHandling: 'merge',
+		});
 	}
 }

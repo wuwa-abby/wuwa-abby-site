@@ -48,7 +48,6 @@ export class PreferencesService {
 	private reloadPref(set: boolean = false): void {
 		const cookie = this.cookieService.get('userPreferences');
 
-		debugger;
 		if (cookie) {
 			this.userPreferences = JSON.parse(cookie) as { [key: string]: any };
 		} else if (set) this.setDefaultPreferences();
