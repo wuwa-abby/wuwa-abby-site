@@ -11,7 +11,7 @@ export class PreferencesService {
 		this.reloadPref(true);
 	}
 
-	private userPreferences: Record<string, any> = {};
+	private userPreferences: { [key: string]: any } = {};
 
 	private readonly defaultOnHomeClick: string = '/convenes';
 
@@ -29,20 +29,14 @@ export class PreferencesService {
 		this.reloadPref();
 
 		delete this.userPreferences[key];
-		this.cookieService.set(
-			'userPreferences',
-			JSON.stringify(this.userPreferences)
-		);
+		this.cookieService.set('userPreferences', this.userPreferences);
 	}
 
 	public set(key: string, value: any): void {
 		this.reloadPref();
 
 		this.userPreferences[key] = value;
-		this.cookieService.set(
-			'userPreferences',
-			JSON.stringify(this.userPreferences)
-		);
+		this.cookieService.set('userPreferences', this.userPreferences);
 	}
 
 	public get(key: string): any {
@@ -54,18 +48,16 @@ export class PreferencesService {
 	private reloadPref(set: boolean = false): void {
 		const cookie = this.cookieService.get('userPreferences');
 
-		if (cookie)
-			this.userPreferences = JSON.parse(cookie) as Record<string, any>;
-		else if (set) this.setDefaultPreferences();
+		debugger;
+		if (cookie) {
+			this.userPreferences = JSON.parse(cookie) as { [key: string]: any };
+		} else if (set) this.setDefaultPreferences();
 	}
 
 	private setDefaultPreferences(): void {
 		this.userPreferences = {
 			onHomeClick: this.defaultOnHomeClick,
 		};
-		this.cookieService.set(
-			'userPreferences',
-			JSON.stringify(this.userPreferences)
-		);
+		this.cookieService.set('userPreferences', this.userPreferences);
 	}
 }
