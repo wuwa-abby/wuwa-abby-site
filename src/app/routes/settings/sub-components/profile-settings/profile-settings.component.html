@@ -23,9 +23,10 @@
                                         <p-tag [value]="profile.server" styleClass="text-700" severity="secondary" />
                                     </div>
                                     <div class="flex flex-row-reverse md:flex-row gap-2">
-                                        <p-button icon="pi pi-user-edit" [outlined]="true"
+                                        <p-button ariaLabel="Edit profile" icon="pi pi-user-edit" [outlined]="true"
                                             (onClick)="showEditProfileDialog(profile)" />
-                                        <p-button icon="pi pi-user" iconPos="right" label="Set active"
+                                        <p-button [ariaLabel]="'Set ' + profile.profileName + ' as the active profile'"
+                                            icon="pi pi-user" iconPos="right" label="Set active"
                                             [disabled]="profile.isActive"
                                             [severity]="profile.isActive ? 'secondary' : 'primary'"
                                             [loading]="isLoadingSetActive" loadingIcon="pi pi-loading"
@@ -67,10 +68,12 @@
     <p class="mt-2 text-center">More customization will be available soon!</p>
 
     <div class="block mt-4 gap-2">
-        <p-button label="Cancel" icon="pi pi-cross" iconPos="right" [loading]="isLoadingSaveProfile" styleClass="me-2"
-            severity="secondary" (onClick)="this.isEditingProfile = false" />
-        <p-button label="Save" icon="pi pi-check" iconPos="right" [loading]="isLoadingSaveProfile"
-            (onClick)="saveProfile()" />
+        <p-button ariaLabel="Cancel editing profile" label="Cancel" icon="pi pi-cross" iconPos="right"
+            [loading]="isLoadingSaveProfile" severity="secondary" (onClick)="this.isEditingProfile = false" />
+        <p-button ariaLabel="Delete profile" icon="pi pi-user-minus" iconPos="right" [loading]="isLoadingSaveProfile"
+            styleClass="mx-2" severity="danger" (onClick)="deleteProfile()" />
+        <p-button ariaLabel="Save profile changes" label="Save" icon="pi pi-check" iconPos="right"
+            [loading]="isLoadingSaveProfile" (onClick)="saveProfile()" />
     </div>
 </p-dialog>
 }

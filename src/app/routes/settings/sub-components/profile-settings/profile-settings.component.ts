@@ -114,4 +114,16 @@ export class ProfileSettingsComponent implements OnInit {
 		this.isLoadingSaveProfile = false;
 		this.isEditingProfile = false;
 	}
+
+	public async deleteProfile(): Promise<void> {
+		this.isLoadingSaveProfile = true;
+		this.isLoadingProfiles = true;
+		await this.service.deleteProfile(this.selectedProfile!.id!);
+		this.profiles = this.profiles.filter(
+			(p) => p.id !== this.selectedProfile!.id
+		);
+		this.isEditingProfile = false;
+		this.isLoadingProfiles = false;
+		this.isLoadingSaveProfile = false;
+	}
 }
