@@ -1,7 +1,7 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
         <a pRipple class="flex align-items-center p-menuitem-link">
-            <img ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
+            <img id="nav-logo" ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
             <span class="ms-2" [class.fw-semibold]="isHomeRoute" (click)="prefService.onHomeClick($event)">
                 Wubby
             </span>
