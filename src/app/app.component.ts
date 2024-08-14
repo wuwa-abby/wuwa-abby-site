@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 
-import { NavbarComponent } from '@core/components/navbar/navbar.component';
-import { FooterComponent } from '@core/components/footer/footer.component';
+import { NavbarComponent } from '@app/layout/components/navbar/navbar.component';
+import { FooterComponent } from '@app/layout/components/footer/footer.component';
 import { CookieService } from '@core/services/cookie.service';
 import { PreferencesService } from '@core/services/preferences.service';
 
