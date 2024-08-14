@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { PreferencesService } from '@core/services/preferences.service';
 
@@ -11,7 +13,15 @@ import { ProfileSettingsComponent } from './sub-components/profile-settings/prof
 @Component({
 	selector: 'abby-settings',
 	standalone: true,
-	imports: [PanelModule, TabViewModule, ProfileSettingsComponent],
+	imports: [
+		FormsModule,
+
+		ProfileSettingsComponent,
+
+		PanelModule,
+		TabViewModule,
+		SelectButtonModule,
+	],
 	templateUrl: './settings.component.html',
 	styleUrl: './settings.component.scss',
 })
@@ -23,6 +33,12 @@ export class SettingsComponent implements OnInit {
 	) {}
 
 	public activeTabIdx: number = 0;
+	public activeTheme: string = this.prefService.get('theme') || 'dark';
+
+	public readonly themeOptions: { label: string; value: string }[] = [
+		{ label: 'Dark', value: 'dark' },
+		{ label: 'Light', value: 'light' },
+	];
 
 	ngOnInit(): void {
 		this.activeTabIdx =
@@ -31,6 +47,7 @@ export class SettingsComponent implements OnInit {
 
 	public onChangeTheme(theme: string): void {
 		this.prefService.set('theme', theme);
+		this.prefService.updateTheme(theme);
 	}
 
 	public onTabChange(event: any): void {

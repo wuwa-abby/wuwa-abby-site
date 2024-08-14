@@ -8,6 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" type="text/css" href="dark-theme.css" id="app-theme-link">
+  <script>
+    // 08/14/2024 - Zeroo28 - workaround because Angular doesn't let you access cookies on the server side (atow)
+    var prefCookie = document.cookie.split('; ').find(row => row.startsWith('userPreferences'));
+    if (prefCookie) {
+      var theme = JSON.parse(decodeURIComponent(prefCookie.split('=')[1]))['theme'];
+      document.getElementById('app-theme-link').href = `${theme}-theme.css`;
+    } else {
+      document.getElementById('app-theme-link').href = 'dark-theme.css';
+    }
+  </script>
 </head>
 
 <body>

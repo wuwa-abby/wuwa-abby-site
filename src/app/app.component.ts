@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
 
 import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 
@@ -19,21 +18,14 @@ import { PreferencesService } from '@core/services/preferences.service';
 export class AppComponent implements OnInit {
 	constructor(
 		private cookieService: CookieService,
-		private prefService: PreferencesService,
-		@Inject(PLATFORM_ID) private platformId: Object
+		private prefService: PreferencesService
 	) {}
 
-	public title = 'WuWa Abby';
-
-	ngOnInit(): void {
-		if (isPlatformBrowser(this.platformId)) {
-			const themeLinkElem = document.getElementById('app-theme-link');
-			const theme = this.prefService.get('theme');
-			if (themeLinkElem && theme) {
-				themeLinkElem.setAttribute('href', `${theme}-theme.css`);
-			}
-		}
+	public get theme(): string {
+		return this.prefService.theme;
 	}
+
+	ngOnInit(): void {}
 
 	public onToastClose(evt: ToastCloseEvent) {
 		if (evt.message.data?.cookieConsent) {

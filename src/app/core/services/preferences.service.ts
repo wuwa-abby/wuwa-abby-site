@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 import { CookieService } from './cookie.service';
 
@@ -7,13 +8,21 @@ import { CookieService } from './cookie.service';
 	providedIn: 'root',
 })
 export class PreferencesService {
-	constructor(private router: Router, private cookieService: CookieService) {
+	constructor(
+		private router: Router,
+		private cookieService: CookieService,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {
 		this.reloadPref(true);
 	}
 
 	private userPreferences: { [key: string]: any } = {};
 
 	private readonly defaultOnHomeClick: string = '/convenes';
+
+	public get theme(): string {
+		return this.get('theme');
+	}
 
 	public onHomeClick(evt?: Event): void {
 		if (evt) {
@@ -43,6 +52,15 @@ export class PreferencesService {
 		this.reloadPref();
 
 		return this.userPreferences[key];
+	}
+
+	public updateTheme(theme: string): void {
+		if (isPlatformBrowser(this.platformId)) {
+			const themeLinkElem = document.getElementById('app-theme-link');
+			if (themeLinkElem && theme) {
+				themeLinkElem.setAttribute('href', `${theme}-theme.css`);
+			}
+		}
 	}
 
 	private reloadPref(set: boolean = false): void {
