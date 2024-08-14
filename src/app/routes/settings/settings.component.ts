@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { FieldsetModule } from 'primeng/fieldset';
 
 import { PreferencesService } from '@core/services/preferences.service';
 
@@ -21,6 +22,7 @@ import { ProfileSettingsComponent } from './sub-components/profile-settings/prof
 		PanelModule,
 		TabViewModule,
 		SelectButtonModule,
+		FieldsetModule,
 	],
 	templateUrl: './settings.component.html',
 	styleUrl: './settings.component.scss',
