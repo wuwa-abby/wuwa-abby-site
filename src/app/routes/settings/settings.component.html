@@ -1,0 +1,22 @@
+<div class="page__title">
+    <h1 class="text-5xl">Settings</h1>
+</div>
+
+<div class="page__content">
+    <p-tabView styleClass="surface-ground" (onChange)="onTabChange($event)" [(activeIndex)]="activeTabIdx">
+        <p-tabPanel header="Overview" rightIcon="pi pi-wrench">
+            <div class="gap-2 mt-2">
+                <p-fieldset legend="Appearance">
+                    <p class="mt-2">Choose a theme</p>
+                    <p-selectButton [options]="themeOptions" [allowEmpty]="false" [multiple]="false" optionLabel="label"
+                        optionValue="value" [(ngModel)]="activeTheme" (onChange)="onChangeTheme($event.value)" />
+                </p-fieldset>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Profiles" rightIcon="pi pi-users">
+            <ng-template pTemplate="content">
+                <abby-profile-settings></abby-profile-settings>
+            </ng-template>
+        </p-tabPanel>
+    </p-tabView>
+</div>

@@ -29,10 +29,7 @@ export class ProfileService {
 			.get(id);
 		if (!profile) return undefined;
 
-		profile.historyUrl = Buffer.from(
-			profile.historyUrlBase64,
-			'base64'
-		).toString();
+		profile.historyUrl = this.parseHistoryUrl(profile.historyUrlBase64);
 
 		return profile;
 	}
@@ -47,12 +44,13 @@ export class ProfileService {
 
 	public async updateProfile(
 		id: number,
-		historyUrl: string,
-		profile: UserProfileTable
+		profile: UserProfileTable,
+		historyUrl?: string
 	) {
 		if (historyUrl)
 			profile.historyUrlBase64 = Buffer.from(historyUrl).toString('base64');
-		else throw new Error('Profile history URL is required');
+		else if (!profile.historyUrlBase64)
+			throw new Error('Profile history URL is required');
 
 		return await this.storageService.getUserProfileTable().update(id, profile);
 	}
@@ -65,7 +63,8 @@ export class ProfileService {
 	public async createProfile(
 		playerId: number,
 		historyUrl: string,
-		name?: string
+		name?: string,
+		setActive: boolean = false
 	) {
 		const existingProfile = await this.table
 			.where('inGameID')
@@ -83,7 +82,9 @@ export class ProfileService {
 		};
 
 		const id = await this.addProfile(historyUrl, newProfile);
-		newProfile.profileId = id;
+		newProfile.id = id;
+
+		if (setActive) await this.setActiveProfile(id);
 
 		return newProfile;
 	}
@@ -108,9 +109,15 @@ export class ProfileService {
 		const profiles = await this.getAllProfiles();
 
 		for (const profile of profiles) {
-			profile.isActive = profile.profileId === id;
+			profile.isActive = profile.id === id;
 		}
 
 		await this.storageService.getUserProfileTable().bulkPut(profiles);
+	}
+
+	public parseHistoryUrl(base64Url: string): string {
+		if (!base64Url) return '';
+
+		return Buffer.from(base64Url, 'base64').toString();
 	}
 }

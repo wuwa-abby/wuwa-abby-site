@@ -11,7 +11,7 @@ import {
 	ResourceHistoryDTO,
 } from '@app/core/types/kuro-history.type';
 import { StorageService } from '@app/core/services/storage.service';
-import { getInvalidClass } from '@app/core/helpers/primeng-func.helper';
+import { KURO_HISTORY_URL_REGEX } from '@app/core/helpers/kuro.helper';
 
 @Injectable({
 	providedIn: 'root',
@@ -30,9 +30,7 @@ export class ImportService {
 		platform: new FormControl<string>('win'),
 		historyUrl: new FormControl<string | undefined>(undefined, [
 			Validators.required,
-			Validators.pattern(
-				/https:\/\/aki-gm-resources-oversea\.aki-game\.net\/aki\/gacha\/index\.html#\/record\?.*/
-			),
+			Validators.pattern(KURO_HISTORY_URL_REGEX),
 		]),
 		adbPath: new FormControl<string | undefined>(undefined, [
 			Validators.pattern(
