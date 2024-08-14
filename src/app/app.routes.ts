@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ConveneComponent } from '@routes/convene/convene.component';
 
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
@@ -20,6 +21,11 @@ export const routes: Routes = [
 		title: 'Settings',
 		path: 'settings',
 		component: SettingsComponent,
+	},
+	{
+		title: 'Convene',
+		path: 'convenes',
+		component: ConveneComponent,
 	},
 
 	/* 404 redirect */
