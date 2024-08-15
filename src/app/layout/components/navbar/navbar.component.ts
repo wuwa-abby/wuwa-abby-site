@@ -4,10 +4,11 @@ import {
 	NgOptimizedImage,
 } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
-import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
+import { RippleModule } from 'primeng/ripple';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 import { filter } from 'rxjs';
 
 import { NavbarService } from '@app/core/services/navbar.service';
@@ -17,7 +18,15 @@ import { CookieService } from '@app/core/services/cookie.service';
 @Component({
 	selector: 'abby-navbar',
 	standalone: true,
-	imports: [CommonModule, MenubarModule, BadgeModule, NgOptimizedImage],
+	imports: [
+		CommonModule,
+		RouterModule,
+		NgOptimizedImage,
+
+		BadgeModule,
+		RippleModule,
+		TieredMenuModule,
+	],
 	templateUrl: './navbar.component.html',
 	styleUrl: './navbar.component.scss',
 })
@@ -52,5 +61,9 @@ export class NavbarComponent implements OnInit {
 					this.cookieService.getCookieConsent();
 				}
 			});
+	}
+
+	public test(item: any) {
+		console.debug('test', item);
 	}
 }

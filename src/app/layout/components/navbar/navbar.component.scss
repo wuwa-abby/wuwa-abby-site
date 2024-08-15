@@ -1,22 +1,60 @@
 :host ::ng-deep {
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-
-	* {
-		user-select: none;
-		-moz-user-select: none;
-		-webkit-user-select: none;
-	}
-}
-
-#nav-logo {
 	user-select: none !important;
 	-moz-user-select: none !important;
 	-webkit-user-select: none !important;
 	-webkit-user-drag: none !important;
+
+	* {
+		user-select: none !important;
+		-moz-user-select: none !important;
+		-webkit-user-select: none !important;
+		-webkit-user-drag: none !important;
+	}
 }
 
-p-divider {
-	margin-right: 0rem !important;
+nav {
+	display: flex;
+	align-items: center;
+	padding: 0.5rem;
+}
+
+.nav-logo {
+	display: flex;
+	align-items: center;
+}
+
+.nav-menu {
+	display: flex;
+}
+
+.nav-item {
+	display: flex;
+	align-items: center;
+
+	padding: 0.5rem 1rem;
+	margin: 0rem 0.1rem;
+	border-radius: 0.5rem;
+
+	text-decoration: none;
+
+	color: var(--text-color) !important;
+	transition: background-color 0.2s;
+
+	.item-icon {
+		opacity: 0.7;
+	}
+
+	&:hover {
+		background-color: var(--surface-50);
+
+		.item-icon {
+			opacity: 1;
+		}
+	}
+}
+
+.nav-settings {
+	display: flex;
+	align-items: center;
+	color: inherit;
 }

@@ -1,37 +1,31 @@
-<p-menubar [model]="items">
-    <ng-template pTemplate="start">
-        <a pRipple class="flex align-items-center p-menuitem-link">
-            <img id="nav-logo" ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
-            <span class="ms-2" [class.fw-semibold]="isHomeRoute" (click)="prefService.onHomeClick($event)">
-                Wubby
-            </span>
-        </a>
-    </ng-template>
-    <ng-template pTemplate="item" let-item let-root="root">
-        <ng-container *ngIf="item.routerLink; else urlRef">
-            <a [routerLink]="item.routerLink" class="p-menuitem-link" [attr.abby-route]="item.route">
-                <span [class]="item.icon"></span>
-                <span class="ms-2">{{ item.label }}</span>
-            </a>
+<nav role="navigation" class="navbar">
+    <div class="nav-logo">
+        <img src="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48">
+        <span class="ms-2 fw-semibold" (click)="prefService.onHomeClick($event)">
+            Wubby
+        </span>
+    </div>
+    <div class="nav-menu ms-2">
+        <ng-container *ngFor="let item of items">
+            <ng-container *ngIf="item.items; then dropdownItem; else normalItem"></ng-container>
+            <ng-template #normalItem>
+                <a [routerLink]="item.routerLink" class="nav-item">
+                    <span class="item-icon" [class]="item.icon" [class.opacity-100]="item.styleClass"></span>
+                    <span class="ms-2" [class]="item.styleClass">{{ item.label }}</span>
+                </a>
+            </ng-template>
+            <ng-template #dropdownItem>
+                <a class="nav-item">
+                    <span class="item-icon" [class]="item.icon" [class.opacity-100]="item.styleClass"></span>
+                    <span class="ms-2" [class]="item.styleClass">{{ item.label }} - TODO</span>
+                    <i class="pi pi-angle-down ms-3"></i>
+                </a>
+            </ng-template>
         </ng-container>
-        <ng-template #urlRef>
-            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menuitem-link">
-                <span [class]="item.icon"></span>
-                <span class="ms-2">{{ item.label }}</span>
-            </a>
-        </ng-template>
-        <ng-template #noLink>
-            <div class="p-menuitem-link">
-                <span [class]="item.icon"></span>
-                <span class="ms-2">{{ item.label }}</span>
-                <span class="pi pi-fw pi-angle-down ms-2"></span>
-            </div>
-        </ng-template>
-    </ng-template>
-    <ng-template pTemplate="end">
-        <a pRipple class="flex align-items-center p-menuitem-link me-4 text-reset" [class.fw-semibold]="isHomeRoute"
-            routerLink="/settings">
+    </div>
+    <div class="nav-settings ms-auto">
+        <a routerLink="/settings" class="nav-item">
             <i class="bi bi-gear"></i>
         </a>
-    </ng-template>
-</p-menubar>
+    </div>
+</nav>
