@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" type="text/css" href="dark-theme.css" id="app-theme-link">
-  <script>
+  <script fetchpriority="high">
     // 08/14/2024 - Zeroo28 - workaround because Angular doesn't let you access cookies on the server side (atow)
     var prefCookie = document.cookie.split('; ').find(row => row.startsWith('userPreferences'));
     if (prefCookie) {
