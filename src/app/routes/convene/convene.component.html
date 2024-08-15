@@ -1,1 +1,39 @@
-<p>convene works!</p>
+<!-- desktop view -->
+<div class="row gap-2 mt-2 d-none d-lg-flex">
+    <div class="col">
+        <div class="h-100">
+            <div class="row gap-2">
+                <div class="col">
+                    <div class="card">
+                        <div class="text-xl">Pity</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="text-xl">Luck</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="text-xl">Recent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-5 xxl:col-3">
+        <div class="card h-100">
+            <div class="text-2xl">Banners</div>
+            <div class="col gap-2 banner-list max-h-30rem overflow-y-auto">
+                <div class="banner-card border rounded" *ngFor="let i of [1,2,3,4,5]"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 xxl:col-3">
+        <div class="card h-100">
+            <div class="text-2xl">Summary</div>
+        </div>
+    </div>
+</div>

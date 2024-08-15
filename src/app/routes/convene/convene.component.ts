@@ -1,12 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-@Component({
-  selector: 'abby-convene',
-  standalone: true,
-  imports: [],
-  templateUrl: './convene.component.html',
-  styleUrl: './convene.component.scss'
-})
-export class ConveneComponent {
+import { ButtonModule } from 'primeng/button';
+import { FieldsetModule } from 'primeng/fieldset';
 
-}
+@Component({
+	selector: 'abby-convene',
+	standalone: true,
+	imports: [CommonModule, ButtonModule, FieldsetModule],
+	templateUrl: './convene.component.html',
+	styleUrl: './convene.component.scss',
+})
+export class ConveneComponent {}
