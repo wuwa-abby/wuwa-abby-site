@@ -1,0 +1,18 @@
+{
+    "key": "weapon-event-blazing_brilliance-20240722-20240814",
+    "kuroBannerId": "Resonators Accurate Modulation - 2",
+    "name": "Absolute Pulsation",
+    "featuredResources": {
+        "fiveStar": [
+            "Blazing Brilliance"
+        ],
+        "fourStar": [
+            "Comet Flare",
+            "Overture",
+            "Undying Flame"
+        ]
+    },
+    "startDate": "2024-07-22T10:00:00",
+    "endDate": "2024-08-14T11:59:59",
+    "type": "Event"
+}
