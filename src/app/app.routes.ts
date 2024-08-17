@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ConveneComponent } from '@routes/convene/convene.component';
+import { conveneResolver } from '@routes/convene/convene.resolver';
 
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
@@ -26,6 +27,7 @@ export const routes: Routes = [
 		title: 'Convene',
 		path: 'convenes',
 		component: ConveneComponent,
+		resolve: { banners: conveneResolver },
 	},
 
 	/* 404 redirect */
