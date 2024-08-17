@@ -1,12 +1,12 @@
 {
     "key": "resonator-standard-fifty-20240521-99990913",
     "kuroBannerId": "7",
-    "name": "Beginner's Choice (50 pity)",
+    "name": "Beginner's Choice",
     "featuredResources": {
         "fiveStar": [],
         "fourStar": []
     },
-    "startDate": "2024-06-13T10:00:00",
-    "endDate": "2024-06-26T23:59:59",
+    "startDate": "0001-01-01T00:00:01",
+    "endDate": "9999-09-13T23:59:59",
     "type": "Standard"
 }

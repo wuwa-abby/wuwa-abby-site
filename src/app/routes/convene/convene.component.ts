@@ -90,7 +90,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			);
 			const banner = this.banners.find(
 				(b) =>
-					b.kuroBannerId === item.cardPoolType &&
+					b.kuroBannerId == item.cardPoolType &&
 					b.startDate <= new Date(item.time) &&
 					b.endDate >= new Date(item.time)
 			);
@@ -100,6 +100,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 					calculateResourceDetails(item, poolItems, banner) ?? {};
 				item.pity = pity;
 				console.debug(item, wonFiftyFifty);
+			} else {
+				console.debug('Banner not found for', item);
 			}
 		});
 	}
