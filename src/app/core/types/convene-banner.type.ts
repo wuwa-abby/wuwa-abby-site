@@ -15,8 +15,8 @@ export interface ConveneBanner {
 	 * List of featured resources in the banner.
 	 */
 	featuredResources: {
-		fiveStar: number[];
-		fourStar: number[];
+		fiveStar: string[];
+		fourStar: string[];
 	};
 	/**
 	 * Start date of the banner.
@@ -34,6 +34,10 @@ export interface ConveneBanner {
 
 export interface ConveneBannerSimple {
 	/**
+	 * Unique identifier for the banner. (internal)
+	 */
+	key: string;
+	/**
 	 * Unique identifier for the banner. (kuro games API)
 	 */
 	kuroBannerId: string;
@@ -45,4 +49,9 @@ export interface ConveneBannerSimple {
 	 * End date of the banner.
 	 */
 	end: Date;
+	/**
+	 * Show the banner in the UI.
+	 * @default true
+	 */
+	showUI: boolean;
 }

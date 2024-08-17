@@ -3,7 +3,8 @@
         "key": "resonator-event-zhezhi-20240815-20240907",
         "kuroBannerId": "Resonators Accurate Modulation",
         "from": "2024-08-15T00:00:00",
-        "to": "2024-09-07T09:59:00"
+        "to": "2024-09-07T09:59:00",
+        "showUI": true
     },
     {
         "key": "resonator-event-changli-20240722-20240814",
@@ -28,21 +29,25 @@
     {
         "key": "resonator-standard-permanent-20240521-99990913",
         "from": "2024-06-13T10:00:00",
-        "to": "2024-06-26T23:59:59"
+        "to": "2024-06-26T23:59:59",
+        "showUI": true
     },
     {
         "key": "weapon-standard-permanent-20240521-99990913",
         "from": "2024-06-13T10:00:00",
-        "to": "2024-06-26T23:59:59"
+        "to": "2024-06-26T23:59:59",
+        "showUI": true
     },
     {
         "key": "resonator-standard-select-20240521-99990913",
         "from": "2024-06-13T10:00:00",
-        "to": "2024-06-26T23:59:59"
+        "to": "2024-06-26T23:59:59",
+        "showUI": true
     },
     {
         "key": "resonator-standard-fifty-20240521-99990913",
         "from": "2024-06-13T10:00:00",
-        "to": "2024-06-26T23:59:59"
+        "to": "2024-06-26T23:59:59",
+        "showUI": true
     }
 ]
