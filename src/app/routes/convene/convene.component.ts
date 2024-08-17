@@ -1,4 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import {
 	AfterViewInit,
 	Component,
@@ -16,15 +17,11 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 import { StorageService } from '@core/services/storage.service';
 import { calculateResourceDetails } from '@core/helpers/kuro.helper';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import {
-	ConveneBanner,
-	ConveneBannerSimple,
-} from '@core/types/convene-banner.type';
+import { ConveneBanner } from '@core/types/convene-banner.type';
 
 @Component({
 	selector: 'abby-convene',
@@ -60,18 +57,25 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				'With the release of version 1.2, Kuro games has removed the support for permanent convene URLs. This means Wubby will no longer be able to remember your convene URL.',
 		},
 	];
-	private rawBanners: ConveneBannerSimple[] = [];
+	private banners: ConveneBanner[] = [];
 
 	public ngOnInit(): void {
 		this.activatedRoute.data.subscribe((data) => {
-			this.rawBanners = data['banners'];
-			console.debug('Convene banners', this.rawBanners);
+			const bannersApi = data['banners'] as Observable<ConveneBanner>[];
+			bannersApi.forEach((banner) => {
+				banner.subscribe((bannerData) => {
+					bannerData.startDate = new Date(bannerData.startDate);
+					bannerData.endDate = new Date(bannerData.endDate);
+					this.banners.push(bannerData);
+				});
+			});
 		});
 	}
 
 	public ngAfterViewInit(): void {
 		if (!isPlatformBrowser(this.platformId)) return;
 
+		console.debug('ConveneComponent: ngAfterViewInit', this.banners);
 		this.loadHistory();
 	}
 
@@ -84,9 +88,19 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			const poolItems = history.filter(
 				(poolItem) => poolItem.cardPoolType === item.cardPoolType
 			);
-			const { pity } = calculateResourceDetails(item, poolItems) ?? {};
-			item.pity = pity;
-			console.debug(item);
+			const banner = this.banners.find(
+				(b) =>
+					b.kuroBannerId === item.cardPoolType &&
+					b.startDate <= new Date(item.time) &&
+					b.endDate >= new Date(item.time)
+			);
+
+			if (banner) {
+				const { pity, wonFiftyFifty } =
+					calculateResourceDetails(item, poolItems, banner) ?? {};
+				item.pity = pity;
+				console.debug(item, wonFiftyFifty);
+			}
 		});
 	}
 }
