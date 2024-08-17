@@ -4,5 +4,45 @@
         "kuroBannerId": "Resonators Accurate Modulation",
         "from": "2024-08-15T00:00:00",
         "to": "2024-09-07T09:59:00"
+    },
+    {
+        "key": "resonator-event-changli-20240722-20240814",
+        "from": "2024-07-22T10:00:00",
+        "to": "2024-08-14T11:59:59"
+    },
+    {
+        "key": "resonator-event-jinhsi-20240628-20240722",
+        "from": "2024-06-28T12:00:00",
+        "to": "2024-07-22T09:59:59"
+    },
+    {
+        "key": "resonator-event-yinlin-20240613-20240626",
+        "from": "2024-06-13T10:00:00",
+        "to": "2024-06-26T23:59:59"
+    },
+    {
+        "key": "resonator-event-jiyan-20240513-20240606",
+        "from": "2024-05-23T00:00:00",
+        "to": "2024-06-06T09:59:59"
+    },
+    {
+        "key": "resonator-standard-permanent-20240521-99990913",
+        "from": "2024-06-13T10:00:00",
+        "to": "2024-06-26T23:59:59"
+    },
+    {
+        "key": "weapon-standard-permanent-20240521-99990913",
+        "from": "2024-06-13T10:00:00",
+        "to": "2024-06-26T23:59:59"
+    },
+    {
+        "key": "resonator-standard-select-20240521-99990913",
+        "from": "2024-06-13T10:00:00",
+        "to": "2024-06-26T23:59:59"
+    },
+    {
+        "key": "resonator-standard-fifty-20240521-99990913",
+        "from": "2024-06-13T10:00:00",
+        "to": "2024-06-26T23:59:59"
     }
 ]
