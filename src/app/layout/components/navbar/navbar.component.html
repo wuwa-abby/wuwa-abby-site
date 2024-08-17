@@ -1,11 +1,14 @@
 <nav role="navigation" class="navbar">
     <div class="nav-logo">
         <img ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
-        <span class="ms-2 fw-semibold" (click)="prefService.onHomeClick($event)">
+        <span class="ms-2 fw-semibold d-none d-md-block" (click)="prefService.onHomeClick($event)">
             Wubby
         </span>
+        <span class="ms-2 fw-semibold d-md-none" (click)="prefService.onHomeClick($event)">
+            {{activeItem?.label || 'Wubby'}}
+        </span>
     </div>
-    <div class="nav-menu ms-2">
+    <div class="nav-menu ms-2 d-none d-md-flex overflow-y-auto">
         <ng-container *ngFor="let item of items">
             <ng-container *ngIf="item.items; then dropdownItem; else normalItem"></ng-container>
             <ng-template #normalItem>
@@ -23,9 +26,39 @@
             </ng-template>
         </ng-container>
     </div>
-    <div class="nav-settings ms-auto">
-        <a routerLink="/settings" class="nav-item">
+    <div class="nav-end ms-auto">
+        <a routerLink="/settings" class="nav-item d-none d-md-flex">
             <i class="bi bi-gear"></i>
         </a>
+        <a class="nav-item d-md-none" (click)="toggleSidebar()">
+            <i class="pi pi-bars"></i>
+        </a>
     </div>
+    <p-sidebar [(visible)]="showSidebar">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2" routerLink="/" (click)="toggleSidebar()">
+                <img ngSrc="meta/meta-icon.png" alt="Wubby Logo" width="48" height="48" priority>
+                <span class="fw-semibold">Wubby</span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <ng-container *ngFor="let item of items">
+                <ng-container *ngIf="item.items; then dropdownItem; else normalItem"></ng-container>
+                <ng-template #normalItem>
+                    <a [routerLink]="item.routerLink" class="nav-menu-item" (click)="toggleSidebar()">
+                        <span class="item-icon" [class]="item.icon" [class.opacity-100]="item.styleClass"></span>
+                        <span class="ms-2" [class]="item.styleClass">{{ item.label }}</span>
+                    </a>
+                </ng-template>
+                <ng-template #dropdownItem>
+                    <a class="nav-item">
+                        <span class="item-icon" [class]="item.icon" [class.opacity-100]="item.styleClass"></span>
+                        <span class="ms-2" [class]="item.styleClass">{{ item.label }} - TODO</span>
+                        <i class="pi pi-angle-down ms-3"></i>
+                    </a>
+                </ng-template>
+            </ng-container>
+        </ng-template>
+    </p-sidebar>
 </nav>
