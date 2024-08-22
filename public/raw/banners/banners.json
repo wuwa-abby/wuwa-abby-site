@@ -41,20 +41,17 @@
     {
         "key": "resonator-standard-select-20240521-99990913",
         "from": "0001-01-01T00:00:01",
-        "to": "9999-09-13T23:59:59",
-        "showUI": true
+        "to": "9999-09-13T23:59:59"
     },
     {
         "key": "resonator-standard-all-20240521-99990913",
         "from": "0001-01-01T00:00:01",
-        "to": "9999-09-13T23:59:59",
-        "showUI": true
+        "to": "9999-09-13T23:59:59"
     },
     {
         "key": "resonator-standard-fifty-20240521-99990913",
         "from": "0001-01-01T00:00:01",
-        "to": "9999-09-13T23:59:59",
-        "showUI": true
+        "to": "9999-09-13T23:59:59"
     },
     {
         "key": "weapon-event-verdant_summit-20240523-20240606",
@@ -79,6 +76,7 @@
     {
         "key": "weapon-event-rime_draped_sprouts-20240815-20240907",
         "from": "2024-08-15T00:00:00",
-        "to": "2024-09-07T09:59:00"
+        "to": "2024-09-07T09:59:00",
+        "showUI": true
     }
 ]

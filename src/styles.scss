@@ -36,3 +36,19 @@ code:not(.nostyle) {
 	word-break: break-word;
 	hyphens: auto;
 }
+
+.text-five-star {
+	color: darken(#fbd856, 20%) !important;
+
+	[data-bs-theme='dark'] & {
+		color: #fbd856 !important;
+	}
+}
+
+.text-four-star {
+	color: darken(#8c6eb2, 10%) !important;
+
+	[data-bs-theme='dark'] & {
+		color: #8c6eb2 !important;
+	}
+}

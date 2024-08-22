@@ -39,8 +39,22 @@
     <div class="col-5 xxl:col-3">
         <div class="card border border-100 h-100">
             <div class="text-2xl">Banners</div>
-            <div class="col gap-2 banner-list max-h-30rem overflow-y-auto">
-                <div class="banner-card border border-100 border rounded" *ngFor="let i of [1,2,3,4,5]"></div>
+            <div class="col gap-2 banner-list max-h-30rem">
+                <div class="banner-card border border-100 border rounded" *ngFor="let banner of displayBanners">
+                    <div class="banner-card__title text-lg" (click)="selectBanner(banner)">{{banner.name}}</div>
+                    <p [ngClass]="{'text-five-star': (banner.pity?.fiveStar || 0) > 1}">
+                        <span class="text-2xl">
+                            {{banner.pity?.fiveStar || 0}}
+                        </span>
+                        <span class="opacity-75">/ 80</span>
+                    </p>
+                    <p [ngClass]="{'text-four-star': (banner.pity?.fourStar || 0) > 1}">
+                        <span class="text-2xl">
+                            {{banner.pity?.fourStar || 0}}
+                        </span>
+                        <span class="opacity-75">/ 10</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

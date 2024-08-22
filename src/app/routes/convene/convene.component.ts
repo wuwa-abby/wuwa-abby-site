@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { StorageService } from '@core/services/storage.service';
 import { calculateResourceDetails } from '@core/helpers/kuro.helper';
 import { ConveneBanner } from '@core/types/convene-banner.type';
+import { GachaMemoryTable } from '@core/model/gacha-history.table';
 
 @Component({
 	selector: 'abby-convene',
@@ -57,7 +58,13 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				'With the release of version 1.2, Kuro games has removed the support for permanent convene URLs. This means Wubby will no longer be able to remember your convene URL.',
 		},
 	];
-	private banners: ConveneBanner[] = [];
+
+	public banners: DisplayBanner[] = [];
+	public selectedBanner?: DisplayBanner;
+
+	public get displayBanners(): DisplayBanner[] {
+		return this.banners.filter((banner) => banner.endDate > new Date());
+	}
 
 	public ngOnInit(): void {
 		this.activatedRoute.data.subscribe((data) => {
@@ -67,6 +74,9 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 					bannerData.startDate = new Date(bannerData.startDate);
 					bannerData.endDate = new Date(bannerData.endDate);
 					this.banners.push(bannerData);
+					if (!this.selectedBanner) {
+						this.selectedBanner = bannerData;
+					}
 				});
 			});
 		});
@@ -75,34 +85,53 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public ngAfterViewInit(): void {
 		if (!isPlatformBrowser(this.platformId)) return;
 
-		console.debug('ConveneComponent: ngAfterViewInit', this.banners);
 		this.loadHistory();
+	}
+
+	public selectBanner(banner: DisplayBanner): void {
+		this.selectedBanner = banner;
 	}
 
 	private async loadHistory(): Promise<void> {
 		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
 		const history = await gachaMemoryStore.toArray();
 
-		const quality4AndAbove = history.filter((item) => item.qualityLevel >= 5);
-		quality4AndAbove.forEach((item) => {
-			const poolItems = history.filter(
-				(poolItem) => poolItem.cardPoolType === item.cardPoolType
-			);
-			const banner = this.banners.find(
-				(b) =>
-					b.kuroBannerId == item.cardPoolType &&
-					b.startDate <= new Date(item.time) &&
-					b.endDate >= new Date(item.time)
+		this.banners.forEach((banner) => {
+			const bannerHistory = history.filter(
+				(item) => item.cardPoolType === banner.kuroBannerId
 			);
 
-			if (banner) {
-				const { pity, wonFiftyFifty } =
-					calculateResourceDetails(item, poolItems, banner) ?? {};
-				item.pity = pity;
-				console.debug(item, wonFiftyFifty);
-			} else {
-				console.debug('Banner not found for', item);
+			const quality4AndAbove = bannerHistory.filter(
+				(item) => item.qualityLevel >= 4
+			);
+			for (let item of quality4AndAbove) {
+				const a = calculateResourceDetails(item, bannerHistory, banner);
+				if (!a) continue;
+
+				const { wonFiftyFifty, pity } = a;
+				const displayItem: DisplayItem = {
+					...item,
+					wonFiftyFifty,
+					pity: pity,
+				};
+				banner.history = banner.history || [];
+				banner.history.push(displayItem);
+				banner.pity = banner.pity || { fiveStar: 1, fourStar: 1 };
+				if (item.qualityLevel === 5) {
+					banner.pity.fiveStar = pity;
+				} else {
+					banner.pity.fourStar = pity;
+				}
 			}
 		});
 	}
+}
+
+interface DisplayBanner extends ConveneBanner {
+	pity?: { fiveStar: number; fourStar: number };
+	history?: DisplayItem[];
+}
+
+interface DisplayItem extends GachaMemoryTable {
+	wonFiftyFifty: boolean;
 }

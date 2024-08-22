@@ -17,9 +17,11 @@ export class ConveneService {
 	public async getBannersAuto() {
 		const history = await firstValueFrom(this.getBannerHistory());
 
-		const apiCalls = history.map((banner) => {
-			return this.http.get<ConveneBanner>(`raw/banners/${banner.key}.json`);
-		});
+		const apiCalls = history
+			.filter((x) => x.showUI) // do not auto-fetch banners that are not supposed to be shown
+			.map((banner) => {
+				return this.http.get<ConveneBanner>(`raw/banners/${banner.key}.json`);
+			});
 
 		return apiCalls;
 	}
