@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
-import { FieldsetModule } from 'primeng/fieldset';
 import { PanelModule } from 'primeng/panel';
 import { MessagesModule } from 'primeng/messages';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -17,26 +16,30 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/api';
+import { ChartModule } from 'primeng/chart';
 import { Observable } from 'rxjs';
+import * as Chart from 'chart.js';
 
 import { StorageService } from '@core/services/storage.service';
 import { calculateResourceDetails } from '@core/helpers/kuro.helper';
 import { ConveneBanner } from '@core/types/convene-banner.type';
 import { GachaMemoryTable } from '@core/model/gacha-history.table';
+import moment from 'moment';
 
 @Component({
 	selector: 'abby-convene',
 	standalone: true,
 	imports: [
 		CommonModule,
+
 		ButtonModule,
-		FieldsetModule,
 		PanelModule,
 		MessagesModule,
 		IconFieldModule,
 		InputIconModule,
 		InputTextModule,
 		ToastModule,
+		ChartModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
@@ -61,6 +64,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 
 	public banners: DisplayBanner[] = [];
 	public selectedBanner?: DisplayBanner;
+	public pityChartData?: Chart.ChartData;
+	public pityChartOptions?: Chart.ChartOptions;
 
 	public get displayBanners(): DisplayBanner[] {
 		return this.banners
@@ -77,7 +82,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 					bannerData.endDate = new Date(bannerData.endDate);
 					this.banners.push(bannerData);
 					if (!this.selectedBanner) {
-						this.selectedBanner = bannerData;
+						this.selectBanner(bannerData);
 					}
 				});
 			});
@@ -87,11 +92,22 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public ngAfterViewInit(): void {
 		if (!isPlatformBrowser(this.platformId)) return;
 
-		this.loadHistory();
+		// this.loadHistory()
+		(async () => {
+			await this.loadHistory();
+
+			if (this.selectedBanner) {
+				this.updateChart(this.selectedBanner);
+			}
+		})();
 	}
 
 	public selectBanner(banner: DisplayBanner): void {
 		this.selectedBanner = banner;
+
+		if (!banner.history) return;
+
+		this.updateChart(banner);
 	}
 
 	private async loadHistory(): Promise<void> {
@@ -102,21 +118,25 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			const bannerHistory = history.filter(
 				(item) => item.cardPoolType === banner.kuroBannerId
 			);
+			for (let item of bannerHistory) {
+				banner.history = banner.history || [];
 
-			const quality4AndAbove = bannerHistory.filter(
-				(item) => item.qualityLevel >= 4
-			);
-			for (let item of quality4AndAbove) {
-				const a = calculateResourceDetails(item, bannerHistory, banner);
-				if (!a) continue;
-
-				const { wonFiftyFifty, pity } = a;
 				const displayItem: DisplayItem = {
 					...item,
-					wonFiftyFifty,
-					pity: pity,
+					wonFiftyFifty: false,
+					pity: 1,
 				};
-				banner.history = banner.history || [];
+
+				const a = calculateResourceDetails(item, bannerHistory, banner);
+				if (!a) {
+					banner.history.push(displayItem);
+					continue;
+				}
+
+				const { wonFiftyFifty, pity } = a;
+				displayItem.wonFiftyFifty = wonFiftyFifty;
+				displayItem.pity = pity;
+
 				banner.history.push(displayItem);
 				banner.pity = banner.pity || { fiveStar: 1, fourStar: 1 };
 				if (item.qualityLevel === 5) {
@@ -126,6 +146,106 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				}
 			}
 		});
+	}
+
+	private updateChart(banner: DisplayBanner): void {
+		const documentStyle = getComputedStyle(document.documentElement);
+		const textColor = documentStyle.getPropertyValue('--text-color');
+		const textColorSecondary = documentStyle.getPropertyValue(
+			'--text-color-secondary'
+		);
+		const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+		let dateGroup = banner.history!.reduce((acc, item) => {
+			const date = moment(item.time).format('MMM D');
+			const lastGroup = acc[acc.length - 1];
+			if (lastGroup && moment(lastGroup[0].time).format('MMM D') === date) {
+				lastGroup.push(item);
+			} else {
+				acc.push([item]);
+			}
+			return acc;
+		}, [] as DisplayItem[][]);
+
+		dateGroup = dateGroup.sort((a, b) => b.length - a.length).slice(0, 7);
+
+		this.pityChartData = {
+			labels: dateGroup.map((x) => moment(x[0].time).format('MMM D')),
+			datasets: [
+				{
+					label: 'Total Pulls',
+					data: dateGroup.flatMap((x) => x.length),
+					tension: 0.4,
+					borderColor: documentStyle.getPropertyValue('--blue-200'),
+					borderDash: [5, 5],
+					borderWidth: 1,
+				},
+				{
+					label: '50/50 Wins',
+					data: dateGroup.map((x) => x.filter((y) => y.wonFiftyFifty).length),
+					tension: 0.4,
+					borderColor: `${documentStyle.getPropertyValue('--green-300')}`,
+					borderWidth: 2,
+				},
+				{
+					label: '4★ Pulls',
+					data: dateGroup.map(
+						(x) => x.filter((y) => y.qualityLevel === 4).length
+					),
+					tension: 0.4,
+					borderColor: `${documentStyle.getPropertyValue('--indigo-300')}`,
+					borderWidth: 2,
+				},
+				{
+					label: '5★ Pulls',
+					data: dateGroup.map(
+						(x) => x.filter((y) => y.qualityLevel === 5).length
+					),
+					tension: 0.4,
+					borderColor: `${documentStyle.getPropertyValue('--yellow-500')}`,
+					borderWidth: 2,
+				},
+			],
+		};
+
+		this.pityChartOptions = {
+			interaction: {
+				intersect: false,
+			},
+			maintainAspectRatio: false,
+			aspectRatio: 1.5,
+			plugins: {
+				legend: {
+					labels: {
+						color: textColor,
+					},
+					fullSize: true,
+				},
+			},
+			scales: {
+				x: {
+					ticks: {
+						color: textColorSecondary,
+					},
+					grid: {
+						color: surfaceBorder,
+					},
+					title: {
+						display: true,
+						text: 'Date',
+						color: textColorSecondary,
+					},
+				},
+				y: {
+					ticks: {
+						color: textColorSecondary,
+					},
+					grid: {
+						color: surfaceBorder,
+					},
+				},
+			},
+		};
 	}
 }
 

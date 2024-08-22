@@ -24,6 +24,7 @@
                 <div class="col">
                     <div class="card border border-100">
                         <div class="text-xl">Luck</div>
+
                     </div>
                 </div>
             </div>
@@ -31,6 +32,9 @@
                 <div class="col-12">
                     <div class="card border border-100">
                         <div class="text-xl">Recent</div>
+
+                        <p-chart type="line" [data]="pityChartData" [options]="pityChartOptions" />
+
                     </div>
                 </div>
             </div>
