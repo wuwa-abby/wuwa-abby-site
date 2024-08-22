@@ -87,6 +87,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				});
 			});
 		});
+
+		this.configureChart();
 	}
 
 	public ngAfterViewInit(): void {
@@ -153,25 +155,32 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	private updateChart(banner: DisplayBanner): void {
+		if (banner.chartData) {
+			this.pityChartData = banner.chartData;
+			const maxPulls = Math.max(
+				...this.pityChartData.datasets.map((x) =>
+					Math.max(...(x.data as number[]))
+				)
+			);
+			this.pityChartOptions!.scales!['y']!.suggestedMax = maxPulls * 1.25;
+			return;
+		}
+
 		const documentStyle = getComputedStyle(document.documentElement);
-		const textColor = documentStyle.getPropertyValue('--text-color');
-		const textColorSecondary = documentStyle.getPropertyValue(
-			'--text-color-secondary'
-		);
-		const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-		let dateGroup = banner.history!.reduce((acc, item) => {
-			const date = moment(item.time).format('MMM D');
-			const lastGroup = acc[acc.length - 1];
-			if (lastGroup && moment(lastGroup[0].time).format('MMM D') === date) {
-				lastGroup.push(item);
-			} else {
-				acc.push([item]);
-			}
-			return acc;
-		}, [] as DisplayItem[][]);
-
-		dateGroup = dateGroup.sort((a, b) => b.length - a.length).slice(0, 7);
+		const dateGroup = banner
+			.history!.reduce((acc, item) => {
+				const date = moment(item.time).format('MMM D');
+				const lastGroup = acc[acc.length - 1];
+				if (lastGroup && moment(lastGroup[0].time).format('MMM D') === date) {
+					lastGroup.push(item);
+				} else {
+					acc.push([item]);
+				}
+				return acc;
+			}, [] as DisplayItem[][])
+			.sort((a, b) => b.length - a.length)
+			.slice(0, 7);
 
 		this.pityChartData = {
 			labels: dateGroup.map((x) => moment(x[0].time).format('MMM D')),
@@ -211,6 +220,17 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				},
 			],
 		};
+
+		banner.chartData = this.pityChartData;
+	}
+
+	private configureChart(): void {
+		const documentStyle = getComputedStyle(document.documentElement);
+		const textColor = documentStyle.getPropertyValue('--text-color');
+		const textColorSecondary = documentStyle.getPropertyValue(
+			'--text-color-secondary'
+		);
+		const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
 		this.pityChartOptions = {
 			interaction: {
@@ -256,6 +276,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 interface DisplayBanner extends ConveneBanner {
 	pity?: { fiveStar: number; fourStar: number };
 	history?: DisplayItem[];
+	chartData?: Chart.ChartData;
 }
 
 interface DisplayItem extends GachaMemoryTable {
