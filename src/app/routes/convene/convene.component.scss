@@ -4,7 +4,7 @@
 
 .banner-list {
 	padding-top: 1.25rem;
-	overflow-y: hidden;
+	overflow-y: auto;
 
 	.banner-card {
 		background: var(--surface-card);
@@ -39,19 +39,13 @@
 				background: linear-gradient(
 					to bottom,
 					transparent,
-					color-mix(in srgb, var(--surface-200), #00000000 25%),
-					transparent
+					color-mix(in srgb, var(--surface-200), #00000000 50%)
 				);
-				transition: background 0.25s;
+				transition: background 0.3s ease-in;
 			}
 
 			&:not(.selected) {
 				overflow: visible;
-
-				.banner-card__image {
-					height: 11rem;
-					transition: height 0.2s ease-in-out;
-				}
 			}
 		}
 
@@ -59,15 +53,14 @@
 			position: absolute;
 			bottom: 0;
 			right: 0;
-			padding: 0.25rem 1rem 1rem 1rem;
+			padding: 0.5rem 1rem;
 
 			background: linear-gradient(
 				to bottom,
 				transparent,
-				color-mix(in srgb, var(--surface-card), #00000000 25%),
-				transparent
+				color-mix(in srgb, var(--surface-card), #00000000 50%)
 			);
-			transition: background 0.25s;
+			transition: background 0.3s ease-in;
 		}
 
 		.banner-card__image {
@@ -75,6 +68,7 @@
 			bottom: 0.5rem;
 			right: 0;
 			height: 10rem;
+			object-fit: contain;
 			transition: height 0.2s ease-in-out;
 		}
 
@@ -84,14 +78,10 @@
 			overflow: visible;
 
 			.banner-card__image {
-				height: 12rem;
+				height: 11rem;
 				transition: height 0.2s ease-in-out;
 			}
 		}
-	}
-
-	&:hover {
-		overflow-y: auto;
 	}
 }
 
