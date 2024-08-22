@@ -127,13 +127,17 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 					pity: 1,
 				};
 
-				const a = calculateResourceDetails(item, bannerHistory, banner);
-				if (!a) {
+				const itemGachaDetail = calculateResourceDetails(
+					item,
+					bannerHistory,
+					banner
+				);
+				if (!itemGachaDetail) {
 					banner.history.push(displayItem);
 					continue;
 				}
 
-				const { wonFiftyFifty, pity } = a;
+				const { wonFiftyFifty, pity } = itemGachaDetail;
 				displayItem.wonFiftyFifty = wonFiftyFifty;
 				displayItem.pity = pity;
 

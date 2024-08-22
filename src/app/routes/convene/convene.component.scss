@@ -5,6 +5,7 @@
 .banner-list {
 	padding-top: 1.25rem;
 	overflow-y: auto;
+	position: relative;
 
 	.banner-card {
 		background: var(--surface-card);
@@ -39,7 +40,7 @@
 				background: linear-gradient(
 					to bottom,
 					transparent,
-					color-mix(in srgb, var(--surface-200), #00000000 50%)
+					color-mix(in srgb, var(--surface-200), #00000000)
 				);
 				transition: background 0.3s ease-in;
 			}
@@ -58,7 +59,7 @@
 			background: linear-gradient(
 				to bottom,
 				transparent,
-				color-mix(in srgb, var(--surface-card), #00000000 50%)
+				color-mix(in srgb, var(--surface-card), #00000000)
 			);
 			transition: background 0.3s ease-in;
 		}
@@ -83,6 +84,27 @@
 			}
 		}
 	}
+}
+
+.banner-list__container {
+	position: relative;
+}
+
+.banner-list__container .banner-list__shade_top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 96%; // to account for scrollbar
+	height: 1.25rem;
+	background: linear-gradient(to bottom, var(--surface-card), #00000000);
+}
+.banner-list__container .banner-list__shade_bottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 96%; // to account for scrollbar
+	height: 1.25rem;
+	background: linear-gradient(to top, var(--surface-card), #00000000);
 }
 
 .xxl\:col-3 {

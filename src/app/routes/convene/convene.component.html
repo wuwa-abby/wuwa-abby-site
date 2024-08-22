@@ -43,24 +43,30 @@
     <div class="col-5 xxl:col-3">
         <div class="card border border-100 h-100">
             <div class="text-2xl">Banners</div>
-            <div class="col gap-2 banner-list max-h-30rem">
-                <div class="banner-card border border-100 border rounded" *ngFor="let banner of displayBanners"
-                    [class.selected]="selectedBanner?.key === banner.key" (click)="selectBanner(banner)">
-                    <img class="banner-card__image" [src]="'images/gacha/' + banner.key + '.png'" alt="banner.name" />
-                    <div class="banner-card__title text-lg">{{banner.name}}</div>
-                    <p class="text-five-star">
-                        <span class="text-2xl">
-                            {{banner.pity?.fiveStar || 0}}
-                        </span>
-                        <span class="opacity-75">/ 80</span>
-                    </p>
-                    <p class="text-four-star">
-                        <span class="text-2xl">
-                            {{banner.pity?.fourStar || 0}}
-                        </span>
-                        <span class="opacity-75">/ 10</span>
-                    </p>
+
+            <div class="banner-list__container">
+                <div class="col gap-2 banner-list max-h-30rem">
+                    <div class="banner-card border border-100 border rounded" *ngFor="let banner of displayBanners"
+                        [class.selected]="selectedBanner?.key === banner.key" (click)="selectBanner(banner)">
+                        <img class="banner-card__image" [src]="'images/gacha/' + banner.key + '.png'"
+                            alt="banner.name" />
+                        <div class="banner-card__title text-lg">{{banner.name}}</div>
+                        <p class="text-five-star">
+                            <span class="text-2xl">
+                                {{banner.pity?.fiveStar || 0}}
+                            </span>
+                            <span class="opacity-75">/ 80</span>
+                        </p>
+                        <p class="text-four-star">
+                            <span class="text-2xl">
+                                {{banner.pity?.fourStar || 0}}
+                            </span>
+                            <span class="opacity-75">/ 10</span>
+                        </p>
+                    </div>
                 </div>
+                <div class="banner-list__shade_top"></div>
+                <div class="banner-list__shade_bottom"></div>
             </div>
         </div>
     </div>
