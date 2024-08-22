@@ -3,8 +3,7 @@
 }
 
 .banner-list {
-	margin-top: 1rem;
-
+	padding-top: 1.25rem;
 	overflow-y: hidden;
 
 	.banner-card {
@@ -16,6 +15,8 @@
 
 		min-height: 8rem;
 		max-height: 10rem;
+
+		overflow: hidden;
 
 		position: relative;
 
@@ -33,12 +34,59 @@
 		&:hover {
 			background: var(--surface-200);
 			transition: background 0.3s;
+
+			.banner-card__title {
+				background: linear-gradient(
+					to bottom,
+					transparent,
+					color-mix(in srgb, var(--surface-200), #00000000 25%),
+					transparent
+				);
+				transition: background 0.25s;
+			}
+
+			&:not(.selected) {
+				overflow: visible;
+
+				.banner-card__image {
+					height: 11rem;
+					transition: height 0.2s ease-in-out;
+				}
+			}
 		}
 
 		.banner-card__title {
 			position: absolute;
-			bottom: 1rem;
-			right: 1rem;
+			bottom: 0;
+			right: 0;
+			padding: 0.25rem 1rem 1rem 1rem;
+
+			background: linear-gradient(
+				to bottom,
+				transparent,
+				color-mix(in srgb, var(--surface-card), #00000000 25%),
+				transparent
+			);
+			transition: background 0.25s;
+		}
+
+		.banner-card__image {
+			position: absolute;
+			bottom: 0.5rem;
+			right: 0;
+			height: 10rem;
+			transition: height 0.2s ease-in-out;
+		}
+
+		&.selected {
+			width: 100% !important;
+			transition: width 0.3s ease-in-out;
+			overflow: visible;
+
+			.banner-card__image {
+				height: 12rem;
+				transition: height 0.2s ease-in-out;
+			}
 		}
 	}
 

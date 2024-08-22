@@ -63,7 +63,9 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public selectedBanner?: DisplayBanner;
 
 	public get displayBanners(): DisplayBanner[] {
-		return this.banners.filter((banner) => banner.endDate > new Date());
+		return this.banners
+			.filter((banner) => banner.endDate > new Date())
+			.sort((a, b) => a.type.localeCompare(b.type, 'en'));
 	}
 
 	public ngOnInit(): void {
