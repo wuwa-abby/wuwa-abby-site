@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        <p-panel header="Change URL" [toggleable]="true" [collapsed]="true" toggler="header">
+        <p-panel header="Change URL" [toggleable]="true" [collapsed]="true" toggler="header" styleClass="shadow-1">
             <p-messages [(value)]="version12Message" [enableService]="false" />
             <p-iconField iconPosition="left">
                 <p-inputIcon styleClass="pi pi-link" />
@@ -17,12 +17,12 @@
         <div class="h-100">
             <div class="row gap-2">
                 <div class="col">
-                    <div class="card border border-100">
+                    <div class="card border border-100 shadow-1">
                         <div class="text-xl">Pity</div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card border border-100">
+                    <div class="card border border-100 shadow-1">
                         <div class="text-xl">Luck</div>
 
                     </div>
@@ -30,24 +30,27 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card border border-100">
+                    <div class="card border border-100 shadow-1">
                         <div class="text-xl">Recent</div>
 
                         <p-chart type="line" [data]="pityChartData" [options]="pityChartOptions" />
 
                         <div class="banner-history mt-2">
                             <div class="banner-history__item" *ngFor="let item of selectedBannerHistory">
-                                <img [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
-                                    [alt]="item.name" *ngIf="item.resourceType === 'Resonator'" height="64" width="64"
-                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}">
-                                <img [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
-                                    *ngIf="item.resourceType === 'Weapon'" height="64" width="64"
-                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}">
-
+                                <img class="banner-history__item-image"
+                                    [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
+                                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                                    *ngIf="item.resourceType === 'Resonator'">
+                                <img class="banner-history__item-image"
+                                    [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
+                                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                                    *ngIf="item.resourceType === 'Weapon'">
 
                                 <i class="banner-history__item-quality pi bi-stars"
-                                    [class.won-5050]="item.wonFiftyFifty" *ngIf="item.qualityLevel > 4"
-                                    [pTooltip]="item.wonFiftyFifty ? 'Won the 50/50!': 'Got a 5★'"></i>
+                                    [class.won-5050]="item.wonFiftyFifty" pTooltip="Won the 50/50!"
+                                    *ngIf="item.qualityLevel > 4 && item.wonFiftyFifty"></i>
                                 <span class="banner-history__item-pity"
                                     [class]="getPityClass(item.qualityLevel, item.pity)">{{item.pity}}</span>
                             </div>
@@ -58,7 +61,7 @@
         </div>
     </div>
     <div class="col-5 xl:col-3">
-        <div class="card border border-100 h-100">
+        <div class="card border border-100 h-100 shadow-1">
             <div class="text-2xl">Banners</div>
 
             <div class="banner-list__container">

@@ -162,9 +162,19 @@
 		left: 0;
 		font-size: large;
 		font-weight: 600;
+		color: var(--yellow-500);
+	}
 
-		&.won-5050 {
-			color: var(--yellow-500);
+	.banner-history__item-image {
+		border: 2px solid var(--surface-100);
+		border-radius: 50%;
+
+		background: var(--surface-50);
+
+		padding: 0.1rem;
+
+		&.five-star {
+			border-color: var(--yellow-500) !important;
 		}
 	}
 }
