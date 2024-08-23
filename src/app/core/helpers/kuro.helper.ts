@@ -15,24 +15,61 @@ export const KURO_HISTORY_URL_REGEX: RegExp =
 export function calculateResourceDetails(
 	resource: GachaMemoryTable,
 	poolResources: GachaMemoryTable[],
-	pool: ConveneBanner
+	currentPool: ConveneBanner,
+	previousPool?: ConveneBanner
 ) {
 	if (resource.qualityLevel < 4) return;
 
 	if (poolResources.length === 1) return { pity: 1, wonFiftyFifty: true };
 
 	const index = poolResources.indexOf(resource);
-	poolResources = poolResources.slice(index + 1);
+	const wishesBeforeResource = (poolResources = poolResources.slice(index + 1));
 
 	// WuWa resets 4* pity on 5* blessing
-	const sameOrHigherRarity =
-		poolResources.findIndex((x) => x.qualityLevel >= resource.qualityLevel) + 1;
+	const pity =
+		wishesBeforeResource.findIndex(
+			(x) => x.qualityLevel >= resource.qualityLevel
+		) + 1;
+
+	const isFeatured =
+		resource.qualityLevel === 4
+			? currentPool.featuredResources.fourStar.includes(resource.name)
+			: currentPool.featuredResources.fiveStar.includes(resource.name);
+
+	let wonFiftyFifty = false;
+	if (isFeatured) {
+		const previousResource = wishesBeforeResource
+			.slice(0, pity)
+			.find((x) => x.qualityLevel === resource.qualityLevel);
+
+		if (previousResource) {
+			const previousFeaturedInCurrent =
+				resource.qualityLevel === 4
+					? currentPool.featuredResources.fourStar.includes(
+							previousResource.name
+					  )
+					: currentPool.featuredResources.fiveStar.includes(
+							previousResource.name
+					  );
+
+			const previousFeaturedInLast =
+				(previousPool &&
+					(resource.qualityLevel === 4
+						? previousPool.featuredResources.fourStar.includes(
+								previousResource.name
+						  )
+						: previousPool.featuredResources.fiveStar.includes(
+								previousResource.name
+						  ))) ??
+				false;
+
+			// If the previous resource was featured in the current pool or the previous pool, the 50-50 was won for the current resource
+			wonFiftyFifty = previousFeaturedInCurrent || previousFeaturedInLast;
+		}
+	}
 
 	return {
-		pity: sameOrHigherRarity || poolResources.length + 1,
-		wonFiftyFifty:
-			resource.qualityLevel === 4
-				? pool.featuredResources.fourStar.includes(resource.name)
-				: pool.featuredResources.fiveStar.includes(resource.name),
+		pity: pity || poolResources.length + 1,
+		wonFiftyFifty: wonFiftyFifty,
 	};
 }

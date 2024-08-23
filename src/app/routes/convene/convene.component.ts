@@ -1,4 +1,8 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+	CommonModule,
+	isPlatformBrowser,
+	NgOptimizedImage,
+} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
 	AfterViewInit,
@@ -17,20 +21,23 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
+import { TooltipModule } from 'primeng/tooltip';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
+import moment from 'moment';
 
 import { StorageService } from '@core/services/storage.service';
 import { calculateResourceDetails } from '@core/helpers/kuro.helper';
+import { getPityClass } from '@core/helpers/ui.helper';
 import { ConveneBanner } from '@core/types/convene-banner.type';
 import { GachaMemoryTable } from '@core/model/gacha-history.table';
-import moment from 'moment';
 
 @Component({
 	selector: 'abby-convene',
 	standalone: true,
 	imports: [
 		CommonModule,
+		NgOptimizedImage,
 
 		ButtonModule,
 		PanelModule,
@@ -40,6 +47,7 @@ import moment from 'moment';
 		InputTextModule,
 		ToastModule,
 		ChartModule,
+		TooltipModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
@@ -71,6 +79,14 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		return this.banners
 			.filter((banner) => banner.endDate > new Date())
 			.sort((a, b) => a.type.localeCompare(b.type, 'en'));
+	}
+
+	public get selectedBannerHistory(): DisplayItem[] {
+		return (
+			this.selectedBanner?.history?.filter((x) => x.qualityLevel >= 4) || []
+		)
+			.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+			.slice(0, 15);
 	}
 
 	public ngOnInit(): void {
@@ -112,15 +128,25 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		this.updateChart(banner);
 	}
 
+	public getPityClass = getPityClass;
+
 	private async loadHistory(): Promise<void> {
 		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
 		const history = await gachaMemoryStore.toArray();
 
-		this.banners.forEach((banner) => {
+		for (let i = 0; i < this.banners.length; i++) {
+			const banner = this.banners[i];
+			let previousBanner: DisplayBanner | undefined;
+			if (i > 0) {
+				previousBanner = this.banners[i - 1];
+			}
+
 			const bannerHistory = history.filter(
 				(item) => item.cardPoolType === banner.kuroBannerId
 			);
-			for (let item of bannerHistory) {
+
+			for (let j = 0; j < bannerHistory.length; j++) {
+				const item = bannerHistory[j];
 				banner.history = banner.history || [];
 
 				const displayItem: DisplayItem = {
@@ -132,7 +158,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				const itemGachaDetail = calculateResourceDetails(
 					item,
 					bannerHistory,
-					banner
+					banner,
+					previousBanner
 				);
 				if (!itemGachaDetail) {
 					banner.history.push(displayItem);
@@ -151,7 +178,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 					banner.pity.fourStar = pity;
 				}
 			}
-		});
+		}
 	}
 
 	private updateChart(banner: DisplayBanner): void {

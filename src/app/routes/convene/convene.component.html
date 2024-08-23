@@ -35,12 +35,29 @@
 
                         <p-chart type="line" [data]="pityChartData" [options]="pityChartOptions" />
 
+                        <div class="banner-history mt-2">
+                            <div class="banner-history__item" *ngFor="let item of selectedBannerHistory">
+                                <img [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
+                                    [alt]="item.name" *ngIf="item.resourceType === 'Resonator'" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}">
+                                <img [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
+                                    *ngIf="item.resourceType === 'Weapon'" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}">
+
+
+                                <i class="banner-history__item-quality pi bi-stars"
+                                    [class.won-5050]="item.wonFiftyFifty" *ngIf="item.qualityLevel > 4"
+                                    [pTooltip]="item.wonFiftyFifty ? 'Won the 50/50!': 'Got a 5★'"></i>
+                                <span class="banner-history__item-pity"
+                                    [class]="getPityClass(item.qualityLevel, item.pity)">{{item.pity}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-5 xxl:col-3">
+    <div class="col-5 xl:col-3">
         <div class="card border border-100 h-100">
             <div class="text-2xl">Banners</div>
 
@@ -70,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 xxl:col-3">
+    <div class="col-12 xxl:col-3" *ngIf="false">
         <div class="card border border-100 h-100">
             <div class="text-2xl">Summary</div>
         </div>
