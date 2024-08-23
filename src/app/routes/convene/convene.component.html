@@ -1,3 +1,7 @@
+@if (isMobile === undefined) {
+<p-messages [(value)]="loadingMessage" enableService="false" />
+}
+
 <!-- mobile view -->
 @defer (when isMobile === true; prefetch when isMobile) {
 @if (isMobile) {

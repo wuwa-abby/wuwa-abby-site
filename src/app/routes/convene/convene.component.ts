@@ -66,9 +66,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private storageService: StorageService,
 		private activatedRoute: ActivatedRoute
-	) {
-		this.isMobileCheck();
-	}
+	) {}
 
 	public readonly version12Message: Message[] = [
 		{
@@ -78,6 +76,14 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			summary: 'API change',
 			detail:
 				'With the release of version 1.2, Kuro games has removed the support for permanent convene URLs. This means Wubby will no longer be able to remember your convene URL.',
+		},
+	];
+	public readonly loadingMessage: Message[] = [
+		{
+			severity: 'info',
+			closable: false,
+			summary: 'Loading',
+			detail: 'Please wait while we load your history...',
 		},
 	];
 	public readonly qualityLevels = [
@@ -122,6 +128,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	public ngOnInit(): void {
+		this.isMobileCheck();
+
 		this.activatedRoute.data.subscribe((data) => {
 			const bannersApi = data['banners'] as Observable<ConveneBanner>[];
 			bannersApi.forEach((banner) => {
