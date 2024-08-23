@@ -29,12 +29,11 @@ export function calculateResourceDetails(
 	const pity =
 		wishesBeforeResource.findIndex(
 			(x) => x.qualityLevel >= resource.qualityLevel
-		) + 1;
+		) + 1 || wishesBeforeResource.length + 1;
 
-	const isFeatured =
-		resource.qualityLevel === 4
-			? currentPool.featuredResources.fourStar.includes(resource.name)
-			: currentPool.featuredResources.fiveStar.includes(resource.name);
+	const isFeatured = currentPool.featuredResources[
+		resource.qualityLevel === 4 ? 'fourStar' : 'fiveStar'
+	].includes(resource.name);
 
 	let wonFiftyFifty = false;
 	if (isFeatured) {
@@ -43,33 +42,19 @@ export function calculateResourceDetails(
 			.find((x) => x.qualityLevel === resource.qualityLevel);
 
 		if (previousResource) {
-			const previousFeaturedInCurrent =
-				resource.qualityLevel === 4
-					? currentPool.featuredResources.fourStar.includes(
-							previousResource.name
-					  )
-					: currentPool.featuredResources.fiveStar.includes(
-							previousResource.name
-					  );
+			const previousFeaturedInCurrent = currentPool.featuredResources[
+				resource.qualityLevel === 4 ? 'fourStar' : 'fiveStar'
+			].includes(previousResource.name);
 
 			const previousFeaturedInLast =
-				(previousPool &&
-					(resource.qualityLevel === 4
-						? previousPool.featuredResources.fourStar.includes(
-								previousResource.name
-						  )
-						: previousPool.featuredResources.fiveStar.includes(
-								previousResource.name
-						  ))) ??
-				false;
+				previousPool?.featuredResources[
+					resource.qualityLevel === 4 ? 'fourStar' : 'fiveStar'
+				].includes(previousResource.name) ?? false;
 
 			// If the previous resource was featured in the current pool or the previous pool, the 50-50 was won for the current resource
 			wonFiftyFifty = previousFeaturedInCurrent || previousFeaturedInLast;
 		}
 	}
 
-	return {
-		pity: pity || wishesBeforeResource.length + 1,
-		wonFiftyFifty: wonFiftyFifty,
-	};
+	return { pity, wonFiftyFifty };
 }
