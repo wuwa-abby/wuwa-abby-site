@@ -12,20 +12,74 @@
 </div>
 
 <!-- desktop view -->
-<div class="row gap-2 d-none d-lg-flex">
-    <div class="col-12 xl:col">
+<div class="row d-none d-lg-flex">
+    <div class="col-12 xl:col-9">
         <div class="h-100">
             <div class="row gap-2">
                 <div class="col">
                     <div class="card border border-100 shadow-1">
-                        <div class="text-xl">Pity</div>
+                        <div class="flex flex-row justify-content-between align-content-center">
+                            <div class="banner-detail__identifier">
+                                <div class="text-xl">{{selectedBanner?.name}}</div>
+                                <div class="text-sm">{{selectedBanner?.kuroBannerId}}</div>
+                            </div>
+
+                            <div class="text-lg">
+                                {{selectedBanner?.startDate | date: 'MMM d'}} -
+                                {{selectedBanner?.endDate | date: 'MMM d'}}
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row justify-content-between mt-2">
+                            <div class="banner-detail__astrite-5050">
+                                <div class="text-lg">You've spent</div>
+                                @defer (when selectedBannerDurationHistory) {
+                                <div class="text-2xl animated-underline flex align-content-center"
+                                    pTooltip="That's {{selectedBannerDurationHistory.length}} wishes!">
+                                    {{selectedBannerDurationHistory.length * 160}}
+                                    <img ngSrc="images/icons/T_IconA160_zcpq_UI.png" alt="Astrite icon" height="32"
+                                        width="32">
+                                    Astrites
+                                </div>
+                                } @placeholder {
+                                <p-skeleton width="20vh" height="2.5rem" styleClass="m-1" />
+                                }
+                            </div>
+                            <div class="banner-detail__pity text-right">
+                                <div class="text-lg">You are at</div>
+
+                                @defer (when selectedBanner?.pity?.fiveStar; on timer(5s)) {
+                                <div class="text-2xl animated-underline text-five-star"
+                                    pTooltip="{{80 - (selectedBanner?.pity?.fiveStar || 0)}} more pulls for a guaranteed 5★">
+                                    {{selectedBanner?.pity?.fiveStar}}
+                                    <span class="text-sm text-color">/80</span>
+                                    5★ Pity
+                                </div>
+                                } @placeholder {
+                                <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
+                                }
+
+                                @defer(when selectedBanner?.pity?.fourStar; on timer(5s)) {
+                                <div class="text-2xl animated-underline block text-four-star"
+                                    pTooltip="{{10 - (selectedBanner?.pity?.fourStar || 0)}} more pulls for a guaranteed 4★">
+                                    {{selectedBanner?.pity?.fourStar}}
+                                    <span class="text-sm text-color">/10</span>
+                                    4★ Pity
+                                </div>
+                                }
+                                @placeholder {
+                                <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
+
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card border border-100 shadow-1">
                         <div class="grid">
                             <div class="col-12 flex justify-content-between">
-                                <div class="text-xl">Luck</div>
+                                <div class="text-xl">Luck Summary</div>
                                 <p-selectButton [options]="qualityLevels" [(ngModel)]="selectedQualityLevel"
                                     optionLabel="label" optionValue="value" [allowEmpty]="false" />
                             </div>
@@ -33,103 +87,106 @@
                                 <p-skeleton *ngIf="!selectedBanner || !selectedBanner.stats" class="w-100"
                                     height="14rem"></p-skeleton>
 
-                                <div *ngIf="selectedBanner && selectedBanner.stats">
-                                    <ng-container
-                                        *ngIf="selectedQualityLevel === 5; then fiveStarStats else fourStarStats"></ng-container>
+                                @defer (when selectedBanner?.stats) {
+                                <ng-container
+                                    *ngIf="selectedQualityLevel === 5; then fiveStarStats else fourStarStats"></ng-container>
 
-                                    <ng-template #fiveStarStats>
-                                        <div class="grid gap">
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    No. of
-                                                    <span class="text-five-star">5★ pulls</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        pTooltip="You pulled {{selectedBanner.stats.fiveStar.count}} 5★">
-                                                        {{selectedBanner.stats.fiveStar.count}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    Avg. Pity
-                                                    <span class="text-five-star">5★</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        [class]="getPityClass(5, selectedBanner.stats.fiveStar.avgPity)"
-                                                        pTooltip="You averaged {{selectedBanner.stats.fiveStar.avgPity}} pulls to get a 5★">
-                                                        {{(selectedBanner.stats.fiveStar.avgPity || 0) | number:
-                                                        '1.0-0'}}
-                                                        <span class="text-sm text-color">/80</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    50-50s won
-                                                    <span class="text-five-star">5★</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        pTooltip="You won fifty-fifty {{selectedBanner.stats.fiveStar.wonFiftyFifty}} times">
-                                                        {{selectedBanner.stats.fiveStar.wonFiftyFifty}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="text-lg">Chance of getting a
-                                                    <span class="text-five-star">5★</span>
-                                                </div>
-                                                <p-progressBar [value]="selectedBanner.stats.fiveStar.qualityPercentage"
-                                                    mode="determinate" [showValue]="false" styleClass="mt-2"
-                                                    pTooltip="You had a {{selectedBanner.stats.fiveStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 5★"
-                                                    tooltipPosition="bottom" />
+                                <ng-template #fiveStarStats>
+                                    <div class="grid gap">
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                No. of
+                                                <span class="text-five-star">5★ pulls</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    pTooltip="You pulled {{selectedBanner!.stats!.fiveStar.count}} 5★">
+                                                    {{selectedBanner!.stats!.fiveStar.count}}
+                                                </span>
                                             </div>
                                         </div>
-                                    </ng-template>
-                                    <ng-template #fourStarStats>
-                                        <div class="grid gap">
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    No. of
-                                                    <span class="text-four-star">4★ pulls</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        pTooltip="You pulled {{selectedBanner.stats.fiveStar.count}} 4★">
-                                                        {{selectedBanner.stats.fiveStar.count}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    Avg. Pity
-                                                    <span class="text-four-star">4★</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        [class]="getPityClass(4, selectedBanner.stats.fourStar.avgPity)"
-                                                        pTooltip="You averaged {{selectedBanner.stats.fourStar.avgPity}} pulls to get a 4★">
-                                                        {{(selectedBanner.stats.fourStar.avgPity || 0) | number:
-                                                        '1.0-0'}}
-                                                        <span class="text-sm text-color">/10</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="text-lg">
-                                                    50-50s won
-                                                    <span class="text-four-star">4★</span>
-                                                    <span class="text-2xl ms-2 animated-underline"
-                                                        pTooltip="You won fifty-fifty {{selectedBanner.stats.fourStar.wonFiftyFifty}} times">
-                                                        {{selectedBanner.stats.fourStar.wonFiftyFifty}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="text-lg">Chance of getting a
-                                                    <span class="text-four-star">4★</span>
-                                                </div>
-                                                <p-progressBar [value]="selectedBanner.stats.fourStar.qualityPercentage"
-                                                    mode="determinate" [showValue]="false" styleClass="mt-2"
-                                                    pTooltip="You had a {{selectedBanner.stats.fourStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 4★"
-                                                    tooltipPosition="bottom" />
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                Avg. Pity
+                                                <span class="text-five-star">5★</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    [class]="getPityClass(5, selectedBanner!.stats!.fiveStar.avgPity)"
+                                                    pTooltip="You averaged {{selectedBanner!.stats!.fiveStar.avgPity}} pulls to get a 5★">
+                                                    {{(selectedBanner!.stats!.fiveStar.avgPity || 0) | number:
+                                                    '1.0-0'}}
+                                                    <span class="text-sm text-color">/80</span>
+                                                </span>
                                             </div>
                                         </div>
-                                    </ng-template>
-                                </div>
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                50-50s won
+                                                <span class="text-five-star">5★</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    pTooltip="You won fifty-fifty {{selectedBanner!.stats!.fiveStar.wonFiftyFifty}} times">
+                                                    {{selectedBanner!.stats!.fiveStar.wonFiftyFifty}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-lg">Chance of getting a
+                                                <span class="text-five-star">5★</span>
+                                            </div>
+                                            <p-progressBar [value]="selectedBanner!.stats!.fiveStar.qualityPercentage"
+                                                mode="determinate" [showValue]="false" styleClass="mt-2"
+                                                pTooltip="You had a {{selectedBanner!.stats!.fiveStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 5★"
+                                                tooltipPosition="bottom" />
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #fourStarStats>
+                                    <div class="grid gap">
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                No. of
+                                                <span class="text-four-star">4★ pulls</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    pTooltip="You pulled {{selectedBanner!.stats!.fiveStar.count}} 4★">
+                                                    {{selectedBanner!.stats!.fiveStar.count}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                Avg. Pity
+                                                <span class="text-four-star">4★</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    [class]="getPityClass(4, selectedBanner!.stats!.fourStar.avgPity)"
+                                                    pTooltip="You averaged {{selectedBanner!.stats!.fourStar.avgPity}} pulls to get a 4★">
+                                                    {{(selectedBanner!.stats!.fourStar.avgPity || 0) | number:
+                                                    '1.0-0'}}
+                                                    <span class="text-sm text-color">/10</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-lg">
+                                                50-50s won
+                                                <span class="text-four-star">4★</span>
+                                                <span class="text-2xl ms-2 animated-underline"
+                                                    pTooltip="You won fifty-fifty {{selectedBanner!.stats!.fourStar.wonFiftyFifty}} times">
+                                                    {{selectedBanner!.stats!.fourStar.wonFiftyFifty}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-lg">Chance of getting a
+                                                <span class="text-four-star">4★</span>
+                                            </div>
+                                            <p-progressBar [value]="selectedBanner!.stats!.fourStar.qualityPercentage"
+                                                mode="determinate" [showValue]="false" styleClass="mt-2"
+                                                pTooltip="You had a {{selectedBanner!.stats!.fourStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 4★"
+                                                tooltipPosition="bottom" />
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                }
+                                @placeholder {
+                                <p-skeleton width="100%" height="20vh"></p-skeleton>
+                                }
                             </div>
                         </div>
                     </div>
@@ -138,9 +195,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card border border-100 shadow-1">
-                        <div class="text-xl">Recent</div>
+                        <div class="text-xl">Recent Pulls</div>
 
+                        @defer (on viewport) {
                         <p-chart type="line" [data]="pityChartData" [options]="pityChartOptions" />
+                        } @placeholder {
+                        <p-skeleton height="20rem"></p-skeleton>
+                        }
 
                         <div class="banner-history mt-2">
                             <div class="banner-history__item" *ngFor="let item of selectedBannerHistory">
@@ -178,18 +239,6 @@
                         <img class="banner-card__image" [src]="'images/gacha/' + banner.key + '.png'"
                             alt="banner.name" />
                         <div class="banner-card__title text-lg">{{banner.name}}</div>
-                        <p class="text-five-star">
-                            <span class="text-2xl">
-                                {{banner.pity?.fiveStar || 0}}
-                            </span>
-                            <span class="opacity-75">/ 80</span>
-                        </p>
-                        <p class="text-four-star">
-                            <span class="text-2xl">
-                                {{banner.pity?.fourStar || 0}}
-                            </span>
-                            <span class="opacity-75">/ 10</span>
-                        </p>
                     </div>
                 </div>
                 <div class="banner-list__shade_top"></div>

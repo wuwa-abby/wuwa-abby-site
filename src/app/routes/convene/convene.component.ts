@@ -104,6 +104,16 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			.slice(0, 15);
 	}
 
+	public get selectedBannerDurationHistory(): DisplayItem[] {
+		return this.selectedBanner
+			? this.selectedBanner.history?.filter(
+					(x) =>
+						new Date(x.time) >= this.selectedBanner!.startDate &&
+						new Date(x.time) <= this.selectedBanner!.endDate
+			  ) || []
+			: [];
+	}
+
 	public ngOnInit(): void {
 		this.activatedRoute.data.subscribe((data) => {
 			const bannersApi = data['banners'] as Observable<ConveneBanner>[];
@@ -211,14 +221,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		}
 
 		const documentStyle = getComputedStyle(document.documentElement);
-
-		const bannerDurationHistory = banner.history!.filter(
-			(x) =>
-				new Date(x.time) >= banner.startDate &&
-				new Date(x.time) <= banner.endDate
-		);
-
-		const dateGroup = bannerDurationHistory
+		const dateGroup = this.selectedBannerDurationHistory
 			.reduce((acc, item) => {
 				const date = moment(item.time).format('MMM D');
 				const lastGroup = acc[acc.length - 1];
@@ -325,16 +328,10 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	private async calculateStats(): Promise<void> {
 		if (!this.selectedBanner || this.selectedBanner.stats) return;
 
-		const banner = this.selectedBanner;
-		const bannerDurationHistory = banner.history!.filter(
-			(x) =>
-				new Date(x.time) >= banner.startDate &&
-				new Date(x.time) <= banner.endDate
-		);
-		const totalPulls = bannerDurationHistory.length;
+		const totalPulls = this.selectedBannerDurationHistory.length;
 
 		/* 5★ count, avg pity, no. of 5050 won */
-		const fiveStarStats = bannerDurationHistory
+		const fiveStarStats = this.selectedBannerDurationHistory
 			.filter((x) => x.qualityLevel === 5)
 			.reduce(
 				(acc, item) => {
@@ -349,7 +346,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			);
 
 		/* 4★ count, avg pity, no. of 5050 won */
-		const fourStarStats = bannerDurationHistory
+		const fourStarStats = this.selectedBannerDurationHistory
 			.filter((x) => x.qualityLevel === 4)
 			.reduce(
 				(acc, item) => {
