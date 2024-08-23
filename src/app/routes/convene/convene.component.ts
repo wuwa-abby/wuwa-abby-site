@@ -11,6 +11,7 @@ import {
 	OnInit,
 	PLATFORM_ID,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
@@ -22,6 +23,9 @@ import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
 import { TooltipModule } from 'primeng/tooltip';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { SkeletonModule } from 'primeng/skeleton';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
 import moment from 'moment';
@@ -38,6 +42,7 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 	imports: [
 		CommonModule,
 		NgOptimizedImage,
+		FormsModule,
 
 		ButtonModule,
 		PanelModule,
@@ -48,6 +53,9 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 		ToastModule,
 		ChartModule,
 		TooltipModule,
+		SelectButtonModule,
+		SkeletonModule,
+		ProgressBarModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
@@ -69,11 +77,18 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				'With the release of version 1.2, Kuro games has removed the support for permanent convene URLs. This means Wubby will no longer be able to remember your convene URL.',
 		},
 	];
+	public readonly qualityLevels = [
+		{ label: '5★', value: 5 },
+		{ label: '4★', value: 4 },
+	];
 
 	public banners: DisplayBanner[] = [];
 	public selectedBanner?: DisplayBanner;
+	/* Chart */
 	public pityChartData?: Chart.ChartData;
 	public pityChartOptions?: Chart.ChartOptions;
+	/* Stats */
+	public selectedQualityLevel: number = 5;
 
 	public get displayBanners(): DisplayBanner[] {
 		return this.banners
@@ -116,6 +131,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 
 			if (this.selectedBanner) {
 				this.updateChart(this.selectedBanner);
+				this.calculateStats();
 			}
 		})();
 	}
@@ -126,6 +142,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		if (!banner.history) return;
 
 		this.updateChart(banner);
+		this.calculateStats();
 	}
 
 	public getPityClass = getPityClass;
@@ -195,8 +212,14 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 
 		const documentStyle = getComputedStyle(document.documentElement);
 
-		const dateGroup = banner
-			.history!.reduce((acc, item) => {
+		const bannerDurationHistory = banner.history!.filter(
+			(x) =>
+				new Date(x.time) >= banner.startDate &&
+				new Date(x.time) <= banner.endDate
+		);
+
+		const dateGroup = bannerDurationHistory
+			.reduce((acc, item) => {
 				const date = moment(item.time).format('MMM D');
 				const lastGroup = acc[acc.length - 1];
 				if (lastGroup && moment(lastGroup[0].time).format('MMM D') === date) {
@@ -264,7 +287,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				intersect: false,
 			},
 			maintainAspectRatio: false,
-			aspectRatio: 1.5,
+			aspectRatio: 1.2,
 			plugins: {
 				legend: {
 					labels: {
@@ -298,14 +321,89 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			},
 		};
 	}
+
+	private async calculateStats(): Promise<void> {
+		if (!this.selectedBanner || this.selectedBanner.stats) return;
+
+		const banner = this.selectedBanner;
+		const bannerDurationHistory = banner.history!.filter(
+			(x) =>
+				new Date(x.time) >= banner.startDate &&
+				new Date(x.time) <= banner.endDate
+		);
+		const totalPulls = bannerDurationHistory.length;
+
+		/* 5★ count, avg pity, no. of 5050 won */
+		const fiveStarStats = bannerDurationHistory
+			.filter((x) => x.qualityLevel === 5)
+			.reduce(
+				(acc, item) => {
+					acc[0]++;
+					acc[1] += item.pity || 0;
+					if (item.wonFiftyFifty) {
+						acc[2]++;
+					}
+					return acc;
+				},
+				[0, 0, 0]
+			);
+
+		/* 4★ count, avg pity, no. of 5050 won */
+		const fourStarStats = bannerDurationHistory
+			.filter((x) => x.qualityLevel === 4)
+			.reduce(
+				(acc, item) => {
+					acc[0]++;
+					acc[1] += item.pity || 0;
+					if (item.wonFiftyFifty) {
+						acc[2]++;
+					}
+					return acc;
+				},
+				[0, 0, 0]
+			);
+
+		this.selectedBanner.stats = {
+			totalPulls,
+			fiveStar: {
+				count: fiveStarStats[0],
+				avgPity: Math.round(fiveStarStats[1] / fiveStarStats[0]),
+				wonFiftyFifty: fiveStarStats[2],
+				qualityPercentage: (fiveStarStats[0] / totalPulls) * 100,
+			},
+			fourStar: {
+				count: fourStarStats[0],
+				avgPity: Math.round(fourStarStats[1] / fourStarStats[0]),
+				wonFiftyFifty: fourStarStats[2],
+				qualityPercentage: (fourStarStats[0] / totalPulls) * 100,
+			},
+		};
+	}
 }
 
 interface DisplayBanner extends ConveneBanner {
 	pity?: { fiveStar: number; fourStar: number };
 	history?: DisplayItem[];
 	chartData?: Chart.ChartData;
+	stats?: DisplayStats;
 }
 
 interface DisplayItem extends GachaMemoryTable {
 	wonFiftyFifty: boolean;
+}
+
+interface DisplayStats {
+	totalPulls: number;
+	fiveStar: {
+		count: number;
+		avgPity: number;
+		wonFiftyFifty: number;
+		qualityPercentage: number;
+	};
+	fourStar: {
+		count: number;
+		avgPity: number;
+		wonFiftyFifty: number;
+		qualityPercentage: number;
+	};
 }

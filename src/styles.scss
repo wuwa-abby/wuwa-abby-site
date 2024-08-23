@@ -52,3 +52,15 @@ code:not(.nostyle) {
 		color: #8c6eb2 !important;
 	}
 }
+
+.hard-pity {
+	color: var(--red-500);
+}
+
+.soft-pity {
+	color: var(--yellow-500);
+}
+
+.no-pity {
+	color: var(--green-500);
+}

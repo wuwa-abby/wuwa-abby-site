@@ -107,14 +107,6 @@
 	background: linear-gradient(to top, var(--surface-card), #00000000);
 }
 
-.xxl\:col-3 {
-	@media screen and (min-width: 1400px) {
-		width: 25%;
-		flex: 0 0 auto;
-		padding: 0.5rem;
-	}
-}
-
 .banner-history {
 	display: flex;
 	flex-direction: row;
@@ -176,5 +168,29 @@
 		&.five-star {
 			border-color: var(--yellow-500) !important;
 		}
+	}
+}
+
+.animated-underline {
+	position: relative;
+	display: inline-block;
+
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background: var(--surface-700);
+		transform: scaleX(0);
+		transform-origin: 0 0;
+		transition: transform 0.3s;
+		transition-delay: 0.3s;
+	}
+
+	&:hover::before {
+		transform: scaleX(1);
+		transition-delay: 0s;
 	}
 }
