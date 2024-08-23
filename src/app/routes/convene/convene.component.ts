@@ -27,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SidebarModule } from 'primeng/sidebar';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
 import moment from 'moment';
@@ -57,6 +58,7 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 		SelectButtonModule,
 		SkeletonModule,
 		ProgressBarModule,
+		SidebarModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
@@ -100,6 +102,9 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public pityChartOptions?: Chart.ChartOptions;
 	/* Stats */
 	public selectedQualityLevel: number = 5;
+	/* Sidebars */
+	public displayUpdateUrlSidebar: boolean = false;
+	public displayBannerFilterSidebar: boolean = false;
 
 	public get displayBanners(): DisplayBanner[] {
 		return this.banners.sort((a, b) => a.type.localeCompare(b.type, 'en'));

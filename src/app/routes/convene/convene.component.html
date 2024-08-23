@@ -1,35 +1,47 @@
-@if (isMobile === undefined) {
-<p-messages [(value)]="loadingMessage" enableService="false" />
+@defer(on viewport) {
+<p-sidebar [(visible)]="displayUpdateUrlSidebar" [position]="isMobile ? 'bottom' : 'top'">
+    <p>Update URL WIP</p>
+</p-sidebar>
+
+<p-sidebar [(visible)]="displayBannerFilterSidebar" position="top" [fullScreen]="isMobile ?? false">
+    <ng-template pTemplate="header">
+        <span class="font-semibold text-xl">
+            Filter banners
+        </span>
+    </ng-template>
+    <p>Filter banners WIP</p>
+</p-sidebar>
+
+<div class="row">
+    <div class="col">
+        <p-button label="Change URL" icon="pi pi-link" iconPos="right" styleClass="mt-2 w-100 h-100"
+            severity="secondary" (onClick)="displayUpdateUrlSidebar = !displayUpdateUrlSidebar" />
+    </div>
+    <div class="col">
+        <p-button label="Change Banners" icon="pi pi-filter-fill" iconPos="right" styleClass="mt-2 w-100 h-100"
+            severity="secondary" (onClick)="displayBannerFilterSidebar = !displayBannerFilterSidebar" />
+    </div>
+</div>
+}
+@placeholder {
+<p-skeleton width="100%" height="3rem"></p-skeleton>
 }
 
 <!-- mobile view -->
 @defer (when isMobile === true; prefetch when isMobile) {
 @if (isMobile) {
-<p>mobile view WIP!</p>
+
 }
 }
 
 <!-- desktop view -->
 @defer (when isMobile === false; prefetch when isMobile === false) {
 @if(!isMobile) {
-<div class="row">
-    <div class="col">
-        <p-panel header="Change URL" [toggleable]="true" [collapsed]="true" toggler="header" styleClass="shadow-1">
-            <p-messages [(value)]="version12Message" [enableService]="false" />
-            <p-iconField iconPosition="left">
-                <p-inputIcon styleClass="pi pi-link" />
-                <input type="url" class="w-full" pInputText placeholder="Convene URL" />
-            </p-iconField>
-            <p-button label="Refresh History" icon="pi pi-refresh" iconPos="right" styleClass="mt-2" />
-        </p-panel>
-    </div>
-</div>
-
-<div class="row d-none lg:flex">
+<div class="row d-none lg:flex mt-2">
     <div class="col-12 xl:col-9 flex-order-1 xl:flex-order-0">
         <div class="h-100">
             <div class="row gap-2">
-                <div class="col">
+                <div class="col pt-0">
                     <div class="card border border-100 shadow-1">
                         <div class="flex flex-row justify-content-between align-content-center">
                             <div class="banner-detail__identifier">
@@ -88,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col pt-0">
                     <div class="card border border-100 shadow-1">
                         <div class="grid">
                             <div class="col-12 flex justify-content-between">
@@ -261,4 +273,14 @@
     </div>
 </div>
 }
+} @loading {
+<div class="grid">
+    <div class="col-9">
+        <p-skeleton width="100%" height="10rem"></p-skeleton>
+        <p-skeleton width="100%" height="10rem"></p-skeleton>
+    </div>
+    <div class="col-3">
+        <p-skeleton width="100%" height="25rem"></p-skeleton>
+    </div>
+</div>
 }
