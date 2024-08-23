@@ -234,7 +234,7 @@
 
             <div class="banner-list__container">
                 <div class="col gap-2 banner-list min-h-30rem">
-                    <div class="banner-card border border-100 border rounded" *ngFor="let banner of displayBanners"
+                    <div class="banner-card border border-400 border rounded" *ngFor="let banner of displayBanners"
                         [class.selected]="selectedBanner?.key === banner.key" (click)="selectBanner(banner)">
                         <img class="banner-card__image" [src]="'images/gacha/' + banner.key + '.png'"
                             alt="banner.name" />
