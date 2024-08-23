@@ -20,10 +20,10 @@ export function calculateResourceDetails(
 ) {
 	if (resource.qualityLevel < 4) return;
 
-	if (poolResources.length === 1) return { pity: 1, wonFiftyFifty: true };
+	if (poolResources.length === 1) return { pity: 1, wonFiftyFifty: false };
 
 	const index = poolResources.indexOf(resource);
-	const wishesBeforeResource = (poolResources = poolResources.slice(index + 1));
+	const wishesBeforeResource = poolResources.slice(index + 1);
 
 	// WuWa resets 4* pity on 5* blessing
 	const pity =
@@ -69,7 +69,7 @@ export function calculateResourceDetails(
 	}
 
 	return {
-		pity: pity || poolResources.length + 1,
+		pity: pity || wishesBeforeResource.length + 1,
 		wonFiftyFifty: wonFiftyFifty,
 	};
 }
