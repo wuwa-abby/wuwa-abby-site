@@ -3,9 +3,12 @@
 }
 
 .banner-list {
-	padding-top: 1.25rem;
-	overflow-y: auto;
+	display: flex;
+	padding-top: 2rem;
+	overflow: auto;
 	position: relative;
+
+	max-height: 70vh;
 
 	.banner-card {
 		background: var(--surface-card);
@@ -16,6 +19,7 @@
 
 		min-height: 8rem;
 		max-height: 10rem;
+		min-width: 20vh;
 
 		overflow: hidden;
 
@@ -83,6 +87,13 @@
 				transition: height 0.2s ease-in-out;
 			}
 		}
+
+		// on screens smaller than 'xl', prevent overflow from showing except when selected
+		@media (max-width: 1280px) {
+			&:not(.selected) {
+				overflow: hidden;
+			}
+		}
 	}
 }
 
@@ -94,25 +105,26 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 96%; // to account for scrollbar
 	height: 1.25rem;
 	background: linear-gradient(to bottom, var(--surface-card), #00000000);
+	pointer-events: none; // pass clicks through
 }
+
 .banner-list__container .banner-list__shade_bottom {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	width: 96%; // to account for scrollbar
 	height: 1.25rem;
 	background: linear-gradient(to top, var(--surface-card), #00000000);
+	pointer-events: none; // pass clicks through
 }
 
 .banner-history {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: safe center;
 	align-items: center;
-	overflow-x: auto;
+	overflow: auto;
 	padding: 1rem 0;
 }
 

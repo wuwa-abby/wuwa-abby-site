@@ -12,8 +12,8 @@
 </div>
 
 <!-- desktop view -->
-<div class="row d-none d-lg-flex">
-    <div class="col-12 xl:col-9">
+<div class="row d-none lg:flex">
+    <div class="col-12 xl:col-9 flex-order-1 xl:flex-order-0">
         <div class="h-100">
             <div class="row gap-2">
                 <div class="col">
@@ -46,7 +46,7 @@
                                 }
                             </div>
                             <div class="banner-detail__pity text-right">
-                                <div class="text-lg">You are at</div>
+                                <div class="text-lg">You {{selectedBanner?.isExpired ? 'were': 'are'}} at</div>
 
                                 @defer (when selectedBanner?.pity?.fiveStar; on timer(5s)) {
                                 <div class="text-2xl animated-underline text-five-star"
@@ -204,7 +204,7 @@
                         }
 
                         <div class="banner-history mt-2">
-                            <div class="banner-history__item" *ngFor="let item of selectedBannerHistory">
+                            <div class="banner-history__item" *ngFor="let item of selectedQualityBannerHistory">
                                 <img class="banner-history__item-image"
                                     [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
                                     [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
@@ -228,14 +228,14 @@
             </div>
         </div>
     </div>
-    <div class="col-5 xl:col-3">
-        <div class="card border border-100 h-100 shadow-1">
+    <div class="col-12 xl:col-3 flex-order-0 xl:flex-order-1">
+        <div class="card border border-100 shadow-1">
             <div class="text-2xl">Banners</div>
 
             <div class="banner-list__container">
-                <div class="col gap-2 banner-list min-h-30rem">
+                <div class="col gap-2 banner-list flex-row xl:flex-column">
                     <div class="banner-card border border-400 border rounded" *ngFor="let banner of displayBanners"
-                        [class.selected]="selectedBanner?.key === banner.key" (click)="selectBanner(banner)">
+                        [ngClass]="{'selected': selectedBanner?.key === banner.key}" (click)="selectBanner(banner)">
                         <img class="banner-card__image" [src]="'images/gacha/' + banner.key + '.png'"
                             alt="banner.name" />
                         <div class="banner-card__title text-lg">{{banner.name}}</div>

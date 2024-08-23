@@ -81,6 +81,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		{ label: '5★', value: 5 },
 		{ label: '4★', value: 4 },
 	];
+	private readonly now: Date = new Date();
 
 	public banners: DisplayBanner[] = [];
 	public selectedBanner?: DisplayBanner;
@@ -91,17 +92,19 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public selectedQualityLevel: number = 5;
 
 	public get displayBanners(): DisplayBanner[] {
-		return this.banners
-			.filter((banner) => banner.endDate > new Date())
-			.sort((a, b) => a.type.localeCompare(b.type, 'en'));
+		return this.banners.sort((a, b) => a.type.localeCompare(b.type, 'en'));
 	}
 
 	public get selectedBannerHistory(): DisplayItem[] {
+		return this.selectedBanner?.history || [];
+	}
+
+	public get selectedQualityBannerHistory(): DisplayItem[] {
 		return (
-			this.selectedBanner?.history?.filter((x) => x.qualityLevel >= 4) || []
-		)
-			.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
-			.slice(0, 15);
+			this.selectedBannerDurationHistory.filter((x) => x.qualityLevel >= 4) ||
+			[]
+		).sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+		// .slice(0, 15);
 	}
 
 	public get selectedBannerDurationHistory(): DisplayItem[] {
@@ -128,7 +131,6 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				});
 			});
 		});
-
 		this.configureChart();
 	}
 
@@ -167,6 +169,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 			if (i > 0) {
 				previousBanner = this.banners[i - 1];
 			}
+
+			banner.isExpired = banner.endDate < this.now;
 
 			const bannerHistory = history.filter(
 				(item) => item.cardPoolType === banner.kuroBannerId
@@ -383,6 +387,7 @@ interface DisplayBanner extends ConveneBanner {
 	history?: DisplayItem[];
 	chartData?: Chart.ChartData;
 	stats?: DisplayStats;
+	isExpired?: boolean;
 }
 
 interface DisplayItem extends GachaMemoryTable {
