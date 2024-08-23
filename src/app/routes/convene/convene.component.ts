@@ -213,6 +213,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	private updateChart(banner: DisplayBanner): void {
+		if (!isPlatformBrowser(this.platformId)) return;
+
 		if (banner.chartData) {
 			this.pityChartData = banner.chartData;
 			const maxPulls = Math.max(
@@ -282,6 +284,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	private configureChart(): void {
+		if (!isPlatformBrowser(this.platformId)) return;
+
 		const documentStyle = getComputedStyle(document.documentElement);
 		const textColor = documentStyle.getPropertyValue('--text-color');
 		const textColorSecondary = documentStyle.getPropertyValue(
