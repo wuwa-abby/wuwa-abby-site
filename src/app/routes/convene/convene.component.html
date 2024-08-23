@@ -1,3 +1,13 @@
+<!-- mobile view -->
+@defer (when isMobile === true; prefetch when isMobile) {
+@if (isMobile) {
+<p>mobile view WIP!</p>
+}
+}
+
+<!-- desktop view -->
+@defer (when isMobile === false; prefetch when isMobile === false) {
+@if(!isMobile) {
 <div class="row">
     <div class="col">
         <p-panel header="Change URL" [toggleable]="true" [collapsed]="true" toggler="header" styleClass="shadow-1">
@@ -11,7 +21,6 @@
     </div>
 </div>
 
-<!-- desktop view -->
 <div class="row d-none lg:flex">
     <div class="col-12 xl:col-9 flex-order-1 xl:flex-order-0">
         <div class="h-100">
@@ -247,3 +256,5 @@
         </div>
     </div>
 </div>
+}
+}

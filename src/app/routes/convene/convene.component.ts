@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
 	AfterViewInit,
 	Component,
+	HostListener,
 	Inject,
 	OnInit,
 	PLATFORM_ID,
@@ -65,7 +66,9 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private storageService: StorageService,
 		private activatedRoute: ActivatedRoute
-	) {}
+	) {
+		this.isMobileCheck();
+	}
 
 	public readonly version12Message: Message[] = [
 		{
@@ -85,6 +88,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 
 	public banners: DisplayBanner[] = [];
 	public selectedBanner?: DisplayBanner;
+	public isMobile?: boolean;
 	/* Chart */
 	public pityChartData?: Chart.ChartData;
 	public pityChartOptions?: Chart.ChartOptions;
@@ -383,6 +387,17 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				qualityPercentage: (fourStarStats[0] / totalPulls) * 100,
 			},
 		};
+	}
+
+	private isMobileCheck(): void {
+		if (isPlatformBrowser(this.platformId)) {
+			this.isMobile = window.innerWidth <= 992;
+		}
+	}
+
+	@HostListener('window:resize', ['$event'])
+	public onResize(event: Event): void {
+		this.isMobile = window.innerWidth <= 992;
 	}
 }
 
