@@ -1,15 +1,6 @@
-@defer(on viewport) {
+@defer(on viewport; prefetch on immediate) {
 <p-sidebar [(visible)]="displayUpdateUrlSidebar" [position]="isMobile ? 'bottom' : 'top'">
     <p>Update URL WIP</p>
-</p-sidebar>
-
-<p-sidebar [(visible)]="displayBannerFilterSidebar" position="top" [fullScreen]="isMobile ?? false">
-    <ng-template pTemplate="header">
-        <span class="font-semibold text-xl">
-            Filter banners
-        </span>
-    </ng-template>
-    <p>Filter banners WIP</p>
 </p-sidebar>
 
 <div class="row">
@@ -17,10 +8,12 @@
         <p-button label="Change URL" icon="pi pi-link" iconPos="right" styleClass="mt-2 w-100 h-100"
             severity="secondary" (onClick)="displayUpdateUrlSidebar = !displayUpdateUrlSidebar" />
     </div>
+    @if(!isMobile) {
     <div class="col">
         <p-button label="Change Banners" icon="pi pi-filter-fill" iconPos="right" styleClass="mt-2 w-100 h-100"
             severity="secondary" (onClick)="displayBannerFilterSidebar = !displayBannerFilterSidebar" />
     </div>
+    }
 </div>
 }
 @placeholder {
@@ -30,13 +23,256 @@
 <!-- mobile view -->
 @defer (when isMobile === true; prefetch when isMobile) {
 @if (isMobile) {
+<p-divider />
+<div class="row">
+    <div class="col-12 mobile-banner-list__container gap-2">
+        <div class="flex flex-column">
+            @if (displayBanners && selectedBanner) {
+            <div class="text-lg">{{selectedBanner.name}}</div>
+            <div class="text-sm">{{selectedBanner.type}} Convene</div>
+            } @else {
+            <p-skeleton width="100%" height="2rem" />
+            <p-skeleton width="100%" height="1.5rem" />
+            }
+        </div>
 
+        <p-button icon="pi pi-objects-column" ariaLabel="Switch banner button" />
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col">
+        @if(selectedBanner) {
+        <div class="card border border-100 shadow-1 grid gap-2">
+            <div class="col-12 p-0">
+                <div class="text-lg">Pity</div>
+            </div>
+
+            <div class="col text-left">
+                @defer (when selectedBanner.pity?.fiveStar; on timer(5s)) {
+                <div class="text-five-star">5★ Pity</div>
+                <span class="text-2xl animated-underline text-five-star"
+                    pTooltip="{{80 - (selectedBanner.pity?.fiveStar || 0)}} more pulls for a guaranteed 5★"
+                    tooltipEvent="focus">
+                    {{selectedBanner.pity?.fiveStar}}
+                    <span class="text-sm text-color">/80</span>
+                </span>
+                } @placeholder {
+                <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
+                }
+            </div>
+            <div class="col text-center">
+                @defer (when selectedBannerDurationHistory) {
+                <div>Astrite</div>
+                <div class="text-2xl animated-underline flex justify-content-center align-content-center"
+                    pTooltip="That's {{selectedBannerDurationHistory.length}} wishes!" tooltipEvent="focus">
+                    <img ngSrc="images/icons/T_IconA160_zcpq_UI.png" alt="Astrite icon" height="32" width="32">
+
+                    {{selectedBannerDurationHistory.length * 160}}
+                </div>
+                } @placeholder {
+                <p-skeleton width="20vh" height="2.5rem" styleClass="m-1" />
+                }
+            </div>
+            <div class="col text-right">
+                @defer(when selectedBanner.pity?.fourStar; on timer(5s)) {
+                <div class="text-four-star">4★ Pity</div>
+                <span class="text-2xl animated-underline text-four-star"
+                    pTooltip="{{10 - (selectedBanner.pity?.fourStar || 0)}} more pulls for a guaranteed 4★"
+                    tooltipEvent="focus">
+                    {{selectedBanner.pity?.fourStar}}
+                    <span class="text-sm text-color">/10</span>
+                </span>
+                }
+                @placeholder {
+                <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
+                }
+            </div>
+        </div>
+        } @else {
+        <p-skeleton width="100%" height="10rem"></p-skeleton>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        @if(selectedBanner && selectedBanner.stats) {
+        <div class="card border border-100 shadow-1 grid">
+            <div class="col-12 flex justify-content-between p-0">
+                <div class="text-lg">Luck Summary</div>
+                <p-selectButton [options]="qualityLevels" [(ngModel)]="selectedQualityLevel" optionLabel="label"
+                    optionValue="value" [allowEmpty]="false" />
+            </div>
+
+            <div class="col">
+                <ng-container *ngIf="selectedQualityLevel === 5; then fiveStarStats else fourStarStats"></ng-container>
+
+                <ng-template #fiveStarStats>
+                    <div class="grid gap">
+                        <div class="col-4">
+                            <div class="text-lg">
+                                No. of
+                                <span class="text-five-star">5★ pulls</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    pTooltip="You pulled {{selectedBanner.stats.fiveStar.count}} 5★"
+                                    tooltipEvent="focus">
+                                    {{selectedBanner.stats.fiveStar.count}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-lg">
+                                Avg. Pity
+                                <span class="text-five-star">5★</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    [class]="getPityClass(5, selectedBanner.stats.fiveStar.avgPity)"
+                                    pTooltip="You averaged {{selectedBanner.stats.fiveStar.avgPity}} pulls to get a 5★"
+                                    tooltipEvent="focus">
+                                    {{(selectedBanner.stats.fiveStar.avgPity || 0) | number: '1.0-0'}}
+                                    <span class="text-sm text-color">/80</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-lg">
+                                50-50s won
+                                <span class="text-five-star">5★</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    pTooltip="You won fifty-fifty {{selectedBanner.stats.fiveStar.wonFiftyFifty}} times"
+                                    tooltipEvent="focus">
+                                    {{selectedBanner.stats.fiveStar.wonFiftyFifty}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-lg">Chance of getting a
+                                <span class="text-five-star">5★</span>
+                            </div>
+                            <p-progressBar [value]="selectedBanner.stats.fiveStar.qualityPercentage" mode="determinate"
+                                [showValue]="false" styleClass="mt-2"
+                                pTooltip="You had a {{selectedBanner.stats.fiveStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 5★"
+                                tooltipEvent="focus" tooltipPosition="bottom" />
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #fourStarStats>
+                    <div class="grid gap">
+                        <div class="col-4">
+                            <div class="text-lg">
+                                No. of
+                                <span class="text-four-star">4★ pulls</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    pTooltip="You pulled {{selectedBanner.stats.fiveStar.count}} 4★"
+                                    tooltipEvent="focus">
+                                    {{selectedBanner.stats.fiveStar.count}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-lg">
+                                Avg. Pity
+                                <span class="text-four-star">4★</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    [class]="getPityClass(4, selectedBanner.stats.fourStar.avgPity)"
+                                    pTooltip="You averaged {{selectedBanner.stats.fourStar.avgPity}} pulls to get a 4★"
+                                    tooltipEvent="focus">
+                                    {{(selectedBanner.stats.fourStar.avgPity || 0) | number: '1.0-0'}}
+                                    <span class="text-sm text-color">/10</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-lg">
+                                50-50s won
+                                <span class="text-four-star">4★</span>
+                                <span class="text-2xl ms-2 animated-underline"
+                                    pTooltip="You won fifty-fifty {{selectedBanner.stats.fourStar.wonFiftyFifty}} times"
+                                    tooltipEvent="focus">
+                                    {{selectedBanner.stats.fourStar.wonFiftyFifty}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-lg">Chance of getting a
+                                <span class="text-four-star">4★</span>
+                            </div>
+                            <p-progressBar [value]="selectedBanner.stats.fourStar.qualityPercentage" mode="determinate"
+                                [showValue]="false" styleClass="mt-2"
+                                pTooltip="You had a {{selectedBanner.stats.fourStar.qualityPercentage | number: '1.0-2'}}% chance of getting a 4★"
+                                tooltipEvent="focus" tooltipPosition="bottom" />
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        }
+        @else {
+        <p-skeleton width="100%" height="20vh"></p-skeleton>
+        }
+    </div>
+</div>
+
+@defer(on viewport; when selectedBanner && selectedBanner.history) {
+<div class="row">
+    <div class="col">
+        @if(selectedBanner && selectedBanner.history) {
+        <div class="card border border-100 shadow-1 grid justify-content-center">
+            <div class="col-12 p-0">
+                <div class="text-lg">Recent Pulls</div>
+            </div>
+            <div class="col-3 banner-history__item mobile" *ngFor="let item of selectedQualityBannerHistory">
+                <img class="banner-history__item-image"
+                    [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
+                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                    *ngIf="item.resourceType === 'Resonator'">
+                <img class="banner-history__item-image"
+                    [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
+                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                    *ngIf="item.resourceType === 'Weapon'">
+
+                <i class="banner-history__item-quality pi bi-stars" [class.won-5050]="item.wonFiftyFifty"
+                    pTooltip="Won the 50/50!" *ngIf="item.qualityLevel > 4 && item.wonFiftyFifty"></i>
+                <span class="banner-history__item-pity"
+                    [class]="getPityClass(item.qualityLevel, item.pity)">{{item.pity}}</span>
+            </div>
+        </div>
+        }
+        @else {
+        <p-skeleton width="100%" height="20rem" styleClass="px-1 pt-1"></p-skeleton>
+        }
+    </div>
+</div>
+} @placeholder {
+<p-skeleton width="100%" height="20rem"></p-skeleton>
 }
+}
+} @loading {
+<div class="grid">
+    <div class="col-9">
+        <p-skeleton width="100%" height="10rem"></p-skeleton>
+        <p-skeleton width="100%" height="10rem"></p-skeleton>
+    </div>
+    <div class="col-3">
+        <p-skeleton width="100%" height="25rem"></p-skeleton>
+    </div>
+</div>
 }
 
 <!-- desktop view -->
 @defer (when isMobile === false; prefetch when isMobile === false) {
 @if(!isMobile) {
+<p-sidebar [(visible)]="displayBannerFilterSidebar" position="top">
+    <ng-template pTemplate="header">
+        <span class="font-semibold text-xl">
+            Filter banners
+        </span>
+    </ng-template>
+    <p>Filter banners WIP</p>
+</p-sidebar>
+
 <div class="row d-none lg:flex mt-2">
     <div class="col-12 xl:col-9 flex-order-1 xl:flex-order-0">
         <div class="h-100">
@@ -94,7 +330,6 @@
                                 }
                                 @placeholder {
                                 <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
-
                                 }
                             </div>
                         </div>

@@ -133,6 +133,10 @@
 
 	&:not(:last-child) {
 		margin-right: 1rem;
+
+		&:not(.mobile) {
+			margin-right: none;
+		}
 	}
 
 	.banner-history__item-pity {
@@ -205,4 +209,13 @@
 		transform: scaleX(1);
 		transition-delay: 0s;
 	}
+}
+
+.mobile-banner-list__container {
+	display: flex;
+
+	justify-content: space-between;
+	align-items: center;
+
+	overflow: hidden;
 }

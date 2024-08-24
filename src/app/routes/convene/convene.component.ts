@@ -28,6 +28,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SidebarModule } from 'primeng/sidebar';
+import { DividerModule } from 'primeng/divider';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
 import moment from 'moment';
@@ -59,6 +60,7 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 		SkeletonModule,
 		ProgressBarModule,
 		SidebarModule,
+		DividerModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
