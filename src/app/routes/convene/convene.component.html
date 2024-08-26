@@ -1,12 +1,8 @@
 @defer(on viewport; prefetch on immediate) {
-<p-sidebar [(visible)]="displayUpdateUrlSidebar" [position]="isMobile ? 'bottom' : 'top'">
-    <p>Update URL WIP</p>
-</p-sidebar>
-
 <div class="row">
     <div class="col">
         <p-button label="Change URL" icon="pi pi-link" iconPos="right" styleClass="mt-2 w-100 h-100"
-            severity="secondary" (onClick)="displayUpdateUrlSidebar = !displayUpdateUrlSidebar" />
+            severity="secondary" routerLink="/import" [queryParams]="{'skipGuide': 1}" />
     </div>
     @if(!isMobile) {
     <div class="col">

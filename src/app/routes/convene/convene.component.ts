@@ -3,7 +3,7 @@ import {
 	isPlatformBrowser,
 	NgOptimizedImage,
 } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
 	AfterViewInit,
 	Component,
@@ -15,13 +15,9 @@ import {
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
-import { PanelModule } from 'primeng/panel';
-import { MessagesModule } from 'primeng/messages';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
-import { Message } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -46,14 +42,12 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 		CommonModule,
 		NgOptimizedImage,
 		FormsModule,
+		RouterModule,
 
 		ButtonModule,
-		PanelModule,
-		MessagesModule,
 		IconFieldModule,
 		InputIconModule,
 		InputTextModule,
-		ToastModule,
 		ChartModule,
 		TooltipModule,
 		SelectButtonModule,
@@ -72,24 +66,6 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		private activatedRoute: ActivatedRoute
 	) {}
 
-	public readonly version12Message: Message[] = [
-		{
-			key: 'version1.2',
-			severity: 'warn',
-			closable: false,
-			summary: 'API change',
-			detail:
-				'With the release of version 1.2, Kuro games has removed the support for permanent convene URLs. This means Wubby will no longer be able to remember your convene URL.',
-		},
-	];
-	public readonly loadingMessage: Message[] = [
-		{
-			severity: 'info',
-			closable: false,
-			summary: 'Loading',
-			detail: 'Please wait while we load your history...',
-		},
-	];
 	public readonly qualityLevels = [
 		{ label: '5★', value: 5 },
 		{ label: '4★', value: 4 },
