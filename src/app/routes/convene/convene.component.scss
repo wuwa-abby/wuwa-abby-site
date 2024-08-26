@@ -36,7 +36,8 @@
 			margin-bottom: 1rem;
 		}
 
-		&:hover {
+		&:hover,
+		&.selected {
 			background: var(--surface-200);
 			transition: background 0.3s;
 

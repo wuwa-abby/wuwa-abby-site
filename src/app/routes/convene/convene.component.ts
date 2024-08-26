@@ -107,6 +107,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	/* Sidebars */
 	public displayUpdateUrlSidebar: boolean = false;
 	public displayBannerFilterSidebar: boolean = false;
+	public displayPickBannerSidebar: boolean = false;
 
 	public get displayBanners(): DisplayBanner[] {
 		return this.banners.sort((a, b) => a.type.localeCompare(b.type, 'en'));
