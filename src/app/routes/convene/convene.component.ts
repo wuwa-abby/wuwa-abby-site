@@ -120,8 +120,9 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		return (
 			this.selectedBannerDurationHistory.filter((x) => x.qualityLevel >= 4) ||
 			[]
-		).sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
-		// .slice(0, 15);
+		)
+			.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+			.slice(0, 20);
 	}
 
 	public get selectedBannerDurationHistory(): DisplayItem[] {

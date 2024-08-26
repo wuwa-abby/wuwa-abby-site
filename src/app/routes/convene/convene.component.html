@@ -217,26 +217,31 @@
 <div class="row">
     <div class="col">
         @if(selectedBanner && selectedBanner.history) {
-        <div class="card border border-100 shadow-1 grid justify-content-center">
-            <div class="col-12 p-0">
-                <div class="text-lg">Recent Pulls</div>
-            </div>
-            <div class="col-3 banner-history__item mobile" *ngFor="let item of selectedQualityBannerHistory">
-                <img class="banner-history__item-image"
-                    [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
-                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
-                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
-                    *ngIf="item.resourceType === 'Resonator'">
-                <img class="banner-history__item-image"
-                    [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
-                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
-                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
-                    *ngIf="item.resourceType === 'Weapon'">
+        <div class="card border border-100 shadow-1">
+            <div class="text-lg">Recent Pulls</div>
 
-                <i class="banner-history__item-quality pi bi-stars" [class.won-5050]="item.wonFiftyFifty"
-                    pTooltip="Won the 50/50!" *ngIf="item.qualityLevel > 4 && item.wonFiftyFifty"></i>
-                <span class="banner-history__item-pity"
-                    [class]="getPityClass(item.qualityLevel, item.pity)">{{item.pity}}</span>
+            <div class="grid gap-3 justify-content-center mt-4">
+                <div *ngFor="let item of selectedQualityBannerHistory">
+                    <div class="banner-history__container-mobile">
+                        <div class="banner-history__item">
+                            <div class="banner-history__image-container">
+                                <img class="banner-history__item-image"
+                                    [ngSrc]="'images/characters/head-80/T_IconRoleHead80_' + item.name.toLowerCase() + '_UI.png'"
+                                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                                    *ngIf="item.resourceType === 'Resonator'">
+                                <img class="banner-history__item-image"
+                                    [ngSrc]="'images/weapons/weapons-80/T_IconWeapon80_' + item.resourceId + '_UI.png'"
+                                    [class.five-star]="item.qualityLevel === 5" [alt]="item.name" height="64" width="64"
+                                    pTooltip="Obtained {{item.name}} on {{item.time | date: 'MMM d'}}"
+                                    *ngIf="item.resourceType === 'Weapon'">
+
+                                <span class="banner-history__item-pity"
+                                    [class]="getPityClass(item.qualityLevel, item.pity)">{{item.pity}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         }
