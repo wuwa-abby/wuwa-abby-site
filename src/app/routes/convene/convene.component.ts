@@ -26,11 +26,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SidebarModule } from 'primeng/sidebar';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
-import { PickListModule } from 'primeng/picklist';
+import { PickListModule, PickListMoveToTargetEvent } from 'primeng/picklist';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
 import moment from 'moment';
 
+import { CookieService } from '@core/services/cookie.service';
 import { StorageService } from '@core/services/storage.service';
 import { calculateResourceDetails } from '@core/helpers/kuro.helper';
 import { getPityClass } from '@core/helpers/ui.helper';
@@ -67,7 +68,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private storageService: StorageService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private cookieService: CookieService
 	) {}
 
 	public readonly qualityLevels = [
@@ -76,10 +78,14 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	];
 	private readonly now: Date = new Date();
 
-	public availableBanners: DisplayBanner[] = [];
-	public userBanners: DisplayBanner[] = [];
-	public selectedBanner?: DisplayBanner;
+	public selectedBanners: DisplayBanner[] = [];
+	public activeBanner?: DisplayBanner;
+	public bannersToLoad: string[] = [];
 	public isMobile?: boolean;
+
+	public bannerPickListTrackBy = (index: number, item: DisplayBanner) =>
+		item.key;
+
 	/* Chart */
 	public pityChartData?: Chart.ChartData;
 	public pityChartOptions?: Chart.ChartOptions;
@@ -90,12 +96,22 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	/* Dialog */
 	public displayBannerFilterDialog: boolean = false;
 
+	private availableBanners: DisplayBanner[] = [];
+
+	public get availableBannersFiltered(): DisplayBanner[] {
+		return this.availableBanners.filter(
+			(x) => !this.selectedBanners.includes(x)
+		);
+	}
+
 	public get displayBanners(): DisplayBanner[] {
-		return this.userBanners.sort((a, b) => a.type.localeCompare(b.type, 'en'));
+		return this.selectedBanners.sort((a, b) =>
+			a.type.localeCompare(b.type, 'en')
+		);
 	}
 
 	public get selectedBannerHistory(): DisplayItem[] {
-		return this.selectedBanner?.history || [];
+		return this.activeBanner?.history || [];
 	}
 
 	public get selectedQualityBannerHistory(): DisplayItem[] {
@@ -108,58 +124,36 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	public get selectedBannerDurationHistory(): DisplayItem[] {
-		return this.selectedBanner
-			? this.selectedBanner.history?.filter(
+		return this.activeBanner
+			? this.activeBanner.history?.filter(
 					(x) =>
-						new Date(x.time) >= this.selectedBanner!.startDate &&
-						new Date(x.time) <= this.selectedBanner!.endDate
+						new Date(x.time) >= this.activeBanner!.startDate &&
+						new Date(x.time) <= this.activeBanner!.endDate
 			  ) || []
 			: [];
 	}
 
 	public ngOnInit(): void {
 		this.isMobileCheck();
+		this.retrieveUserBanners();
 
-		this.activatedRoute.data.subscribe((data) => {
-			const bannersApi = data['banners'] as Observable<ConveneBanner>[];
-			bannersApi.forEach((banner) => {
-				banner.subscribe((bannerData) => {
-					bannerData.startDate = new Date(bannerData.startDate);
-					bannerData.endDate = new Date(bannerData.endDate);
-
-					const displayBanner = {
-						...bannerData,
-						featuredString: `${bannerData.featuredResources.fiveStar.join(
-							', '
-						)},${bannerData.featuredResources.fourStar.join(', ')}`,
-					};
-
-					this.availableBanners.push(displayBanner);
-					if (!this.selectedBanner) {
-						this.selectBanner(displayBanner);
-					}
-				});
-			});
-		});
+		this.loadBanners();
 		this.configureChart();
 	}
 
 	public ngAfterViewInit(): void {
 		if (!isPlatformBrowser(this.platformId)) return;
 
-		// this.loadHistory()
-		(async () => {
-			await this.loadHistory();
-
-			if (this.selectedBanner) {
-				this.updateChart(this.selectedBanner);
+		this.loadHistory().then(() => {
+			if (this.activeBanner) {
+				this.updateChart(this.activeBanner);
 				this.calculateStats();
 			}
-		})();
+		});
 	}
 
 	public selectBanner(banner: DisplayBanner): void {
-		this.selectedBanner = banner;
+		this.activeBanner = banner;
 
 		if (!banner.history) return;
 
@@ -168,6 +162,13 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	public getPityClass = getPityClass;
+
+	public updateBannerPreferences(evt: PickListMoveToTargetEvent) {
+		this.cookieService.set(
+			'conveneBanners',
+			this.selectedBanners.map((b) => b.key)
+		);
+	}
 
 	private async loadHistory(): Promise<void> {
 		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
@@ -344,7 +345,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	}
 
 	private async calculateStats(): Promise<void> {
-		if (!this.selectedBanner || this.selectedBanner.stats) return;
+		if (!this.activeBanner || this.activeBanner.stats) return;
 
 		const totalPulls = this.selectedBannerDurationHistory.length;
 
@@ -378,7 +379,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				[0, 0, 0]
 			);
 
-		this.selectedBanner.stats = {
+		this.activeBanner.stats = {
 			totalPulls,
 			fiveStar: {
 				count: fiveStarStats[0],
@@ -404,6 +405,49 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	@HostListener('window:resize', ['$event'])
 	public onResize(event: Event): void {
 		this.isMobile = window.innerWidth <= 992;
+	}
+
+	private retrieveUserBanners(): void {
+		const userBanners = this.cookieService.get('conveneBanners');
+		if (!userBanners) return;
+
+		this.bannersToLoad = JSON.parse(userBanners) as string[];
+	}
+
+	private loadBanners(): void {
+		let shouldUseDefault = this.bannersToLoad.length === 0;
+
+		this.activatedRoute.data.subscribe((data) => {
+			const bannersApi = data['banners'] as Observable<ConveneBanner>[];
+			bannersApi.forEach((banner) => {
+				banner.subscribe((bannerData) => {
+					bannerData.startDate = new Date(bannerData.startDate);
+					bannerData.endDate = new Date(bannerData.endDate);
+
+					const displayBanner = {
+						...bannerData,
+						featuredString: `${bannerData.featuredResources.fiveStar.join(
+							', '
+						)},${bannerData.featuredResources.fourStar.join(', ')}`,
+					};
+
+					if (shouldUseDefault && displayBanner.showUI) {
+						this.selectedBanners.push(displayBanner);
+						if (!this.activeBanner) {
+							this.selectBanner(displayBanner);
+						}
+					} else if (this.bannersToLoad.includes(displayBanner.key)) {
+						this.selectedBanners.push(displayBanner);
+
+						if (!this.activeBanner) {
+							this.selectBanner(displayBanner);
+						}
+					}
+
+					this.availableBanners.push(displayBanner);
+				});
+			});
+		});
 	}
 }
 

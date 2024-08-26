@@ -30,6 +30,11 @@ export interface ConveneBanner {
 	 * Type of the banner.
 	 */
 	type: string;
+	/**
+	 * Show the banner in the UI.
+	 * @default false
+	 */
+	showUI: boolean;
 }
 
 export interface ConveneBannerSimple {
