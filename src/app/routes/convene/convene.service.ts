@@ -18,7 +18,7 @@ export class ConveneService {
 		const history = await firstValueFrom(this.getBannerHistory());
 
 		const apiCalls = history
-			.filter((x) => x.showUI) // do not auto-fetch banners that are not supposed to be shown
+			// .filter((x) => x.showUI) // do not auto-fetch banners that are not supposed to be shown
 			.map((banner) => {
 				return this.http.get<ConveneBanner>(`raw/banners/${banner.key}.json`);
 			});

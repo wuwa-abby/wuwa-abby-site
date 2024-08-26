@@ -7,8 +7,26 @@
     @if(!isMobile) {
     <div class="col">
         <p-button label="Change Banners" icon="pi pi-filter-fill" iconPos="right" styleClass="mt-2 w-100 h-100"
-            severity="secondary" (onClick)="displayBannerFilterSidebar = !displayBannerFilterSidebar" />
+            severity="secondary" (onClick)="displayBannerFilterDialog = !displayBannerFilterDialog" />
     </div>
+
+    @defer(when availableBanners) {
+    <p-dialog header="Pick Banners to display" [modal]="true" [(visible)]="displayBannerFilterDialog">
+        <div class="card">
+            <p-pickList [source]="availableBanners" [target]="userBanners" sourceHeader="Available"
+                targetHeader="Selected" [dragdrop]="true" [responsive]="true" [showSourceControls]="false"
+                [showTargetControls]="false" filterBy="name,kuroBannerId,type,featuredString">
+                <ng-template let-bannerInfo pTemplate="item">
+                    <div class="card border border-400 border rounded text-center mb-0">
+                        <img class="object-fit-contain" [ngSrc]="'images/gacha/' + bannerInfo.key + '.png'"
+                            [alt]="bannerInfo.name" height="127" width="226" priority />
+                        <div>{{bannerInfo.name}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+    </p-dialog>
+    }
     }
 </div>
 }
@@ -286,15 +304,6 @@
 <!-- desktop view -->
 @defer (when isMobile === false; prefetch when isMobile === false) {
 @if(!isMobile) {
-<p-sidebar [(visible)]="displayBannerFilterSidebar" position="top">
-    <ng-template pTemplate="header">
-        <span class="font-semibold text-xl">
-            Filter banners
-        </span>
-    </ng-template>
-    <p>Filter banners WIP</p>
-</p-sidebar>
-
 <div class="row d-none lg:flex mt-2">
     <div class="col-12 xl:col-9 flex-order-1 xl:flex-order-0">
         <div class="h-100">

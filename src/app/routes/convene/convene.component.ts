@@ -25,6 +25,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SidebarModule } from 'primeng/sidebar';
 import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { PickListModule } from 'primeng/picklist';
 import { Observable } from 'rxjs';
 import * as Chart from 'chart.js';
 import moment from 'moment';
@@ -55,6 +57,8 @@ import { GachaMemoryTable } from '@core/model/gacha-history.table';
 		ProgressBarModule,
 		SidebarModule,
 		DividerModule,
+		DialogModule,
+		PickListModule,
 	],
 	templateUrl: './convene.component.html',
 	styleUrl: './convene.component.scss',
@@ -72,7 +76,8 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	];
 	private readonly now: Date = new Date();
 
-	public banners: DisplayBanner[] = [];
+	public availableBanners: DisplayBanner[] = [];
+	public userBanners: DisplayBanner[] = [];
 	public selectedBanner?: DisplayBanner;
 	public isMobile?: boolean;
 	/* Chart */
@@ -81,12 +86,12 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	/* Stats */
 	public selectedQualityLevel: number = 5;
 	/* Sidebars */
-	public displayUpdateUrlSidebar: boolean = false;
-	public displayBannerFilterSidebar: boolean = false;
 	public displayPickBannerSidebar: boolean = false;
+	/* Dialog */
+	public displayBannerFilterDialog: boolean = false;
 
 	public get displayBanners(): DisplayBanner[] {
-		return this.banners.sort((a, b) => a.type.localeCompare(b.type, 'en'));
+		return this.userBanners.sort((a, b) => a.type.localeCompare(b.type, 'en'));
 	}
 
 	public get selectedBannerHistory(): DisplayItem[] {
@@ -121,9 +126,17 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 				banner.subscribe((bannerData) => {
 					bannerData.startDate = new Date(bannerData.startDate);
 					bannerData.endDate = new Date(bannerData.endDate);
-					this.banners.push(bannerData);
+
+					const displayBanner = {
+						...bannerData,
+						featuredString: `${bannerData.featuredResources.fiveStar.join(
+							', '
+						)},${bannerData.featuredResources.fourStar.join(', ')}`,
+					};
+
+					this.availableBanners.push(displayBanner);
 					if (!this.selectedBanner) {
-						this.selectBanner(bannerData);
+						this.selectBanner(displayBanner);
 					}
 				});
 			});
@@ -160,11 +173,11 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
 		const history = await gachaMemoryStore.toArray();
 
-		for (let i = 0; i < this.banners.length; i++) {
-			const banner = this.banners[i];
+		for (let i = 0; i < this.availableBanners.length; i++) {
+			const banner = this.availableBanners[i];
 			let previousBanner: DisplayBanner | undefined;
 			if (i > 0) {
-				previousBanner = this.banners[i - 1];
+				previousBanner = this.availableBanners[i - 1];
 			}
 
 			banner.isExpired = banner.endDate < this.now;
@@ -400,6 +413,7 @@ interface DisplayBanner extends ConveneBanner {
 	chartData?: Chart.ChartData;
 	stats?: DisplayStats;
 	isExpired?: boolean;
+	featuredString: string;
 }
 
 interface DisplayItem extends GachaMemoryTable {
