@@ -1,0 +1,18 @@
+{
+    "key": "weapon-event-verdant_summit-20240523-20240606",
+    "kuroBannerId": "Resonators Accurate Modulation - 2",
+    "name": "Absolute Pulsation",
+    "featuredResources": {
+        "fiveStar": [
+            "Verdant Summit"
+        ],
+        "fourStar": [
+            "Augment",
+            "Hollow Mirage",
+            "Dauntless Evernight"
+        ]
+    },
+    "startDate": "2024-05-23T00:00:00",
+    "endDate": "2024-06-06T09:59:59",
+    "type": "Event Weapon"
+}

@@ -1,0 +1,18 @@
+{
+    "key": "weapon-event-ages_of_harvest-20240628-20240722",
+    "kuroBannerId": "Resonators Accurate Modulation - 2",
+    "name": "Absolute Pulsation",
+    "featuredResources": {
+        "fiveStar": [
+            "Ages of Harvest"
+        ],
+        "fourStar": [
+            "Discord",
+            "Commando of Conviction",
+            "Amnity Accord"
+        ]
+    },
+    "startDate": "2024-06-28T12:00:00",
+    "endDate": "2024-07-22T09:59:59",
+    "type": "Event Weapon"
+}

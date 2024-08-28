@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+::-webkit-scrollbar {
+	width: 18px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: color-mix(in srgb, var(--primary-color), #00000000 25%);
+	background-clip: content-box;
+
+	border: 5px solid transparent;
+	border-radius: 10px;
+}
+
 body {
+	height: 100%;
 	font-family: var(--font-family);
 	font-weight: normal;
 	background: var(--surface-ground);
@@ -22,4 +35,32 @@ code:not(.nostyle) {
 	word-wrap: break-word;
 	word-break: break-word;
 	hyphens: auto;
+}
+
+.text-five-star {
+	color: darken(#fbd856, 20%) !important;
+
+	[data-bs-theme='dark'] & {
+		color: #fbd856 !important;
+	}
+}
+
+.text-four-star {
+	color: darken(#8c6eb2, 10%) !important;
+
+	[data-bs-theme='dark'] & {
+		color: #8c6eb2 !important;
+	}
+}
+
+.hard-pity {
+	color: var(--red-500);
+}
+
+.soft-pity {
+	color: var(--yellow-500);
+}
+
+.no-pity {
+	color: var(--green-500);
 }

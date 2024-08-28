@@ -1,0 +1,13 @@
+{
+    "key": "weapon-standard-permanent-20240521-99990913",
+    "kuroBannerId": "Full-Range Modualtion",
+    "name": "Winter Brume",
+    "featuredResources": {
+        "fiveStar": [],
+        "fourStar": []
+    },
+    "startDate": "0001-01-01T00:00:01",
+    "endDate": "9999-09-13T23:59:59",
+    "type": "Standard Weapon",
+    "showUI": true
+}
