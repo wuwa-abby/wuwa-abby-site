@@ -95,6 +95,7 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	public displayPickBannerSidebar: boolean = false;
 	/* Dialog */
 	public displayBannerFilterDialog: boolean = false;
+	public displayPromptImportDialog: boolean = false;
 
 	private availableBanners: DisplayBanner[] = [];
 
@@ -173,6 +174,11 @@ export class ConveneComponent implements OnInit, AfterViewInit {
 	private async loadHistory(): Promise<void> {
 		const gachaMemoryStore = this.storageService.getGachaMemoryTable();
 		const history = await gachaMemoryStore.toArray();
+
+		if (!history.length) {
+			this.displayPromptImportDialog = true;
+			return;
+		}
 
 		for (let i = 0; i < this.availableBanners.length; i++) {
 			const banner = this.availableBanners[i];

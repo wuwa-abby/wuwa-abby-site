@@ -28,6 +28,28 @@
         </div>
     </p-dialog>
     }
+
+    <p-dialog header="Oops!" [modal]="true" [(visible)]="displayPromptImportDialog" [closeOnEscape]="false"
+        [closable]="false">
+        <div class="card p-0 m-0">
+            <div class="text-lg">Wubby noticed that you haven't imported your data yet!</div>
+
+            <p>To see your Convene history, Wubby needs your convene data to be imported first.</p>
+
+            <div class="grid">
+                <div class="col">
+                    <p-button label="I'll just look around for now" icon="pi pi-arrow-right" iconPos="right"
+                        severity="secondary" styleClass="w-100" (onClick)="displayPromptImportDialog = false"
+                        routerLink="/resonators" />
+                </div>
+                <div class="col">
+                    <p-button label="Import Data" icon="pi pi-upload" iconPos="right" styleClass="w-100"
+                        severity="contrast" (onClick)="displayPromptImportDialog = false" routerLink="/import"
+                        autofocus />
+                </div>
+            </div>
+        </div>
+    </p-dialog>
     }
 </div>
 }
@@ -85,7 +107,7 @@
             </div>
 
             <div class="col text-left">
-                @defer (when activeBanner.pity?.fiveStar; on timer(5s)) {
+                @defer (when activeBanner.pity?.fiveStar) {
                 <div class="text-five-star">5★ Pity</div>
                 <span class="text-2xl animated-underline text-five-star"
                     pTooltip="{{80 - (activeBanner.pity?.fiveStar || 0)}} more pulls for a guaranteed 5★"
@@ -111,7 +133,7 @@
                 }
             </div>
             <div class="col text-right">
-                @defer(when activeBanner.pity?.fourStar; on timer(5s)) {
+                @defer(when activeBanner.pity?.fourStar) {
                 <div class="text-four-star">4★ Pity</div>
                 <span class="text-2xl animated-underline text-four-star"
                     pTooltip="{{10 - (activeBanner.pity?.fourStar || 0)}} more pulls for a guaranteed 4★"
@@ -339,7 +361,7 @@
                             <div class="banner-detail__pity text-right">
                                 <div class="text-lg">You {{activeBanner?.isExpired ? 'were': 'are'}} at</div>
 
-                                @defer (when activeBanner?.pity?.fiveStar; on timer(5s)) {
+                                @defer (when activeBanner?.pity?.fiveStar) {
                                 <div class="text-2xl animated-underline text-five-star"
                                     pTooltip="{{80 - (activeBanner?.pity?.fiveStar || 0)}} more pulls for a guaranteed 5★">
                                     {{activeBanner?.pity?.fiveStar}}
@@ -350,7 +372,7 @@
                                 <p-skeleton width="10vh" height="2.5rem" styleClass="m-1" />
                                 }
 
-                                @defer(when activeBanner?.pity?.fourStar; on timer(5s)) {
+                                @defer(when activeBanner?.pity?.fourStar) {
                                 <div class="text-2xl animated-underline block text-four-star"
                                     pTooltip="{{10 - (activeBanner?.pity?.fourStar || 0)}} more pulls for a guaranteed 4★">
                                     {{activeBanner?.pity?.fourStar}}
