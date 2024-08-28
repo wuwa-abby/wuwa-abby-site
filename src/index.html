@@ -13,7 +13,8 @@
     var prefCookie = document.cookie.split('; ').find(row => row.startsWith('userPreferences'));
     if (prefCookie) {
       var theme = JSON.parse(decodeURIComponent(prefCookie.split('=')[1]))['theme'];
-      document.getElementById('app-theme-link').href = `${theme}-theme.css`;
+      if (theme)
+        document.getElementById('app-theme-link').href = `${theme}-theme.css`;
     } else {
       document.getElementById('app-theme-link').href = 'dark-theme.css';
     }
