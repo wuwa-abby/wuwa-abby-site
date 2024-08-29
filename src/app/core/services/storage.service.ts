@@ -15,7 +15,7 @@ export class StorageService extends Dexie {
 		super('wubby-memory');
 		this.version(1).stores({
 			gacha:
-				'++id,cardPoolType,cardPoolId,qualityLevel,resourceType,name,count,time,pity,profileId',
+				'++id,cardPoolType,cardPoolId,qualityLevel,resourceType,name,count,time,pity,profileId,isCustom',
 			memory: 'key,value',
 			profiles:
 				'++id,profileName,profileImage,inGameID,server,lastUpdateDate,isActive',

@@ -17,6 +17,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { StorageService } from '@core/services/storage.service';
 
@@ -38,6 +39,7 @@ import { StorageService } from '@core/services/storage.service';
 		TagModule,
 		TooltipModule,
 		DialogModule,
+		InputNumberModule,
 	],
 	templateUrl: './resonators.component.html',
 	styleUrl: './resonators.component.scss',
@@ -80,11 +82,20 @@ export class ResonatorsComponent implements OnInit {
 		this.selectedResonator = resonator;
 	}
 
+	public updateResonatorSequence(
+		resonator: DisplayResonator,
+		sequence: number
+	): void {}
+
 	private async loadResonators(): Promise<void> {
 		this.resonators = (
 			this.activatedRoute.snapshot.data['resonators'] as DisplayResonator[]
 		)
-			.map((r) => ({ ...r, imageName: r.name, isUnknown: false }))
+			.map((r) => ({
+				...r,
+				imageName: r.name,
+				isUnknown: false,
+			}))
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.sort((a, b) => a.element.localeCompare(b.element));
 
@@ -146,6 +157,7 @@ export class ResonatorsComponent implements OnInit {
 					pity: resonator.pity,
 					isUnknown: true,
 					imageName: 'zhujue', // default female rover image
+					isCustom: false,
 				});
 				continue;
 			}
@@ -163,6 +175,7 @@ export class ResonatorsComponent implements OnInit {
 				time: resonator.time,
 				pity: resonator.pity,
 				imageName: resonator.name,
+				isCustom: resonator.isCustom,
 			});
 		}
 
@@ -190,6 +203,7 @@ export interface DisplayResonator {
 	count?: number;
 	time?: string;
 	pity?: number;
+	isCustom?: boolean;
 
 	isUnknown: boolean;
 	imageName: string;

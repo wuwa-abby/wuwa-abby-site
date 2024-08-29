@@ -18,7 +18,7 @@
 <div class="page__content grid mt-2">
     <div class="col-6 md:col-4 lg:col-2" *ngFor="let resonator of resonators; let i = index">
         <p-card styleClass="resonator__container border border-{{resonator.element.toLowerCase()}} surface-ground"
-            (click)="editResonator(resonator)" pTooltip="Click to edit {{resonator.name}}">
+            (click)="editResonator(resonator)" pTooltip="Click to edit {{resonator.name}}" tooltipPosition="bottom">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
                     <img class="resonator__image object-fit-contain"
@@ -35,17 +35,32 @@
                     [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
                     [icon]="resonator.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="resonator.sequenceCount" />
             </div>
-            <!-- <p class="resonator__date">{{resonator.lastObtainedAt | date:'MMM d'}}</p> -->
         </p-card>
     </div>
 </div>
 
 @defer(when selectedResonator) {
-<p-dialog header="Update {{selectedResonator?.name}}" [modal]="true" [maximizable]="true"
-    [(visible)]="state['showEditResonatorDialog']"
+<p-dialog header="Update Resonator" [modal]="true" [maximizable]="true" [(visible)]="state['showEditResonatorDialog']"
     [breakpoints]="{ '1199px': '65vw', '991px': '70vw', '575px': '90vw' }">
-    <div class="col-12" style="min-width: 65vw; max-width: 90vw;">
-        {{selectedResonator | json}}
+    <div class="row" style="min-width: 65vw; max-width: 90vw;" *ngIf="selectedResonator">
+        <div class="col">
+            <h1 class="text-4xl m-0">{{selectedResonator.name}}</h1>
+
+            <div class="row">
+                <div class="col">Sequences</div>
+                <div class="col-2">
+                    <p-inputNumber [(ngModel)]="selectedResonator.sequenceCount" [showButtons]="true"
+                        buttonLayout="vertical" spinnerMode="vertical" inputId="vertical"
+                        decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary"
+                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" [max]="6" [min]="0" />
+                </div>
+            </div>
+        </div>
+        <div class="col-auto flex justify-content-end">
+            <img class="object-fit-contain"
+                [ngSrc]="'images/characters/T_IconRole_Pile_' + selectedResonator.imageName.toLowerCase() + '_UI.png'"
+                [alt]="selectedResonator.name" height="256" width="183" />
+        </div>
     </div>
 
     <ng-template pTemplate="footer">
