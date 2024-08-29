@@ -1,0 +1,19 @@
+{
+    "key": "weapon-event-rime_draped_sprouts-20240815-20240907",
+    "kuroBannerId": "Resonators Accurate Modulation - 2",
+    "name": "Absolute Pulsation",
+    "featuredResources": {
+        "fiveStar": [
+            "Verdant Summit"
+        ],
+        "fourStar": [
+            "Dauntless Evernight",
+            "Jinzhou Keeper",
+            "Hollow Mirage"
+        ]
+    },
+    "startDate": "2024-08-15T12:00:00",
+    "endDate": "2024-09-07T09:59:00",
+    "type": "Event Weapon",
+    "showUI": true
+}

@@ -1,27 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 
-import { NavbarComponent } from '@core/components/navbar/navbar.component';
-import { FooterComponent } from '@core/components/footer/footer.component';
+import { NavbarComponent } from '@app/layout/components/navbar/navbar.component';
+import { FooterComponent } from '@app/layout/components/footer/footer.component';
 import { CookieService } from '@core/services/cookie.service';
+import { PreferencesService } from '@core/services/preferences.service';
 
 @Component({
-  selector: 'abby-root',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, ToastModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+	selector: 'abby-root',
+	standalone: true,
+	imports: [RouterOutlet, NavbarComponent, FooterComponent, ToastModule],
+	templateUrl: './app.component.html',
+	styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  constructor(private cookieService: CookieService) {}
+export class AppComponent implements OnInit {
+	constructor(
+		private cookieService: CookieService,
+		private prefService: PreferencesService
+	) {}
 
-  public title = 'WuWa Abby';
+	public get theme(): string {
+		return this.prefService.theme;
+	}
 
-  public onToastClose(evt: ToastCloseEvent) {
-    if (evt.message.data?.cookieConsent) {
-      this.cookieService.set('cookieConsent', 'true');
-    }
-  }
+	ngOnInit(): void {}
+
+	public onToastClose(evt: ToastCloseEvent) {
+		if (evt.message.data?.cookieConsent) {
+			this.cookieService.set('cookieConsent', 'true');
+		}
+	}
 }

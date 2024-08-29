@@ -1,6 +1,8 @@
-<abby-navbar></abby-navbar>
-<div class="site__content p-2 px-4">
-    <router-outlet />
+<div class="min-vh-100 flex flex-column">
+    <abby-navbar></abby-navbar>
+    <div class="flex-grow-1 p-2 px-4">
+        <router-outlet />
+    </div>
     <p-toast (onClose)="onToastClose($event)" />
 </div>
 <abby-footer></abby-footer>

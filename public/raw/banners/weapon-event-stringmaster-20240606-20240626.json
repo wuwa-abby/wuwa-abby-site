@@ -1,0 +1,21 @@
+{
+    "key": "weapon-event-stringmaster-20240606-20240626",
+    "kuroBannerId": "Resonators Accurate Modulation - 2",
+    "name": "Absolute Pulsation",
+    "featuredResources": {
+        "fiveStar": [
+            "Stringmaster"
+        ],
+        "fourStar": [
+            "Augment",
+            "Hollow Mirage",
+            "Dauntless Evernight",
+            "Lunar Cutter",
+            "Cadenza",
+            "Jinzhou Keeper"
+        ]
+    },
+    "startDate": "2024-06-06T10:00:00",
+    "endDate": "2024-06-26T23:59:59",
+    "type": "Event Weapon"
+}

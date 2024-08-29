@@ -1,0 +1,18 @@
+{
+    "key": "resonator-event-changli-20240722-20240814",
+    "kuroBannerId": "Resonators Accurate Modulation",
+    "name": "Vermillion's Ploy",
+    "featuredResources": {
+        "fiveStar": [
+            "Changli"
+        ],
+        "fourStar": [
+            "Baizhi",
+            "Taoqi",
+            "Mortefi"
+        ]
+    },
+    "startDate": "2024-07-22T10:00:00",
+    "endDate": "2024-08-14T11:59:59",
+    "type": "Event Resonator"
+}

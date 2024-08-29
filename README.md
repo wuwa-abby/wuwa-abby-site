@@ -1,27 +1,42 @@
-# WuwaHistory
+# Wuwa Abby
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+Wuwa Abby is a tracking tool designed to help players of Wuthering Waves track and plan their wish (convene) progress. The site allows users to monitor their pity, view their wish history, analyze stats, and manage multiple profiles if they have more than one account.
 
-## Development server
+> ATOW: _I’m the sole developer working on this project, and while I’ve put in a lot of effort to make it useful, progress has been slow due to my limited free time. However, there's another fantastic and frequently maintained tracker that I highly recommend, called [WuWa Tracker](https://wuwatracker.com/). If you're looking for a reliable tool with regular updates, do check them out!_
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Access the App
 
-## Code scaffolding
+There’s no need to install anything—simply head over to [wuwaabby.moe](https://wuwaabby.moe) to start using the app.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Contributing
 
-## Build
+Contributions are welcome! Since I’ve open-sourced the project, I’d love to invite you to contribute and help improve the site. Please refer to the [CONTRIBUTING](CONTRIBUTING.md) file in the repo for guidelines on how to get started.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Built With
 
-## Running unit tests
+- **Angular 18 SSR**: The foundation of the app, ensuring a seamless and dynamic user experience.
+- **PrimeNG**: A collection of rich UI components that have significantly reduced development time.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## License
 
-## Running end-to-end tests
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Reporting Issues
 
-## Further help
+If you encounter any bugs or issues, feel free to open a new issue on GitHub. I’ll do my best to address them as time permits.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Discussions
+
+For any questions, ideas, or general discussions, please use the GitHub Discussions tab. I might also consider adding a Discord server if there’s enough interest.
+
+## Screenshots
+
+_(Placeholder for screenshots, coming soon!)_
+
+## Future Plans
+
+There are no specific plans for future updates at the moment, but I intend to support the project in the long run. Any new features or updates will be shared as they come.
+
+---
+
+Thank you for checking out Wuwa Abby! Your contributions, feedback, and support mean a lot.

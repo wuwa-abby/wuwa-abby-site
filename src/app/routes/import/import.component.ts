@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FieldsetModule } from 'primeng/fieldset';
@@ -20,6 +20,7 @@ import { ImportStepsWindowsComponent } from './sub-components/import-steps-windo
 import { ImportStepsAppleComponent } from './sub-components/import-steps-apple/import-steps-apple.component';
 import { ImportHistoryComponent } from './sub-components/import-history/import-history.component';
 import { ImportService } from './import.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'abby-import',
@@ -45,13 +46,14 @@ import { ImportService } from './import.service';
 	templateUrl: './import.component.html',
 	styleUrl: './import.component.scss',
 })
-export class ImportComponent implements OnInit {
+export class ImportComponent implements OnInit, AfterViewInit {
 	constructor(
 		public prefService: PreferencesService,
 		private service: ImportService,
 		private profileService: ProfileService,
 		private toastService: MessageService,
-		private storageService: StorageService
+		private storageService: StorageService,
+		private route: ActivatedRoute
 	) {}
 
 	public readonly platformOptions = [
@@ -77,6 +79,10 @@ export class ImportComponent implements OnInit {
 		});
 	}
 
+	public ngAfterViewInit(): void {
+		this.handleUrlParams(this.route.snapshot.queryParams);
+	}
+
 	public onCompleteFlow() {
 		if (this.saveProfile) {
 			const { playerId } = this.service.getUrlData(
@@ -86,7 +92,9 @@ export class ImportComponent implements OnInit {
 			this.profileService
 				.createProfile(
 					parseInt(playerId),
-					this.importForm.get('historyUrl')?.value
+					this.importForm.get('historyUrl')?.value,
+					undefined,
+					true
 				)
 				.then((profile) => {
 					this.toastService.add({
@@ -95,11 +103,11 @@ export class ImportComponent implements OnInit {
 						detail: 'Your profile has been created successfully.',
 					});
 
-					this.saveOrUpdateHistory(profile.profileId!);
+					this.saveOrUpdateHistory(profile.id!);
 				});
 		}
 
-		this.prefService.addUpdate('participateGlobal', this.shareHistory);
+		this.prefService.set('participateGlobal', this.shareHistory);
 		this.prefService.onHomeClick();
 	}
 
@@ -108,5 +116,29 @@ export class ImportComponent implements OnInit {
 		await this.storageService
 			.getGachaMemoryTable()
 			.bulkAdd(this.historyRecords.map((record) => ({ ...record, profileId })));
+	}
+
+	private handleUrlParams(params: any) {
+		if (!params) return;
+
+		const {
+			focus: focusParam,
+			platform: platformParam,
+			block: blockParam,
+		} = params;
+
+		if (focusParam) {
+			const element = document.getElementById(focusParam);
+			if (element) {
+				element.scrollIntoView({
+					behavior: 'smooth',
+					block: blockParam || 'start',
+				});
+			}
+		}
+
+		if (platformParam) {
+			this.importForm.get('platform')?.setValue(platformParam);
+		}
 	}
 }
