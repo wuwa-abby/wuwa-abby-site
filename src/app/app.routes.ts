@@ -5,6 +5,7 @@ import { conveneResolver } from '@routes/convene/convene.resolver';
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
 import { NotFoundComponent } from '@routes/not-found/not-found.component';
+import { ResonatorsComponent } from '@routes/resonators/resonators.component';
 import { SettingsComponent } from '@routes/settings/settings.component';
 
 export const routes: Routes = [
@@ -28,6 +29,11 @@ export const routes: Routes = [
 		path: 'convenes',
 		component: ConveneComponent,
 		resolve: { banners: conveneResolver },
+	},
+	{
+		title: 'Resonators',
+		path: 'resonators',
+		component: ResonatorsComponent,
 	},
 
 	/* 404 redirect */
