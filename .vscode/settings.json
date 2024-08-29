@@ -6,6 +6,7 @@
 		"astrites",
 		"ATOW",
 		"Baizhi",
+		"Broadblade",
 		"Calcharo",
 		"Changli",
 		"Chixia",
@@ -14,6 +15,7 @@
 		"dragdrop",
 		"Evernight",
 		"Feelin",
+		"Glacio",
 		"highlightjs",
 		"iconfield",
 		"Inplace",
@@ -24,10 +26,12 @@
 		"Jianxin",
 		"Jinhsi",
 		"jinlin",
+		"Jinyan",
 		"jiyan",
 		"Kuro",
 		"Lingyang",
 		"localstorage",
+		"maximizable",
 		"Modualtion",
 		"Mortefi",
 		"pagelink",
@@ -40,6 +44,7 @@
 		"progressbar",
 		"Sanhua",
 		"selectbutton",
+		"Spectro",
 		"Stringmaster",
 		"tabview",
 		"Taoqi",
@@ -56,7 +61,8 @@
 		"Yangyang",
 		"Yinlin",
 		"Yuanwu",
-		"zhezhi"
+		"zhezhi",
+		"zhujue"
 	],
 	"angular.log": "verbose"
 }

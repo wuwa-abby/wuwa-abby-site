@@ -54,13 +54,37 @@ code:not(.nostyle) {
 }
 
 .hard-pity {
-	color: var(--red-500);
+	color: var(--red-500) !important;
 }
 
 .soft-pity {
-	color: var(--yellow-500);
+	color: var(--yellow-500) !important;
 }
 
 .no-pity {
-	color: var(--green-500);
+	color: var(--green-500) !important;
+}
+
+.border-aero {
+	border-color: var(--teal-500) !important;
+}
+
+.border-fusion {
+	border-color: var(--orange-500) !important;
+}
+
+.border-glacio {
+	border-color: var(--cyan-500) !important;
+}
+
+.border-havoc {
+	border-color: var(--pink-500) !important;
+}
+
+.border-electro {
+	border-color: var(--purple-500) !important;
+}
+
+.border-spectro {
+	border-color: var(--yellow-500) !important;
 }

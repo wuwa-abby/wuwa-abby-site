@@ -1,16 +1,63 @@
-<div class="page__title flex">
-    <h1 class="text-5xl">Resonators</h1>
-    <p-button label="Add" icon="pi pi-user-plus" iconPos="right" ariaLabel="Contract a new resonator to join you"
-        class="my-auto ms-2" />
+<div class="page__title">
+    <p-toolbar>
+        <div class="p-toolbar-group-start block">
+            <p-iconField [iconPosition]="state['isReadingMemory'] ? 'right' : 'left'">
+                <p-inputIcon [styleClass]="state['isReadingMemory'] ? 'pi pi-spin pi-spinner' : 'pi pi-search'" />
+                <input type="text" pInputText placeholder="Search" />
+            </p-iconField>
+            <p-button label="Filter" icon="pi pi-filter" iconPos="right" ariaLabel="Filter" severity="secondary"
+                styleClass="ms-2" />
+        </div>
+        <div class="p-toolbar-group-end">
+            <p-selectButton [options]="displayTypes" [(ngModel)]="selectedDisplayType" optionLabel="label"
+                optionValue="value" />
+        </div>
+    </p-toolbar>
 </div>
 
-<div class="page__content grid gap-2">
-    <div class="col p-2">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci repellat fugit iste pariatur officiis dolor,
-        rerum sunt voluptate! Perferendis animi omnis quas unde error iure totam sint eaque ipsa magnam.
-    </div>
-    <div class="col-12 md:col-3 border-round border-solid border-1 border-200 p-2 surface-card">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores consequatur sapiente numquam ipsam illo odit
-        mollitia culpa ipsa possimus at sunt sed aliquid tempora iure, recusandae officia doloremque optio sequi!
+<div class="page__content grid mt-2">
+    <div class="col-6 md:col-4 lg:col-2" *ngFor="let resonator of resonators; let i = index">
+        <p-card styleClass="resonator__container border border-{{resonator.element.toLowerCase()}} surface-ground"
+            (click)="editResonator(resonator)">
+            <ng-template pTemplate="header">
+                <div class="resonator__image-container">
+                    <img class="resonator__image object-fit-contain"
+                        [ngSrc]="'images/characters/T_IconRole_Pile_' + resonator.imageName.toLowerCase() + '_UI.png'"
+                        [alt]="resonator.name" height="226" width="226" [attr.priority]="i <= 5"
+                        [attr.placeholder]="i > 5" />
+
+                    <div class="resonator__image-fade"></div>
+                </div>
+            </ng-template>
+            <div class="p-card-title resonator__name mt-2" pTooltip="Edit {{resonator.name}}">
+                {{ resonator.name }}
+                <p-tag value="S{{resonator.sequenceCount}}"
+                    [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
+                    [icon]="resonator.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="resonator.sequenceCount" />
+            </div>
+            <!-- <p class="resonator__date">{{resonator.lastObtainedAt | date:'MMM d'}}</p> -->
+        </p-card>
     </div>
 </div>
+
+@defer(when selectedResonator) {
+<p-dialog header="Update {{selectedResonator?.name}}" [modal]="true" [maximizable]="true"
+    [(visible)]="state['showEditResonatorDialog']"
+    [breakpoints]="{ '1199px': '65vw', '991px': '70vw', '575px': '90vw' }">
+    <div class="col-12" style="min-width: 65vw; max-width: 90vw;">
+        {{selectedResonator | json}}
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="row gap-2">
+            <div class="col">
+                <p-button label="Cancel" severity="secondary" (onClick)="state['showEditResonatorDialog'] = false"
+                    styleClass="w-100" />
+            </div>
+            <div class="col">
+                <p-button label="Save" styleClass="w-100" />
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+}

@@ -1,3 +1,58 @@
-.card {
-	margin-bottom: none !important;
+::ng-deep .resonator__container {
+	&:hover {
+		.resonator__image {
+			transform: scale(1.55) translateY(30px);
+
+			background: linear-gradient(transparent, var(--surface-200));
+
+			transition: transform 0.5s, scale 0.3s, background 0.3s;
+			transition-delay: background 0.5s;
+		}
+
+		.resonator__name {
+			transform: scale(1.2) translateY(-15px);
+			transition: scale 0.5s, transform 0.5s;
+		}
+
+		.resonator__date {
+			opacity: 1;
+			transition: opacity 0.5s;
+		}
+	}
+}
+
+.resonator__image-container {
+	position: relative;
+	overflow: hidden;
+}
+
+.resonator__image {
+	transition: transform 0.5s, scale 0.3s, background 0.3s;
+
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+}
+
+.resonator__image-fade {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 14px;
+	width: 100%;
+	background: linear-gradient(transparent, var(--surface-ground));
+}
+
+.resonator__name {
+	text-align: center;
+
+	transition: scale 0.5s, transform 0.5s;
+}
+
+.resonator__date {
+	text-align: center;
+	opacity: 0;
+
+	transition: opacity 0.5s;
 }
