@@ -18,7 +18,7 @@
 <div class="page__content grid mt-2">
     <div class="col-6 md:col-4 lg:col-2" *ngFor="let resonator of resonators; let i = index">
         <p-card styleClass="resonator__container border border-{{resonator.element.toLowerCase()}} surface-ground"
-            (click)="editResonator(resonator)">
+            (click)="editResonator(resonator)" pTooltip="Click to edit {{resonator.name}}">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
                     <img class="resonator__image object-fit-contain"
@@ -29,7 +29,7 @@
                     <div class="resonator__image-fade"></div>
                 </div>
             </ng-template>
-            <div class="p-card-title resonator__name mt-2" pTooltip="Edit {{resonator.name}}">
+            <div class="p-card-title resonator__name mt-2">
                 {{ resonator.name }}
                 <p-tag value="S{{resonator.sequenceCount}}"
                     [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
