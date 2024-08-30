@@ -16,8 +16,6 @@ import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
-import { DialogModule } from 'primeng/dialog';
-import { InputNumberModule } from 'primeng/inputnumber';
 
 import { StorageService } from '@core/services/storage.service';
 
@@ -38,8 +36,6 @@ import { StorageService } from '@core/services/storage.service';
 		ToolbarModule,
 		TagModule,
 		TooltipModule,
-		DialogModule,
-		InputNumberModule,
 	],
 	templateUrl: './resonators.component.html',
 	styleUrl: './resonators.component.scss',
@@ -71,21 +67,9 @@ export class ResonatorsComponent implements OnInit {
 		showEditResonatorDialog: false,
 	};
 
-	public selectedResonator?: DisplayResonator;
-
 	public ngOnInit(): void {
 		this.loadResonators();
 	}
-
-	public editResonator(resonator: DisplayResonator): void {
-		this.state['showEditResonatorDialog'] = true;
-		this.selectedResonator = resonator;
-	}
-
-	public updateResonatorSequence(
-		resonator: DisplayResonator,
-		sequence: number
-	): void {}
 
 	private async loadResonators(): Promise<void> {
 		this.resonators = (
