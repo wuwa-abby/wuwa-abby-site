@@ -90,7 +90,7 @@ export class ResonatorsComponent implements OnInit {
 				isUnknown: false,
 			}))
 			.sort((a, b) => a.name.localeCompare(b.name))
-			.sort((a, b) => a.element.localeCompare(b.element));
+			.sort((a, b) => b.rarity! - a.rarity!);
 
 		if (!isPlatformBrowser(this.platformId)) return;
 
@@ -174,7 +174,7 @@ export class ResonatorsComponent implements OnInit {
 
 		this.resonators = Array.from(seen.values())
 			.sort((a, b) => a.name.localeCompare(b.name))
-			.sort((a, b) => a.element.localeCompare(b.element));
+			.sort((a, b) => b.qualityLevel! - a.qualityLevel!);
 		this.state['isReadingMemory'] = false;
 	}
 
@@ -228,7 +228,7 @@ export class ResonatorsComponent implements OnInit {
 
 		this.weapons = Array.from(seen.values())
 			.sort((a, b) => a.name.localeCompare(b.name))
-			.sort((a, b) => a.element.localeCompare(b.element));
+			.sort((a, b) => b.qualityLevel! - a.qualityLevel!);
 		this.state['isReadingMemory'] = false;
 	}
 }
