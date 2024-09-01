@@ -49,8 +49,6 @@ export class ResonatorsComponent implements OnInit {
 		private activatedRoute: ActivatedRoute
 	) {}
 
-	public resonators: DisplayResonator[] = [];
-	public weapons: DisplayResonator[] = [];
 	/* Filters */
 	public readonly displayTypes: { label: string; value: number }[] = [
 		{
@@ -63,6 +61,7 @@ export class ResonatorsComponent implements OnInit {
 		},
 	];
 	public selectedDisplayType: number = 0;
+	public searchQuery?: string;
 
 	/* UI state */
 	public state: { [key: string]: any } = {
@@ -70,11 +69,40 @@ export class ResonatorsComponent implements OnInit {
 		showEditResonatorDialog: false,
 	};
 
+	private _weapons: DisplayResonator[] = [];
+	private _resonators: DisplayResonator[] = [];
+
+	public get resonators(): DisplayResonator[] {
+		return this._resonators.filter((r) =>
+			this.searchQuery
+				? r.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+				: true
+		);
+	}
+
+	public get weapons(): DisplayResonator[] {
+		return this._weapons.filter((w) =>
+			this.searchQuery
+				? w.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+				: true
+		);
+	}
+
+	private set resonators(value: DisplayResonator[]) {
+		this._resonators = value;
+	}
+
+	private set weapons(value: DisplayResonator[]) {
+		this._weapons = value;
+	}
+
 	public ngOnInit(): void {
 		this.loadResonators();
 	}
 
 	public async onDisplayTypeChange(): Promise<void> {
+		this.searchQuery = undefined;
+
 		if (this.selectedDisplayType && !this.weapons.length) {
 			this.loadWeapons();
 		}

@@ -3,7 +3,9 @@
         <div class="p-toolbar-group-start block">
             <p-iconField [iconPosition]="state['isReadingMemory'] ? 'right' : 'left'">
                 <p-inputIcon [styleClass]="state['isReadingMemory'] ? 'pi pi-spin pi-spinner' : 'pi pi-search'" />
-                <input type="text" pInputText placeholder="Search" />
+                <input type="text" pInputText
+                    [placeholder]="state['isReadingMemory'] ? 'Loading, please wait ... ' : 'Search'"
+                    [readOnly]="state['isReadingMemory']" [(ngModel)]="searchQuery" />
             </p-iconField>
             <p-button label="Filter" icon="pi pi-filter" iconPos="right" ariaLabel="Filter" severity="secondary"
                 styleClass="ms-2" />
