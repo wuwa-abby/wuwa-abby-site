@@ -14,9 +14,30 @@
 			transition: scale 0.5s, transform 0.5s;
 		}
 
+		.resonator__obtained-at {
+			visibility: visible;
+			opacity: 1;
+
+			transform: translateY(85%);
+
+			transition: visibility 0.5s, opacity 0.5s, transform 0.5s;
+
+			transition-delay: 0.5s;
+		}
+
 		.resonator__date {
 			opacity: 1;
 			transition: opacity 0.5s;
+		}
+
+		.resonator__element-img {
+			top: 0.5rem;
+
+			visibility: visible;
+			opacity: 1;
+
+			transform: translateY(0);
+			transition: visibility 0.5s, opacity 0.5s, transform 0.5s;
 		}
 	}
 }
@@ -33,6 +54,10 @@
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-webkit-user-drag: none;
+
+	&:not(.obtained) {
+		filter: grayscale(100%);
+	}
 }
 
 .resonator__image-fade {
@@ -44,10 +69,47 @@
 	background: linear-gradient(transparent, var(--surface-ground));
 }
 
+.resonator__element-img {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+
+	padding: 0.1rem;
+	border-radius: 50%;
+	background: var(--surface-card);
+	border: 2px solid var(--surface-200);
+
+	width: auto;
+
+	object-fit: contain;
+
+	visibility: hidden;
+	opacity: 0;
+
+	transform: translateY(-250%);
+	transition: visibility 0.5s, opacity 0.5s, transform 0.5s;
+}
+
 .resonator__name {
 	text-align: center;
 
 	transition: scale 0.5s, transform 0.5s;
+}
+
+.resonator__obtained-at {
+	position: absolute;
+
+	visibility: hidden;
+	opacity: 0;
+
+	bottom: 0;
+	left: 0;
+	width: 100%;
+
+	text-align: center;
+
+	transform: translateY(250%);
+	transition: visibility 0.5s, opacity 0.5s, transform 0.5s;
 }
 
 .resonator__date {

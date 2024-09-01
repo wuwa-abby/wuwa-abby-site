@@ -23,19 +23,28 @@
         <p-card styleClass="resonator__container border-{{resonator.rarity}}-star surface-ground">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
-                    <img class="resonator__image object-fit-contain"
+                    <img class="resonator__image object-fit-contain" [class.obtained]="resonator.firstObtainedAt"
                         [ngSrc]="'images/characters/T_IconRole_Pile_' + resonator.imageName.toLowerCase() + '_UI.png'"
                         [alt]="resonator.name" height="226" width="226" [attr.priority]="i <= 5"
                         [attr.placeholder]="i > 5" />
 
+                    <img class="resonator__element-img" [class]="resonator.element.toLowerCase()" height="36" width="36"
+                        ngSrc="images/elements/T_IconElement{{resonator.element}}.png" [alt]="resonator.element"
+                        [pTooltip]="resonator.element">
                     <div class="resonator__image-fade"></div>
                 </div>
             </ng-template>
-            <div class="p-card-title resonator__name mt-2">
-                {{ resonator.name }}
-                <p-tag value="S{{resonator.sequenceCount}}"
-                    [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
-                    [icon]="resonator.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="resonator.sequenceCount" />
+            <div class="position-relative">
+                <div class="p-card-title resonator__name mt-2">
+                    {{ resonator.name }}
+                    <p-tag value="S{{resonator.sequenceCount}}"
+                        [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
+                        [icon]="resonator.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="resonator.sequenceCount" />
+                </div>
+                <p class="resonator__obtained-at text-sm text-500">
+                    <span>Obtained At: </span>
+                    <span>{{ (resonator.lastObtainedAt || resonator.firstObtainedAt) | date: 'short' }}</span>
+                </p>
             </div>
         </p-card>
     </div>
@@ -47,7 +56,7 @@
         <p-card styleClass="resonator__container border-{{weapon.rarity}}-star surface-ground">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
-                    <img class="resonator__image object-fit-contain"
+                    <img class="resonator__image object-fit-contain" [class.obtained]="weapon.firstObtainedAt"
                         [ngSrc]="'images/weapons/T_IconWeapon160_' + weapon.resourceId + '_UI.png'" [alt]="weapon.name"
                         height="226" width="226" [attr.priority]="i <= 5" [attr.placeholder]="i > 5" />
 
