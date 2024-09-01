@@ -17,6 +17,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { StorageService } from '@core/services/storage.service';
 
@@ -38,6 +40,8 @@ import { StorageService } from '@core/services/storage.service';
 		TagModule,
 		TooltipModule,
 		SkeletonModule,
+		DialogModule,
+		CheckboxModule,
 	],
 	templateUrl: './resonators.component.html',
 	styleUrl: './resonators.component.scss',
@@ -60,31 +64,108 @@ export class ResonatorsComponent implements OnInit {
 			value: 1,
 		},
 	];
+	public readonly filterAttributes: { label: string; value: string }[] = [
+		{
+			label: 'Aero',
+			value: 'aero',
+		},
+		{
+			label: 'Electro',
+			value: 'electro',
+		},
+		{
+			label: 'Fusion',
+			value: 'fusion',
+		},
+		{
+			label: 'Glacio',
+			value: 'glacio',
+		},
+		{
+			label: 'Havoc',
+			value: 'havoc',
+		},
+		{
+			label: 'Spectro',
+			value: 'spectro',
+		},
+	];
+	public readonly filterWeaponTypes: { label: string; value: string }[] = [
+		{
+			label: 'Broadblade',
+			value: 'broadblade',
+		},
+		{
+			label: 'Sword',
+			value: 'sword',
+		},
+		{
+			label: 'Pistols',
+			value: 'pistols',
+		},
+		{
+			label: 'Gauntlets',
+			value: 'gauntlets',
+		},
+		{
+			label: 'Rectifier',
+			value: 'rectifier',
+		},
+	];
+	public readonly filterQuality: { label: string; value: number }[] = [
+		{
+			label: '★★★',
+			value: 3,
+		},
+		{
+			label: '★★★★',
+			value: 4,
+		},
+		{
+			label: '★★★★★',
+			value: 5,
+		},
+	];
 	public selectedDisplayType: number = 0;
+	public selectedAttributes: string[] = [];
+	public selectedWeaponTypes: string[] = [];
+	public selectedQuality: number[] = [];
 	public searchQuery?: string;
 
 	/* UI state */
 	public state: { [key: string]: any } = {
 		isReadingMemory: true,
-		showEditResonatorDialog: false,
+		showFilterModal: false,
 	};
 
 	private _weapons: DisplayResonator[] = [];
 	private _resonators: DisplayResonator[] = [];
 
 	public get resonators(): DisplayResonator[] {
-		return this._resonators.filter((r) =>
-			this.searchQuery
-				? r.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-				: true
+		return this._resonators.filter(
+			(r) =>
+				(!this.selectedAttributes.length ||
+					this.selectedAttributes.some(
+						(a) => r.element.toLowerCase() === a.toLowerCase()
+					)) &&
+				(!this.selectedWeaponTypes.length ||
+					this.selectedWeaponTypes.some(
+						(w) => r.weaponOfChoice.toLowerCase() === w.toLowerCase()
+					)) &&
+				(!this.selectedQuality.length ||
+					this.selectedQuality.includes(r.rarity!)) &&
+				(!this.searchQuery ||
+					r.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
 		);
 	}
 
 	public get weapons(): DisplayResonator[] {
-		return this._weapons.filter((w) =>
-			this.searchQuery
-				? w.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-				: true
+		return this._weapons.filter(
+			(w) =>
+				(!this.selectedQuality.length ||
+					this.selectedQuality.includes(w.rarity!)) &&
+				(!this.searchQuery ||
+					w.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
 		);
 	}
 
@@ -98,14 +179,23 @@ export class ResonatorsComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.loadResonators();
+		this.setDefaultFilters();
 	}
 
 	public async onDisplayTypeChange(): Promise<void> {
 		this.searchQuery = undefined;
 
-		if (this.selectedDisplayType && !this.weapons.length) {
+		if (this.selectedDisplayType && !this.filterWeaponTypes.length) {
 			this.loadWeapons();
 		}
+	}
+
+	public setDefaultFilters(): void {
+		this.selectedDisplayType = 0;
+		this.selectedAttributes = [];
+		this.selectedWeaponTypes = [];
+		this.selectedQuality = [];
+		this.searchQuery = undefined;
 	}
 
 	private async loadResonators(): Promise<void> {

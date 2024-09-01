@@ -8,7 +8,7 @@
                     [readOnly]="state['isReadingMemory']" [(ngModel)]="searchQuery" />
             </p-iconField>
             <p-button label="Filter" icon="pi pi-filter" iconPos="right" ariaLabel="Filter" severity="secondary"
-                styleClass="ms-2" />
+                styleClass="ms-2" (onClick)="state['showFilterModal'] = true" />
         </div>
         <div class="p-toolbar-group-end">
             <p-button label="Claim Event Items" icon="pi pi-gift" iconPos="right" severity="help" styleClass="me-2"
@@ -18,6 +18,62 @@
         </div>
     </p-toolbar>
 </div>
+
+@defer {
+<p-dialog header="Filter" [modal]="true" [closable]="true" [focusTrap]="true" [(visible)]="state['showFilterModal']">
+    <small class="flex align-content-center">
+        <i class="pi pi-info-circle me-2"></i> Tip: Unselecting all options will disable the filter.
+    </small>
+
+    <div class="text-lg my-2">Attributes</div>
+    <p-selectButton [options]="filterAttributes" [(ngModel)]="selectedAttributes" optionLabel="label"
+        optionValue="value" [allowEmpty]="true" [multiple]="true">
+        <ng-template let-item pTemplate>
+            <div class="p-button-label">
+                <img [ngSrc]="'images/elements/T_IconElement' + item.label + '.png'" [alt]="item.label" height="24"
+                    width="24" />
+                <div>{{ item.label }}</div>
+            </div>
+        </ng-template>
+    </p-selectButton>
+
+    <div class="text-lg my-2">Quality</div>
+    <p-selectButton [options]="filterQuality" [(ngModel)]="selectedQuality" optionLabel="label" optionValue="value"
+        [allowEmpty]="true" [multiple]="true">
+        <ng-template let-item pTemplate>
+            <div class="p-button-label">
+                <div
+                    [ngClass]="{'text-five-star': item.value === 5, 'text-four-star': item.value === 4, 'text-three-star': item.value === 3 }">
+                    {{ item.label }}
+                </div>
+                <div>{{item.value}} Star</div>
+            </div>
+        </ng-template>
+    </p-selectButton>
+
+    <div class="text-lg my-2">Weapon Type</div>
+    <p-selectButton [options]="filterWeaponTypes" [(ngModel)]="selectedWeaponTypes" optionLabel="label"
+        optionValue="value" [allowEmpty]="true" [multiple]="true">
+        <ng-template let-item pTemplate>
+            <div class="p-button-label">
+                <img [ngSrc]="'images/weapons/weapons-type/T_IconNor' + item.label + '.png'" [alt]="item.label"
+                    height="24" width="24" />
+                <div>{{ item.label }}</div>
+            </div>
+        </ng-template>
+    </p-selectButton>
+
+
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row gap-2 justify-content-end">
+            <p-button label="Reset" icon="pi pi-undo" iconPos="right" severity="danger" [outlined]="true"
+                (onClick)="setDefaultFilters(); state['showFilterModal']=false" />
+            <p-button label="Close" icon="pi pi-times" iconPos="right" severity="secondary"
+                (onClick)="state['showFilterModal']=false" />
+        </div>
+    </ng-template>
+</p-dialog>
+}
 
 <div class="page__content grid mt-2">
     @if(selectedDisplayType === 0) {
