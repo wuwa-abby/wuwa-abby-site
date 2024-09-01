@@ -50,6 +50,8 @@
 .resonator__image {
 	transition: transform 0.5s, scale 0.3s, background 0.3s;
 
+	object-fit: contain;
+
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;

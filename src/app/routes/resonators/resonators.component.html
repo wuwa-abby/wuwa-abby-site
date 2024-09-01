@@ -23,10 +23,9 @@
         <p-card styleClass="resonator__container border-{{resonator.rarity}}-star surface-ground">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
-                    <img class="resonator__image object-fit-contain" [class.obtained]="resonator.firstObtainedAt"
+                    <img class="resonator__image" [class.obtained]="resonator.firstObtainedAt"
                         [ngSrc]="'images/characters/T_IconRole_Pile_' + resonator.imageName.toLowerCase() + '_UI.png'"
-                        [alt]="resonator.name" height="226" width="226" [attr.priority]="i <= 5"
-                        [attr.placeholder]="i > 5" />
+                        [alt]="resonator.name" height="293" width="212" placeholder />
 
                     <img class="resonator__element-img" [class]="resonator.element.toLowerCase()" height="36" width="36"
                         ngSrc="images/elements/T_IconElement{{resonator.element}}.png" [alt]="resonator.element"
@@ -57,9 +56,9 @@
         <p-card styleClass="resonator__container border-{{weapon.rarity}}-star surface-ground">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
-                    <img class="resonator__image object-fit-contain" [class.obtained]="weapon.firstObtainedAt"
+                    <img class="resonator__image" [class.obtained]="weapon.firstObtainedAt"
                         [ngSrc]="'images/weapons/T_IconWeapon160_' + weapon.resourceId + '_UI.png'" [alt]="weapon.name"
-                        height="226" width="226" [attr.priority]="i <= 5" [attr.placeholder]="i > 5" />
+                        height="293" width="226" [attr.priority]="i <= 5" [attr.placeholder]="i > 5" />
 
                     <div class="resonator__image-fade"></div>
                 </div>
