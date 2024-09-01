@@ -20,10 +20,8 @@
 </div>
 
 @defer {
-<p-dialog header="Filter" [modal]="true" [closable]="true" [focusTrap]="true" [(visible)]="state['showFilterModal']">
-    <small class="flex align-content-center">
-        <i class="pi pi-info-circle me-2"></i> Tip: Unselecting all options will disable the filter.
-    </small>
+<p-dialog header="Filter" [modal]="true" [closable]="false" [focusTrap]="true" [(visible)]="state['showFilterModal']">
+    <p-messages [(value)]="filterHelpMessage" [enableService]="false" [closable]="true"></p-messages>
 
     <div class="text-lg my-2">Attributes</div>
     <p-selectButton [options]="filterAttributes" [(ngModel)]="selectedAttributes" optionLabel="label"
@@ -68,8 +66,7 @@
         <div class="flex flex-row gap-2 justify-content-end">
             <p-button label="Reset" icon="pi pi-undo" iconPos="right" severity="danger" [outlined]="true"
                 (onClick)="setDefaultFilters(); state['showFilterModal']=false" />
-            <p-button label="Close" icon="pi pi-times" iconPos="right" severity="secondary"
-                (onClick)="state['showFilterModal']=false" />
+            <p-button label="Close" icon="pi pi-times" iconPos="right" (onClick)="state['showFilterModal']=false" />
         </div>
     </ng-template>
 </p-dialog>

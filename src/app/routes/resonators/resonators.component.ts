@@ -19,8 +19,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessagesModule } from 'primeng/messages';
 
 import { StorageService } from '@core/services/storage.service';
+import { Message } from 'primeng/api';
 
 @Component({
 	selector: 'abby-resonators',
@@ -42,6 +44,7 @@ import { StorageService } from '@core/services/storage.service';
 		SkeletonModule,
 		DialogModule,
 		CheckboxModule,
+		MessagesModule,
 	],
 	templateUrl: './resonators.component.html',
 	styleUrl: './resonators.component.scss',
@@ -126,6 +129,13 @@ export class ResonatorsComponent implements OnInit {
 			value: 5,
 		},
 	];
+	public readonly filterHelpMessage: Message[] = [
+		{
+			severity: 'info',
+			detail: 'Unselecting all options will show all results',
+		},
+	];
+
 	public selectedDisplayType: number = 0;
 	public selectedAttributes: string[] = [];
 	public selectedWeaponTypes: string[] = [];
