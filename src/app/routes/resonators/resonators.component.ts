@@ -16,6 +16,7 @@ import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
+import { SkeletonModule } from 'primeng/skeleton';
 
 import { StorageService } from '@core/services/storage.service';
 
@@ -36,6 +37,7 @@ import { StorageService } from '@core/services/storage.service';
 		ToolbarModule,
 		TagModule,
 		TooltipModule,
+		SkeletonModule,
 	],
 	templateUrl: './resonators.component.html',
 	styleUrl: './resonators.component.scss',
@@ -48,6 +50,7 @@ export class ResonatorsComponent implements OnInit {
 	) {}
 
 	public resonators: DisplayResonator[] = [];
+	public weapons: DisplayResonator[] = [];
 	/* Filters */
 	public readonly displayTypes: { label: string; value: number }[] = [
 		{
@@ -59,7 +62,7 @@ export class ResonatorsComponent implements OnInit {
 			value: 1,
 		},
 	];
-	public selectedDisplayType = 0;
+	public selectedDisplayType: number = 0;
 
 	/* UI state */
 	public state: { [key: string]: any } = {
@@ -69,6 +72,12 @@ export class ResonatorsComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.loadResonators();
+	}
+
+	public async onDisplayTypeChange(): Promise<void> {
+		if (this.selectedDisplayType && !this.weapons.length) {
+			this.loadWeapons();
+		}
 	}
 
 	private async loadResonators(): Promise<void> {
@@ -164,6 +173,60 @@ export class ResonatorsComponent implements OnInit {
 		}
 
 		this.resonators = Array.from(seen.values())
+			.sort((a, b) => a.name.localeCompare(b.name))
+			.sort((a, b) => a.element.localeCompare(b.element));
+		this.state['isReadingMemory'] = false;
+	}
+
+	private async loadWeapons(): Promise<void> {
+		if (!isPlatformBrowser(this.platformId)) return;
+
+		this.state['isReadingMemory'] = true;
+
+		const gachaTable = this.storageService.getGachaMemoryTable();
+		const allWeapons = await gachaTable
+			.where('resourceType')
+			.equalsIgnoreCase('weapon')
+			.toArray();
+
+		const seen = new Map<number, DisplayResonator>();
+		for (const weapon of allWeapons) {
+			const knownWeapon = seen.get(weapon.resourceId);
+
+			if (knownWeapon) {
+				knownWeapon.sequenceCount = Math.min(knownWeapon.sequenceCount! + 1, 6);
+
+				if (new Date(weapon.time) < knownWeapon.firstObtainedAt!) {
+					knownWeapon.firstObtainedAt = new Date(weapon.time);
+				} else {
+					knownWeapon.lastObtainedAt = new Date(weapon.time);
+				}
+				continue;
+			}
+
+			seen.set(weapon.resourceId, {
+				id: weapon.resourceId,
+				name: weapon.name,
+				element: 'Unknown',
+				rarity: weapon.qualityLevel,
+				weaponOfChoice: 'Unknown',
+				sequenceCount: 0,
+				firstObtainedAt: new Date(weapon.time),
+				lastObtainedAt: new Date(weapon.time),
+				cardPoolType: weapon.cardPoolType,
+				resourceId: weapon.resourceId,
+				qualityLevel: weapon.qualityLevel,
+				resourceType: weapon.resourceType,
+				count: weapon.count,
+				time: weapon.time,
+				pity: weapon.pity,
+				isUnknown: true,
+				imageName: 'zhujue', //
+				isCustom: false,
+			});
+		}
+
+		this.weapons = Array.from(seen.values())
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.sort((a, b) => a.element.localeCompare(b.element));
 		this.state['isReadingMemory'] = false;

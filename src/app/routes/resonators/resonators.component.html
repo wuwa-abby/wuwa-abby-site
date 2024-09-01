@@ -9,14 +9,16 @@
                 styleClass="ms-2" />
         </div>
         <div class="p-toolbar-group-end">
-            <p-button label="Claim Event Items" icon="pi pi-gift" iconPos="right" severity="help" styleClass="me-2" />
+            <p-button label="Claim Event Items" icon="pi pi-gift" iconPos="right" severity="help" styleClass="me-2"
+                size="small" />
             <p-selectButton [options]="displayTypes" [(ngModel)]="selectedDisplayType" optionLabel="label"
-                optionValue="value" />
+                optionValue="value" [allowEmpty]="false" (onChange)="onDisplayTypeChange()" />
         </div>
     </p-toolbar>
 </div>
 
 <div class="page__content grid mt-2">
+    @if(selectedDisplayType === 0) {
     <div class="col-6 md:col-4 lg:col-2" *ngFor="let resonator of resonators; let i = index">
         <p-card styleClass="resonator__container border border-{{resonator.element.toLowerCase()}} surface-ground">
             <ng-template pTemplate="header">
@@ -37,4 +39,28 @@
             </div>
         </p-card>
     </div>
+    }
+
+    @defer(when selectedDisplayType === 1; prefetch on immediate) {
+    @if(selectedDisplayType === 1) {
+    <div class="col-6 md:col-4 lg:col-2" *ngFor="let weapon of weapons; let i = index">
+        <p-card styleClass="resonator__container border border-{{weapon.qualityLevel}}-star surface-ground">
+            <ng-template pTemplate="header">
+                <div class="resonator__image-container">
+                    <img class="resonator__image object-fit-contain"
+                        [ngSrc]="'images/weapons/T_IconWeapon160_' + weapon.resourceId + '_UI.png'" [alt]="weapon.name"
+                        height="226" width="226" [attr.priority]="i <= 5" [attr.placeholder]="i > 5" />
+
+                    <div class="resonator__image-fade"></div>
+                </div>
+            </ng-template>
+            <div class="p-card-title resonator__name mt-2">
+                {{ weapon.name }}
+                <p-tag value="S{{weapon.sequenceCount}}" [severity]="weapon.sequenceCount === 6? 'warning': 'secondary'"
+                    [icon]="weapon.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="weapon.sequenceCount" />
+            </div>
+        </p-card>
+    </div>
+    }
+    }
 </div>

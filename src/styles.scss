@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '__colors.scss';
+
 ::-webkit-scrollbar {
 	width: 18px;
 }
@@ -38,19 +40,27 @@ code:not(.nostyle) {
 }
 
 .text-five-star {
-	color: darken(#fbd856, 20%) !important;
-
-	[data-bs-theme='dark'] & {
-		color: #fbd856 !important;
-	}
+	color: $kuro-yellow !important;
 }
 
 .text-four-star {
-	color: darken(#8c6eb2, 10%) !important;
+	color: $kuro-purple !important;
+}
 
-	[data-bs-theme='dark'] & {
-		color: #8c6eb2 !important;
-	}
+.text-three-star {
+	color: $kuro-blue !important;
+}
+
+.border-5-star {
+	border-color: $kuro-yellow !important;
+}
+
+.border-4-star {
+	border-color: $kuro-purple !important;
+}
+
+.border-3-star {
+	border-color: $kuro-blue !important;
 }
 
 .hard-pity {
