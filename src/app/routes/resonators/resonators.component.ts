@@ -170,6 +170,7 @@ export class ResonatorsComponent implements OnInit {
 	}
 
 	public get weapons(): DisplayResonator[] {
+		console.log(this._weapons);
 		return this._weapons.filter(
 			(w) =>
 				(!this.selectedQuality.length ||
@@ -195,7 +196,7 @@ export class ResonatorsComponent implements OnInit {
 	public async onDisplayTypeChange(): Promise<void> {
 		this.searchQuery = undefined;
 
-		if (this.selectedDisplayType && !this.filterWeaponTypes.length) {
+		if (this.selectedDisplayType && !this._weapons.length) {
 			this.loadWeapons();
 		}
 	}
