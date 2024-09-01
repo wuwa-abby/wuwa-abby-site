@@ -41,7 +41,8 @@
                         [severity]="resonator.sequenceCount === 6? 'warning': 'secondary'"
                         [icon]="resonator.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="resonator.sequenceCount" />
                 </div>
-                <p class="resonator__obtained-at text-sm text-500">
+                <p class="resonator__obtained-at text-sm text-500"
+                    *ngIf="resonator.lastObtainedAt || resonator.firstObtainedAt">
                     <span>Obtained At: </span>
                     <span>{{ (resonator.lastObtainedAt || resonator.firstObtainedAt) | date: 'short' }}</span>
                 </p>
@@ -63,10 +64,18 @@
                     <div class="resonator__image-fade"></div>
                 </div>
             </ng-template>
-            <div class="p-card-title resonator__name mt-2">
-                {{ weapon.name }}
-                <p-tag value="R{{weapon.sequenceCount}}" [severity]="weapon.sequenceCount === 6? 'warning': 'secondary'"
-                    [icon]="weapon.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="weapon.sequenceCount" />
+            <div class="position-relative">
+                <div class="p-card-title resonator__name mt-2">
+                    {{ weapon.name }}
+                    <p-tag value="R{{weapon.sequenceCount}}"
+                        [severity]="weapon.sequenceCount === 6? 'warning': 'secondary'"
+                        [icon]="weapon.sequenceCount === 6? 'pi pi-sparkles': ''" *ngIf="weapon.sequenceCount" />
+                </div>
+                <p class="resonator__obtained-at text-sm text-500 d-none d-lg-block"
+                    *ngIf="weapon.lastObtainedAt || weapon.firstObtainedAt">
+                    <span>Obtained At: </span>
+                    <span>{{ (weapon.lastObtainedAt || weapon.firstObtainedAt) | date: 'short' }}</span>
+                </p>
             </div>
         </p-card>
     </div>
