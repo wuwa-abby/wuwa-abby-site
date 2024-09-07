@@ -9,7 +9,5 @@ export const resonatorDetailResolver: ResolveFn<ErrorOr<DisplayResonator>> = (
 	route,
 	_state
 ) => {
-	return inject(ResonatorsService).getResonator(
-		`${route.params['resonatorName']}-${route.params['id']}`
-	);
+	return inject(ResonatorsService).getResonator(route.params['resonatorName']);
 };

@@ -17,22 +17,30 @@ export class ResonatorsService {
 		return this.http.get<DisplayResonator[]>('raw/resonators/list.json');
 	}
 
-	public getResonator(key: string): Observable<ErrorOr<DisplayResonator>> {
-		return this.http.get<DisplayResonator>(`raw/resonators/${key}.json`).pipe(
-			map((resonator) => {
-				return ErrorOr.value(resonator);
-			}),
-			catchError((error) => {
-				let errorDetails;
-				if (error.status === 404) {
-					errorDetails =
-						'Wubby does not know this resonator! Please raise an issue on GitHub.';
-				} else {
-					errorDetails = error.message;
-				}
+	public getResonator(
+		resonatorName: string
+	): Observable<ErrorOr<DisplayResonator>> {
+		return this.http
+			.get<DisplayResonator>(
+				`raw/resonators/${resonatorName.toLowerCase()}.json`
+			)
+			.pipe(
+				map((resonator) => {
+					return ErrorOr.value(resonator);
+				}),
+				catchError((error) => {
+					let errorDetails;
+					if (error.status === 404) {
+						errorDetails =
+							'Wubby does not know this resonator! Please raise an issue on GitHub.';
+					} else {
+						errorDetails = error.message;
+					}
 
-				return of(ErrorOr.error<DisplayResonator>(errorDetails, error.status));
-			})
-		);
+					return of(
+						ErrorOr.error<DisplayResonator>(errorDetails, error.status)
+					);
+				})
+			);
 	}
 }
