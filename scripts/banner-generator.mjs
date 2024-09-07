@@ -2,52 +2,86 @@
 
 import fs from 'fs';
 
-const banners = fs
-	.readdirSync('./public/raw/banners')
-	.filter((file) => file.match(/.*\.json$/));
-
-const seenBanners = new Set();
-
-banners.forEach((banner) => {
-	const bannerData = JSON.parse(
-		fs.readFileSync(`./public/raw/banners/${banner}`, 'utf8')
-	);
-	const { key, startDate, endDate } = bannerData;
-
-	if (seenBanners.has({ key, from: startDate, to: endDate })) {
-		throw new Error(`Duplicate banner found: ${key}`);
+// Function to read and parse JSON files
+const readJsonFile = (filePath) => {
+	try {
+		return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+	} catch (error) {
+		console.error(`Failed to read JSON file ${filePath}:`, error);
+		throw error;
 	}
+};
 
-	seenBanners.add({ key, from: startDate, to: endDate });
-});
+// Function to generate the banners list
+const generateBanners = () => {
+	const bannerFiles = fs
+		.readdirSync('./public/raw/banners')
+		.filter((file) => file.endsWith('.json'));
 
+	const seenBanners = new Set();
+	const bannersData = [];
 
-const ignoreBannerInUIRegex = /-standard(?!-permanent)/;
-const sortedBanners = Array.from(seenBanners)
-	.slice(1)
-	.map((banner) => {
-		const now = new Date();
+	bannerFiles.forEach((bannerFile) => {
+		const bannerData = readJsonFile(`./public/raw/banners/${bannerFile}`);
+		const { key, startDate, endDate } = bannerData;
 
-		return {
-			...banner,
-			showUI: !ignoreBannerInUIRegex.test(banner.key) && new Date(banner.from) < now && new Date(banner.to) > now,
-		};
-	})
-	.sort((a, b) => {
-		return new Date(b.to).getTime() - new Date(a.to).getTime();
+		// Use a unique string representation for deduplication
+		const bannerString = JSON.stringify({ key, startDate, endDate });
+
+		if (seenBanners.has(bannerString)) {
+			console.error(`Duplicate banner found: ${key}`);
+			return;
+		}
+
+		seenBanners.add(bannerString);
+		bannersData.push({ key, from: startDate, to: endDate });
 	});
 
-// delete the existing banners.json file
-try {
-	fs.unlinkSync('./public/raw/banners/banners.json');
-} catch (err) { }
+	return bannersData;
+};
 
-fs.writeFileSync(
-	'./public/raw/banners/banners.json',
-	JSON.stringify(sortedBanners, null, 2)
-);
+// Function to process banners
+const processBanners = (banners) => {
+	const now = new Date();
 
-console.log('Banners generated successfully');
-console.info('Total banners:', sortedBanners.length);
+	const ignoreBannerInUIRegex = /-standard(?!-permanent)/;
+	const sortedBanners = banners
+		.map((banner) => ({
+			...banner,
+			showUI: !ignoreBannerInUIRegex.test(banner.key) &&
+				new Date(banner.from) < now &&
+				new Date(banner.to) > now,
+		}))
+		.sort((a, b) => new Date(b.to) - new Date(a.to));
 
-console.info('Please review the generated public/raw/banners/banners.json file');
+	return sortedBanners;
+};
+
+// Main function
+const main = () => {
+	try {
+		const banners = generateBanners();
+		const processedBanners = processBanners(banners);
+
+		// Delete the existing banners.json file
+		try {
+			fs.unlinkSync('./public/raw/banners/banners.json');
+		} catch (err) {
+			console.warn('No existing banners.json file to delete.');
+		}
+
+		// Write the new banners JSON file
+		fs.writeFileSync(
+			'./public/raw/banners/banners.json',
+			JSON.stringify(processedBanners, null, 2)
+		);
+
+		console.log('Banners generated successfully');
+		console.info('Total banners:', processedBanners.length);
+		console.info('Please review the generated public/raw/banners/banners.json file');
+	} catch (error) {
+		console.error('An error occurred while generating banners:', error);
+	}
+};
+
+main();
