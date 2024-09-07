@@ -46,6 +46,7 @@ const processBanners = (banners) => {
 
 	const ignoreBannerInUIRegex = /-standard(?!-permanent)/;
 	const sortedBanners = banners
+		.filter(banner => banner.key)
 		.map((banner) => ({
 			...banner,
 			showUI: !ignoreBannerInUIRegex.test(banner.key) &&
