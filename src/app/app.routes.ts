@@ -44,7 +44,7 @@ export const routes: Routes = [
 			},
 			{
 				title: 'Resonator Info',
-				path: ':id/:resonatorName',
+				path: ':resonatorName',
 				component: ResonatorDetailComponent,
 				resolve: { resonator: resonatorDetailResolver },
 			},
