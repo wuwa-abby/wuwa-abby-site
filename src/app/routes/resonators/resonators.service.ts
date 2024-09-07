@@ -23,12 +23,15 @@ export class ResonatorsService {
 				return ErrorOr.value(resonator);
 			}),
 			catchError((error) => {
-				const message = 'Failed to load resonator details';
-				const errorDetails = error.message ? error.message : '';
+				let errorDetails;
+				if (error.status === 404) {
+					errorDetails =
+						'Wubby does not know this resonator! Please raise an issue on GitHub.';
+				} else {
+					errorDetails = error.message;
+				}
 
-				return of(
-					ErrorOr.error<DisplayResonator>(`${message}: ${errorDetails}`)
-				);
+				return of(ErrorOr.error<DisplayResonator>(errorDetails, error.status));
 			})
 		);
 	}

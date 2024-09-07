@@ -2,15 +2,17 @@ export class ErrorOr<T> {
 	error?: boolean;
 	message?: string;
 	value?: T;
+	status?: number;
 
 	constructor(value: T) {
 		this.value = value;
 	}
 
-	static error<T>(message: string): ErrorOr<T> {
+	static error<T>(message: string, status?: number): ErrorOr<T> {
 		return {
 			error: true,
-			message,
+			message: message,
+			status: status,
 		};
 	}
 
@@ -20,7 +22,9 @@ export class ErrorOr<T> {
 		};
 	}
 
-	static isError<T>(value: ErrorOr<T>): value is ErrorOr<T> {
-		return value.error !== undefined;
+	static isError<T>(errorOr: ErrorOr<T>): errorOr is ErrorOr<T> {
+		return errorOr.error !== undefined;
 	}
 }
+
+export const isError = ErrorOr.isError;

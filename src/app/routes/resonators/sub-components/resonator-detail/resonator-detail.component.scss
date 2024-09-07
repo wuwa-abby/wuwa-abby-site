@@ -1,0 +1,11 @@
+.overview {
+	height: 92vh;
+	width: 100%;
+
+	overflow: hidden;
+
+	.overview__resonator-image {
+		object-fit: contain;
+		object-position: right;
+	}
+}
