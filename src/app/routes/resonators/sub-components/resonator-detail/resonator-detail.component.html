@@ -1,5 +1,7 @@
 <div class="overview grid">
-    <div class="col-12 md:col-7 align-content-center">
+    <div class=" overview__details col-12 md:col-7">
+        <p-breadcrumb class="max-w-full" [model]="breadcrumbs" />
+
         <ng-container *ngIf="resonator; else resonatorErrorTpl">
             <ng-container *ngTemplateOutlet="resonatorDetailTpl"></ng-container>
         </ng-container>
@@ -7,17 +9,17 @@
     <div class="col-12 md:col-5 position-relative">
         @if (resonator) {
         <img class="overview__resonator-image position-absolute top-50 left-50 md:bottom-0 md:right-0"
-            [ngSrc]="'images/characters/T_IconRole_Pile_' + resonator.imageName + '_UI.png'" [alt]="resonator.name"
-            fill>
+            [ngSrc]="'images/characters/T_IconRole_Pile_' + resonator.imageName + '_UI.png'" [alt]="resonator.name" fill
+            priority>
         } @else {
         <img class="overview__resonator-image position-absolute bottom-0 right-0 d-none md:block"
-            ngSrc="images/characters/T_IconRole_Pile_zhujue_UI.png" alt="Rover" fill>
+            ngSrc="images/characters/T_IconRole_Pile_zhujue_UI.png" alt="Rover" fill priority>
         }
     </div>
 </div>
 
 <ng-template #resonatorErrorTpl>
-    <h2 class="text-2xl mb-0 text-danger">Error {{resonatorStatus}}</h2>
+    <h2 class="text-2xl mb-0 text-danger user-select-none">Error {{resonatorStatus}}</h2>
     <h1 class="text-6xl mt-0">{{resonatorError}}</h1>
 
     <div class="row mt-4">

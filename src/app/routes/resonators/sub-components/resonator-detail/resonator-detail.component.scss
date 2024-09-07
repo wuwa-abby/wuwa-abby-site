@@ -1,8 +1,20 @@
+::ng-deep .p-breadcrumb {
+	background: var(--surface-ground);
+
+	&.p-component {
+		padding: 0;
+	}
+}
+
 .overview {
 	height: 92vh;
 	width: 100%;
 
 	overflow: hidden;
+
+	.overview__details {
+		align-content: center;
+	}
 
 	.overview__resonator-image {
 		object-fit: contain;
