@@ -8,6 +8,7 @@ import { NotFoundComponent } from '@routes/not-found/not-found.component';
 import { SettingsComponent } from '@routes/settings/settings.component';
 import { ResonatorsComponent } from '@routes/resonators/resonators.component';
 import { resonatorsResolver } from '@routes/resonators/resonators.resolver';
+import { ResonatorDetailComponent } from '@routes/resonators/sub-components/resonator-detail/resonator-detail.component';
 
 export const routes: Routes = [
 	{
@@ -32,10 +33,20 @@ export const routes: Routes = [
 		resolve: { banners: conveneResolver },
 	},
 	{
-		title: 'Resonators',
 		path: 'resonators',
-		component: ResonatorsComponent,
-		resolve: { resonators: resonatorsResolver },
+		children: [
+			{
+				title: 'Resonators',
+				path: '',
+				component: ResonatorsComponent,
+				resolve: { resonators: resonatorsResolver },
+			},
+			{
+				title: 'Resonator Info',
+				path: ':id/:resonatorName',
+				component: ResonatorDetailComponent,
+			},
+		],
 	},
 
 	/* 404 redirect */

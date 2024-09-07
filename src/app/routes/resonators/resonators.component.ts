@@ -5,7 +5,7 @@ import {
 	NgOptimizedImage,
 } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -20,9 +20,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessagesModule } from 'primeng/messages';
+import { Message } from 'primeng/api';
 
 import { StorageService } from '@core/services/storage.service';
-import { Message } from 'primeng/api';
 
 @Component({
 	selector: 'abby-resonators',
@@ -31,6 +31,7 @@ import { Message } from 'primeng/api';
 		CommonModule,
 		FormsModule,
 		NgOptimizedImage,
+		RouterModule,
 
 		ButtonModule,
 		IconFieldModule,

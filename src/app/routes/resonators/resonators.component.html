@@ -75,7 +75,8 @@
 <div class="page__content grid mt-2">
     @if(selectedDisplayType === 0) {
     <div class="col-6 md:col-4 lg:col-2" *ngFor="let resonator of resonators; let i = index">
-        <p-card styleClass="resonator__container border-{{resonator.rarity}}-star surface-ground">
+        <p-card styleClass="resonator__container border-{{resonator.rarity}}-star surface-ground"
+            [routerLink]="[resonator.resourceId || 0, resonator.name]">
             <ng-template pTemplate="header">
                 <div class="resonator__image-container">
                     <img class="resonator__image" [class.obtained]="resonator.firstObtainedAt"
