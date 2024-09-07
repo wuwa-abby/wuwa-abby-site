@@ -2,7 +2,7 @@ Resonator files must follow the JSON schema below:
 
 ```json
 {
-	"id": "",
+	"id": 0,
 	"name": "",
 	"imageName": "",
 	"bio": "",
