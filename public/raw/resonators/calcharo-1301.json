@@ -1,0 +1,169 @@
+{
+    "id": "calcharo",
+    "name": "Calcharo",
+    "imageName": "calcharo",
+    "bio": "Leader of the \"Ghost Hounds\", an international mercenary group. Ruthless, vengeful, unforgiving. A potential client must be mindful of the price to pay before making him an offer.",
+    "weaponOfChoice": "Broadblade",
+    "gender": "Male",
+    "attribute": "Electro",
+    "constellations": [
+        {
+            "sequence": 1,
+            "name": "Covert Negotiation",
+            "description": "Extermination Order hits a target, it additionally recovers 10 Resonance Energy. This can be triggered once every 20 seconds."
+        },
+        {
+            "sequence": 2,
+            "name": "Zero-Sum Game",
+            "description": "After Calcharo casts Intro Skill Wanted Criminal or Intro Skill \"Necessary Means\", his Resonance Skill DMG Bonus is increased by 30% for 15 seconds."
+        },
+        {
+            "sequence": 3,
+            "name": "Iron Fist Diplomacy",
+            "description": "During the Resonance Liberation Deathblade Gear state, Calcharo's Electro DMG Bonus is increased by 25%."
+        },
+        {
+            "sequence": 4,
+            "name": "Dark Alliance",
+            "description": "After casting the Outro Skill Shadowy Raid, Electro DMG Bonus of all team members is increased by 20% for 30 seconds."
+        },
+        {
+            "sequence": 5,
+            "name": "Unconventional Compact",
+            "description": "Intro Skill Wanted Criminal and Intro Skill \"Necessary Means\" deal 50% more damage."
+        },
+        {
+            "sequence": 6,
+            "name": "The Ultimatum",
+            "description": "When casting Resonance Liberation \"Death Messenger\", Calcharo will summon 2 Phantoms to perform coordinated attacks. Each Phantom deals Electro DMG equal to 100% of Calcharo's ATK, which is considered Resonance Liberation DMG."
+        }
+    ],
+    "skills": [],
+    "upgradeMaterials": {
+        "breakthrough": {
+            "20": [
+                {
+                    "imageName": "crude-ring",
+                    "name": "Crude Ring",
+                    "quantity": 4
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 5000
+                }
+            ],
+            "40": [
+                {
+                    "imageName": "thundering-tacet-core",
+                    "name": "Thundering Tacet Core",
+                    "quantity": 3
+                },
+                {
+                    "imageName": "iris",
+                    "name": "Iris",
+                    "quantity": 4
+                },
+                {
+                    "imageName": "basic-ring",
+                    "name": "Basic Ring",
+                    "quantity": 4
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 10000
+                }
+            ],
+            "50": [
+                {
+                    "imageName": "thundering-tacet-core",
+                    "name": "Thundering Tacet Core",
+                    "quantity": 6
+                },
+                {
+                    "imageName": "iris",
+                    "name": "Iris",
+                    "quantity": 8
+                },
+                {
+                    "imageName": "basic-ring",
+                    "name": "Basic Ring",
+                    "quantity": 8
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 15000
+                }
+            ],
+            "60": [
+                {
+                    "imageName": "thundering-tacet-core",
+                    "name": "Thundering Tacet Core",
+                    "quantity": 9
+                },
+                {
+                    "imageName": "iris",
+                    "name": "Iris",
+                    "quantity": 12
+                },
+                {
+                    "imageName": "improved-ring",
+                    "name": "Improved Ring",
+                    "quantity": 4
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 20000
+                }
+            ],
+            "70": [
+                {
+                    "imageName": "thundering-tacet-core",
+                    "name": "Thundering Tacet Core",
+                    "quantity": 12
+                },
+                {
+                    "imageName": "iris",
+                    "name": "Iris",
+                    "quantity": 16
+                },
+                {
+                    "imageName": "improved-ring",
+                    "name": "Improved Ring",
+                    "quantity": 8
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 40000
+                }
+            ],
+            "80": [
+                {
+                    "imageName": "thundering-tacet-core",
+                    "name": "Thundering Tacet Core",
+                    "quantity": 16
+                },
+                {
+                    "imageName": "iris",
+                    "name": "Iris",
+                    "quantity": 20
+                },
+                {
+                    "imageName": "tailored-ring",
+                    "name": "Tailored Ring",
+                    "quantity": 4
+                },
+                {
+                    "imageName": "shell-credit",
+                    "name": "Shell Credit",
+                    "quantity": 80000
+                }
+            ]
+        },
+        "talents": []
+    }
+}
