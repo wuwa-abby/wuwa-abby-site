@@ -57,5 +57,18 @@
         }
     </p>
     <p class="text-lg w-75">{{resonator.bio}}</p>
+
+    @defer(on timer(3s)) {
+    <div class="text-center lg:w-75 slidedown-icon d-none md:d-block">
+        <div class="block">More Info</div>
+        <i class="pi pi-arrow-down"></i>
+    </div>
+    }
+    @placeholder {
+    <div class="text-center lg:w-75 fadein animation-duration-1000 d-none md:d-block">
+        <div class="block">More Info</div>
+        <i class="pi pi-arrow-down"></i>
+    </div>
+    }
     }
 </ng-template>
