@@ -53,8 +53,8 @@
         optionValue="value" [allowEmpty]="true" [multiple]="true">
         <ng-template let-item pTemplate>
             <div class="p-button-label">
-                <img [ngSrc]="'images/weapons/weapons-type/T_IconNor' + item.label + '.png'" [alt]="item.label"
-                    height="24" width="24" />
+                <img class="filter__weapon-icon" [ngSrc]="'images/weapons/weapons-type/T_IconNor' + item.label + '.png'"
+                    [alt]="item.label" height="24" width="24" />
                 <div>{{ item.label }}</div>
             </div>
         </ng-template>
