@@ -62,7 +62,7 @@ export class ResonatorDetailComponent implements OnInit {
 			},
 			{
 				label: this.resonator?.name,
-				icon: this._resonator ? undefined : 'pi pi-question',
+				icon: this.resonator?.name ? undefined : 'pi pi-question',
 			},
 		];
 	}
