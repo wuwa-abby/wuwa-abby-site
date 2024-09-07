@@ -1,6 +1,6 @@
 <div class="overview grid">
-    <div class=" overview__details col-12 md:col-6">
-        <p-breadcrumb class="max-w-full" [model]="breadcrumbs" />
+    <div class="overview__details col-12 md:col-6">
+        <p-breadcrumb styleClass="fadein animation-duration-1000 max-w-full" [model]="breadcrumbs" />
 
         <ng-container *ngIf="resonator; else resonatorErrorTpl">
             <ng-container *ngTemplateOutlet="resonatorDetailTpl"></ng-container>
@@ -16,6 +16,10 @@
             ngSrc="images/characters/T_IconRole_Pile_zhujue_UI.png" alt="Rover" fill priority>
         }
     </div>
+</div>
+
+<div class="sequence-detail__container surface-card">
+    aaaaaa
 </div>
 
 <ng-template #resonatorErrorTpl>
@@ -42,18 +46,16 @@
             height="48" width="48" [pTooltip]="resonator.attribute" tooltipPosition="bottom" />
     </h1>
     <p class="overview__resonator-rarity my-0 text-{{resonator.rarity}}-star">
-        <i *ngFor="let _ of [].constructor(resonator.rarity)" class="pi pi-star-fill"></i>
+        @defer(on timer(500ms)) {
+        <ng-container *ngFor="let i of [1,2,3,4,5]">
+            <i class="pi pi-star-fill fadein animation-duration-500" *ngIf="i <= resonator.rarity"></i>
+        </ng-container>
+        }
+        @defer(on timer(1s)) {
+        <span class="text-500 fadein animation-duration-400" *ngIf="resonator.obtained"
+            pTooltip="'Last obtained on'{{resonator.lastObtainedOn | date:'short'}}">Obtained</span>
+        }
     </p>
     <p class="text-lg w-75">{{resonator.bio}}</p>
-
-    <!-- <div class="row mt-4">
-        <div class="col-8 xl:col-4">
-            <p-button label="Edit" icon="pi pi-pencil" iconPos="right" styleClass="w-full" routerLink="edit" />
-        </div>
-        <div class="col-4 xl:col-2">
-            <p-button label="Go Back" icon="pi pi-arrow-left" iconPos="right" styleClass="w-full" severity="secondary"
-                routerLink="../.." />
-        </div>
-    </div> -->
     }
 </ng-template>
