@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TooltipModule } from 'primeng/tooltip';
 import { MenuItem } from 'primeng/api';
 
 import { ErrorOr } from '@core/types/error-or.type';
+import { ItemDetail } from '@core/types/item-detail.type';
 import { NavbarService } from '@core/services/navbar.service';
-import { DisplayResonator } from '@routes/resonators/resonators.component';
 
 @Component({
 	selector: 'abby-resonator-detail',
@@ -17,8 +18,10 @@ import { DisplayResonator } from '@routes/resonators/resonators.component';
 		CommonModule,
 		NgOptimizedImage,
 		RouterModule,
+
 		ButtonModule,
 		BreadcrumbModule,
+		TooltipModule,
 	],
 	templateUrl: './resonator-detail.component.html',
 	styleUrl: './resonator-detail.component.scss',
@@ -28,15 +31,13 @@ export class ResonatorDetailComponent implements OnInit {
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private activatedRoute: ActivatedRoute,
 		public navbarService: NavbarService
-	) {
-		this.createBreadcrumbs();
-	}
+	) {}
 
 	public breadcrumbs!: MenuItem[];
 
-	private _resonator?: ErrorOr<DisplayResonator>;
+	private _resonator?: ErrorOr<ItemDetail>;
 
-	public get resonator(): DisplayResonator | undefined {
+	public get resonator(): ItemDetail | undefined {
 		return this._resonator?.value;
 	}
 
@@ -50,6 +51,7 @@ export class ResonatorDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this._resonator = this.activatedRoute.snapshot.data['resonator'];
+		this.createBreadcrumbs();
 	}
 
 	private createBreadcrumbs(): void {
@@ -60,7 +62,7 @@ export class ResonatorDetailComponent implements OnInit {
 			},
 			{
 				label: this.resonator?.name,
-				icon: this.resonator ? '' : 'pi pi-question',
+				icon: this._resonator ? undefined : 'pi pi-question',
 			},
 		];
 	}

@@ -6,6 +6,7 @@
     "weaponOfChoice": "Broadblade",
     "gender": "Male",
     "attribute": "Electro",
+    "rarity": 5,
     "constellations": [
         {
             "sequence": 1,

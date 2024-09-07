@@ -40,8 +40,7 @@
         [allowEmpty]="true" [multiple]="true">
         <ng-template let-item pTemplate>
             <div class="p-button-label">
-                <div
-                    [ngClass]="{'text-five-star': item.value === 5, 'text-four-star': item.value === 4, 'text-three-star': item.value === 3 }">
+                <div class="text-{{item.value}}-star">
                     {{ item.label }}
                 </div>
                 <div>{{item.value}} Star</div>

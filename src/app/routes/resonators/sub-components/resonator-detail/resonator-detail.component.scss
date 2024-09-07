@@ -2,7 +2,7 @@
 	background: var(--surface-ground);
 
 	&.p-component {
-		padding: 0;
+		padding: 0 0 1rem 0;
 	}
 }
 
@@ -12,6 +12,11 @@
 
 	overflow: hidden;
 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+
 	.overview__details {
 		align-content: center;
 	}
@@ -19,5 +24,24 @@
 	.overview__resonator-image {
 		object-fit: contain;
 		object-position: right;
+	}
+
+	.overview__resonator-title {
+		display: flex;
+		align-content: center;
+	}
+
+	.overview__resonator-attribute {
+		padding: 0.25rem;
+		margin-inline: 0.5rem;
+
+		border: 2px solid var(--surface-200);
+		border-radius: 50%;
+	}
+
+	.overview__resonator-rarity {
+		:not(:last-child) {
+			margin-right: 0.5rem;
+		}
 	}
 }

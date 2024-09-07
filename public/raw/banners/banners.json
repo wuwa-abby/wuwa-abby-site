@@ -33,13 +33,13 @@
     "key": "resonator-event-zhezhi-20240815-20240907",
     "from": "2024-08-15T12:00:00",
     "to": "2024-09-07T09:59:00",
-    "showUI": true
+    "showUI": false
   },
   {
     "key": "weapon-event-rime_draped_sprouts-20240815-20240907",
     "from": "2024-08-15T12:00:00",
     "to": "2024-09-07T09:59:00",
-    "showUI": true
+    "showUI": false
   },
   {
     "key": "resonator-event-changli-20240722-20240814",
