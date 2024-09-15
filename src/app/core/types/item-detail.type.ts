@@ -1,15 +1,31 @@
-export interface ItemDetail {
+export interface ResonatorDetail {
 	id: number;
 	name: string;
-	imageName: string;
+	nickname: string;
+	birthday: string;
+	sex: string;
+	country: string;
+	influence: string;
 	bio: string;
-	weaponOfChoice: string;
 	gender: string;
 	attribute: string;
+	imageName?: string;
 	rarity: number;
-	constellations: SequenceInfo[];
-	skills?: SkillInfo[];
-	upgradeMaterials: UpgradeMaterials;
+	weaponOfChoice: string;
+	talent: {
+		name: string;
+		description: string;
+	};
+	voice_actors: {
+		CN: string;
+		JP: string;
+		EN: string;
+		KO: string;
+	};
+	combo_teaching: {
+		title: string;
+		description: string;
+	}[];
 }
 
 export interface SequenceInfo {
