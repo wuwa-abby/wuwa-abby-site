@@ -1,7 +1,48 @@
 <p-breadcrumb [model]="breadcrumbs" />
 
 <div class="page__title">
-    <h1 class="text-5xl">Pick a file</h1>
+    <h1 class="text-5xl">Pick an item</h1>
 </div>
 
-<div class="page__content">WIP</div>
+<div class="page__content">
+    <div class="item-choice__container grid">
+        <div class="item-choice__container__item col">
+            <p-card styleClass="w-full h-100 position-relative">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        Update Resonator Data
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img" ngSrc="images/contributor/contribution-type/T_SanhuaPixA.png"
+                    fill onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+        <div class="item-choice__container__item col">
+            <p-card styleClass="w-full h-100 position-relative">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        Update Weapon Data
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img"
+                    ngSrc="images/contributor/contribution-type/T_LuckdraWeapon09-28081696.png" fill
+                    onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+        <div class="item-choice__container__item col">
+            <p-card styleClass="w-full h-100 position-relative">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        More options coming soon...
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img"
+                    ngSrc="images/contributor/contribution-type/T_IconAchv256_012.png" fill
+                    onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+    </div>
+</div>

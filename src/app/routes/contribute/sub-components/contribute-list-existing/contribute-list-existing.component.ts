@@ -1,16 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { CardModule } from 'primeng/card';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -20,15 +14,10 @@ import { MenuItem } from 'primeng/api';
 		RouterModule,
 		FormsModule,
 		CommonModule,
+		NgOptimizedImage,
 
 		BreadcrumbModule,
-		TableModule,
-		TagModule,
-		IconFieldModule,
-		InputIconModule,
-		InputTextModule,
-		MultiSelectModule,
-		DropdownModule,
+		CardModule,
 	],
 	templateUrl: './contribute-list-existing.component.html',
 	styleUrl: './contribute-list-existing.component.scss',

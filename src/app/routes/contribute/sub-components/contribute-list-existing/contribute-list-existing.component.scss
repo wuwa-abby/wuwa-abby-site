@@ -1,0 +1,64 @@
+::ng-deep .p-card-title {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+
+	margin-bottom: 0;
+	padding-bottom: 1.5rem;
+
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		transparent 50%,
+		var(--surface-ground) 100%
+	);
+}
+
+::ng-deep .p-card {
+	overflow: hidden;
+}
+
+.item-choice__container {
+	display: flex;
+	flex-direction: row;
+}
+
+.item-choice__container__item {
+	height: 40vh;
+	min-height: 20rem;
+
+	&:hover {
+		.item-choice__background-img {
+			scale: 1.2;
+			transition: scale 0.5s ease-out;
+		}
+	}
+}
+
+.item-choice__background-img {
+	margin-top: 1rem;
+	z-index: 1;
+	object-fit: contain;
+
+	opacity: 0;
+	transition: opacity 0.5s, scale 0.5s;
+}
+
+.vignette {
+	margin: 0;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	// set the background color to var(--surface-ground)  gradient to transparent bottom to top
+	background: linear-gradient(
+		180deg,
+		var(--surface-ground) 0%,
+		transparent 100%
+	);
+}
