@@ -4,13 +4,17 @@ import { ConveneComponent } from '@routes/convene/convene.component';
 import { conveneResolver } from '@routes/convene/convene.resolver';
 
 import { ContributeComponent } from '@routes/contribute/contribute.component';
+import { ContributeExistingComponent } from '@routes/contribute/sub-components/contribute-existing/contribute-existing.component';
+import { ContributeNewComponent } from '@routes/contribute/sub-components/contribute-new/contribute-new.component';
+import { MaintainResonatorComponent } from '@routes/contribute/sub-components/maintain-resonator/maintain-resonator.component';
+import { CreateResonatorComponent } from '@routes/contribute/sub-components/create-resonator/create-resonator.component';
+import { CreateWeaponComponent } from '@routes/contribute/sub-components/create-weapon/create-weapon.component';
+import { MaintainWeaponComponent } from '@routes/contribute/sub-components/maintain-weapon/maintain-weapon.component';
 
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
 import { NotFoundComponent } from '@routes/not-found/not-found.component';
 import { SettingsComponent } from '@routes/settings/settings.component';
-import { ContributeExistingComponent } from '@routes/contribute/sub-components/contribute-existing/contribute-existing.component';
-import { ContributeNewComponent } from '@routes/contribute/sub-components/contribute-new/contribute-new.component';
 
 export const routes: Routes = [
 	{
@@ -46,14 +50,44 @@ export const routes: Routes = [
 				component: ContributeComponent,
 			},
 			{
-				title: 'Pick a file',
 				path: 'existing',
-				component: ContributeExistingComponent,
+				children: [
+					{
+						title: 'Wubby Update - Pick an item',
+						path: '',
+						component: ContributeExistingComponent,
+					},
+					{
+						title: 'Wubby Update - Update Resonator data',
+						path: 'resonators/:resonatorName',
+						component: MaintainResonatorComponent,
+					},
+					{
+						title: 'Wubby Update - Update Weapon data',
+						path: 'weapons/:weaponName',
+						component: MaintainWeaponComponent,
+					},
+				],
 			},
 			{
-				title: 'Create new file',
 				path: 'new',
-				component: ContributeNewComponent,
+				children: [
+					{
+						title: 'Wubby Create - Pick an item',
+						path: '',
+						component: ContributeNewComponent,
+					},
+					{
+						title: 'Create Resonator',
+						path: 'resonators',
+						component: CreateResonatorComponent,
+					},
+					{
+						title: 'Create Weapon',
+						path: 'weapons',
+						component: CreateWeaponComponent,
+					},
+				],
 			},
 		],
 	},
