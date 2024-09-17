@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 
 import { ErrorOr } from '@core/types/error-or.type';
-import { ResonatorDetail } from '@core/types/item-detail.type';
+import { ItemDetail } from '@core/types/item-detail.type';
 
 import { DisplayResonator } from './resonators.component';
 
@@ -18,16 +18,12 @@ export class ResonatorsService {
 		return this.http.get<DisplayResonator[]>('raw/resonators/list.json');
 	}
 
-	public getResonator(
-		resonatorName: string
-	): Observable<ErrorOr<ResonatorDetail>> {
+	public getResonator(resonatorName: string): Observable<ErrorOr<ItemDetail>> {
 		return this.http
-			.get<ResonatorDetail>(
-				`raw/resonators/${resonatorName.toLowerCase()}.json`
-			)
+			.get<ItemDetail>(`raw/resonators/${resonatorName.toLowerCase()}.json`)
 			.pipe(
 				map((resonator) => {
-					return ErrorOr.value<ResonatorDetail>(resonator);
+					return ErrorOr.value<ItemDetail>(resonator);
 				}),
 				catchError((error) => {
 					let errorDetails;
@@ -38,7 +34,7 @@ export class ResonatorsService {
 						errorDetails = error.message;
 					}
 
-					return of(ErrorOr.error<ResonatorDetail>(errorDetails, error.status));
+					return of(ErrorOr.error<ItemDetail>(errorDetails, error.status));
 				})
 			);
 	}

@@ -18,7 +18,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MenuItem } from 'primeng/api';
 
 import { ErrorOr } from '@core/types/error-or.type';
-import { ResonatorDetail } from '@core/types/item-detail.type';
+import { ItemDetail } from '@core/types/item-detail.type';
 import { StorageService } from '@core/services/storage.service';
 
 @Component({
@@ -104,7 +104,7 @@ export class ResonatorDetailComponent implements OnInit, AfterViewInit {
 	}
 }
 
-interface DisplayResonatorDetail extends ResonatorDetail {
+interface DisplayResonatorDetail extends ItemDetail {
 	obtained?: boolean;
 	lastObtainedOn?: Date;
 }

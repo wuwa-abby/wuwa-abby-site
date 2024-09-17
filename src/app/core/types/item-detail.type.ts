@@ -1,4 +1,4 @@
-export interface ResonatorDetail {
+export interface ItemDetail {
 	id: number;
 	name: string;
 	nickname: string;
