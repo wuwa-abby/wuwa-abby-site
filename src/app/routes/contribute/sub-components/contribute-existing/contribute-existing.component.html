@@ -1,0 +1,60 @@
+<p-breadcrumb [model]="breadcrumbs" />
+
+<div class="page__title">
+    <h1 class="text-5xl" *ngIf="!updateType">Pick an item</h1>
+    <h1 class="text-5xl" *ngIf="updateType === 'resonator'">Pick a Resonator</h1>
+    <h1 class="text-5xl" *ngIf="updateType === 'weapon'">Pick a Weapon</h1>
+</div>
+
+<div class="page__content">
+    @if(!updateType) {
+    <div class="item-choice__container grid">
+        <div class="item-choice__container__item col">
+            <p-card [styleClass]="'w-full h-100 position-relative ' + resonatorUpdateClass"
+                (click)="updateType = 'resonator'">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        Update Resonator Data
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img" ngSrc="images/contributor/contribution-type/T_SanhuaPixA.png"
+                    fill onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+        <div class="item-choice__container__item col">
+            <p-card [styleClass]="'w-full h-100 position-relative ' + weaponUpdateClass"
+                (click)="updateType = 'weapon'">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        Update Weapon Data
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img"
+                    ngSrc="images/contributor/contribution-type/T_LuckdraWeapon09-28081696.png" fill
+                    onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+        <div class="item-choice__container__item col">
+            <p-card styleClass="w-full h-100 position-relative">
+                <ng-template pTemplate="header">
+                    <h1 class="p-card-title z-2">
+                        More options coming soon...
+                    </h1>
+                </ng-template>
+                <img class="item-choice__background-img"
+                    ngSrc="images/contributor/contribution-type/T_IconAchv256_012.png" fill
+                    onload="this.style.opacity = 1" />
+                <p class="vignette"></p>
+            </p-card>
+        </div>
+    </div>
+    } @else {<ng-container *ngTemplateOutlet="filePicker" />}
+</div>
+
+<ng-template #filePicker>
+    <div class="mt-2 fadein">
+        WIP
+    </div>
+</ng-template>
