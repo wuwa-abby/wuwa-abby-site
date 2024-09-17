@@ -217,7 +217,7 @@ export class ResonatorsComponent implements OnInit {
 		)
 			.map((r) => ({
 				...r,
-				imageName: r.name,
+				imageName: r.name.replace(/ /g, '-'),
 				isUnknown: false,
 			}))
 			.sort((a, b) => a.name.localeCompare(b.name))
@@ -303,9 +303,12 @@ export class ResonatorsComponent implements OnInit {
 			});
 		}
 
-		this.resonators = Array.from(seen.values())
-			.sort((a, b) => a.name.localeCompare(b.name))
-			.sort((a, b) => b.qualityLevel! - a.qualityLevel!);
+		const resonatorMap = new Map(this.resonators.map((r) => [r.id, r]));
+		for (const [key, value] of seen.entries()) {
+			resonatorMap.set(key, value);
+		}
+
+		this.resonators = Array.from(resonatorMap.values());
 		this.state['isReadingMemory'] = false;
 	}
 
