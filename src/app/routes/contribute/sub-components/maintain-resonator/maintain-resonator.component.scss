@@ -1,0 +1,7 @@
+::ng-deep .p-breadcrumb {
+	background: var(--surface-ground);
+
+	&.p-component {
+		padding: 0 0 1rem 0;
+	}
+}

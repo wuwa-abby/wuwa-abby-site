@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { resonatorDetailResolver } from '@shared/resolvers/resonator-detail.resolver';
+
 import { ConveneComponent } from '@routes/convene/convene.component';
 import { conveneResolver } from '@routes/convene/convene.resolver';
 
@@ -14,7 +16,6 @@ import { MaintainWeaponComponent } from '@routes/contribute/sub-components/maint
 import { ResonatorsComponent } from '@routes/resonators/resonators.component';
 import { resonatorsResolver } from '@routes/resonators/resonators.resolver';
 import { ResonatorDetailComponent } from '@routes/resonators/sub-components/resonator-detail/resonator-detail.component';
-import { resonatorDetailResolver } from '@routes/resonators/sub-components/resonator-detail/resonator-detail.resolver';
 
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
@@ -82,6 +83,7 @@ export const routes: Routes = [
 						title: 'Wubby Update - Update Resonator data',
 						path: 'resonators/:resonatorName',
 						component: MaintainResonatorComponent,
+						resolve: { resonator: resonatorDetailResolver },
 					},
 					{
 						title: 'Wubby Update - Update Weapon data',

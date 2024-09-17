@@ -1,1 +1,14 @@
-<p>maintain-resonator works!</p>
+<p-breadcrumb [model]="breadcrumbs" styleClass="mt-4 mb-0" />
+
+<div class="page__title flex justify-content-between align-items-center mt-0">
+    <div class="text-5xl">Update
+        <span class="text-{{resonatorDetail.value?.attribute}}">
+            {{resonatorDetail.value?.name}}
+        </span>
+    </div>
+    <p-button label="Go back" icon="pi pi-arrow-left" routerLink="../.." />
+</div>
+
+<div class="page__content mt-2">
+    {{resonatorDetail|json}}
+</div>
