@@ -1,10 +1,11 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 
-import { ResonatorsService } from './resonators.service';
-import { DisplayResonator } from './resonators.component';
+import { SimpleResonator } from '@core/types/resonator.type';
 
-export const resonatorsResolver: ResolveFn<DisplayResonator[]> = (
+import { ResonatorsService } from './resonators.service';
+
+export const resonatorsResolver: ResolveFn<SimpleResonator[]> = (
 	_route,
 	_state
 ) => {

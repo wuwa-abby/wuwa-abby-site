@@ -23,6 +23,7 @@ import { MessagesModule } from 'primeng/messages';
 import { Message } from 'primeng/api';
 
 import { StorageService } from '@core/services/storage.service';
+import { SimpleResonator } from '@core/types/resonator.type';
 
 @Component({
 	selector: 'abby-resonators',
@@ -212,7 +213,7 @@ export class ResonatorsComponent implements OnInit {
 
 	private async loadResonators(): Promise<void> {
 		this.resonators = (
-			this.activatedRoute.snapshot.data['resonators'] as DisplayResonator[]
+			this.activatedRoute.snapshot.data['resonators'] as SimpleResonator[]
 		)
 			.map((r) => ({
 				...r,

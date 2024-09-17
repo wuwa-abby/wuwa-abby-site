@@ -6,7 +6,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { ErrorOr } from '@core/types/error-or.type';
 import { ItemDetail } from '@core/types/item-detail.type';
 
-import { DisplayResonator } from './resonators.component';
+import { SimpleResonator } from '@core/types/resonator.type';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,8 +14,8 @@ import { DisplayResonator } from './resonators.component';
 export class ResonatorsService {
 	constructor(private http: HttpClient) {}
 
-	public getResonators(): Observable<DisplayResonator[]> {
-		return this.http.get<DisplayResonator[]>('raw/resonators/list.json');
+	public getResonators(): Observable<SimpleResonator[]> {
+		return this.http.get<SimpleResonator[]>('raw/resonators/list.json');
 	}
 
 	public getResonator(resonatorName: string): Observable<ErrorOr<ItemDetail>> {
