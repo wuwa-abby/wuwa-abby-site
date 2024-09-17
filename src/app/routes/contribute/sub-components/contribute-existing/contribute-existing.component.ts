@@ -8,7 +8,7 @@ import { CardModule } from 'primeng/card';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-	selector: 'abby-contribute-list-existing',
+	selector: 'abby-contribute-existing',
 	standalone: true,
 	imports: [
 		RouterModule,
@@ -19,10 +19,10 @@ import { MenuItem } from 'primeng/api';
 		BreadcrumbModule,
 		CardModule,
 	],
-	templateUrl: './contribute-list-existing.component.html',
-	styleUrl: './contribute-list-existing.component.scss',
+	templateUrl: './contribute-existing.component.html',
+	styleUrl: './contribute-existing.component.scss',
 })
-export class ContributeListExistingComponent {
+export class ContributeExistingComponent {
 	constructor() {
 		this.createBreadcrumbs();
 	}
