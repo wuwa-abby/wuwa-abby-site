@@ -44,6 +44,11 @@
 
 	opacity: 0;
 	transition: opacity 0.5s, scale 0.5s;
+
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
 }
 
 .vignette {

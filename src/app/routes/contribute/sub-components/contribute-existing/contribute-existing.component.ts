@@ -6,6 +6,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CardModule } from 'primeng/card';
 import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
 	selector: 'abby-contribute-existing',
@@ -18,6 +19,7 @@ import { MenuItem } from 'primeng/api';
 
 		BreadcrumbModule,
 		CardModule,
+		ButtonModule,
 	],
 	templateUrl: './contribute-existing.component.html',
 	styleUrl: './contribute-existing.component.scss',
@@ -28,6 +30,19 @@ export class ContributeExistingComponent {
 	}
 
 	public breadcrumbs: MenuItem[] = [];
+	public updateType?: 'resonator' | 'weapon';
+
+	public get resonatorUpdateClass() {
+		if (!this.updateType || this.updateType !== 'resonator') return;
+
+		return 'border border-100';
+	}
+
+	public get weaponUpdateClass() {
+		if (!this.updateType || this.updateType !== 'weapon') return;
+
+		return 'border border-100';
+	}
 
 	private createBreadcrumbs() {
 		this.breadcrumbs = [
