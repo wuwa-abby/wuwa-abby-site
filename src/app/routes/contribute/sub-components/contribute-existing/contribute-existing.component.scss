@@ -123,15 +123,17 @@
 .resonator__image-container {
 	position: relative;
 	overflow: hidden;
+
+	img {
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-webkit-user-drag: none;
+	}
 }
 
 .resonator__image {
 	object-fit: contain;
-
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-webkit-user-drag: none;
 
 	opacity: 0;
 

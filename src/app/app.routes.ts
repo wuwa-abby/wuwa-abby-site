@@ -63,7 +63,6 @@ export const routes: Routes = [
 
 	/* Contributors */
 	{
-		title: 'Contribute',
 		path: 'contribute',
 		children: [
 			{
