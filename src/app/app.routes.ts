@@ -11,6 +11,11 @@ import { CreateResonatorComponent } from '@routes/contribute/sub-components/crea
 import { CreateWeaponComponent } from '@routes/contribute/sub-components/create-weapon/create-weapon.component';
 import { MaintainWeaponComponent } from '@routes/contribute/sub-components/maintain-weapon/maintain-weapon.component';
 
+import { ResonatorsComponent } from '@routes/resonators/resonators.component';
+import { resonatorsResolver } from '@routes/resonators/resonators.resolver';
+import { ResonatorDetailComponent } from '@routes/resonators/sub-components/resonator-detail/resonator-detail.component';
+import { resonatorDetailResolver } from '@routes/resonators/sub-components/resonator-detail/resonator-detail.resolver';
+
 import { GettingStartedComponent } from '@routes/getting-started/getting-started.component';
 import { ImportComponent } from '@routes/import/import.component';
 import { NotFoundComponent } from '@routes/not-found/not-found.component';
@@ -37,6 +42,23 @@ export const routes: Routes = [
 		path: 'convenes',
 		component: ConveneComponent,
 		resolve: { banners: conveneResolver },
+	},
+	{
+		path: 'resonators',
+		children: [
+			{
+				title: 'Resonators',
+				path: '',
+				component: ResonatorsComponent,
+				resolve: { resonators: resonatorsResolver },
+			},
+			{
+				title: 'Resonator Info',
+				path: ':resonatorName',
+				component: ResonatorDetailComponent,
+				resolve: { resonator: resonatorDetailResolver },
+			},
+		],
 	},
 
 	/* Contributors */
