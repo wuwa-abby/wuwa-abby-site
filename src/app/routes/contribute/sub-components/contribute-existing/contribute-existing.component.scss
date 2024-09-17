@@ -20,6 +20,14 @@
 	overflow: hidden;
 }
 
+::ng-deep .p-breadcrumb {
+	background: var(--surface-ground);
+
+	&.p-component {
+		padding: 0 0 1rem 0;
+	}
+}
+
 .item-choice__container {
 	display: flex;
 	flex-direction: row;
@@ -118,14 +126,16 @@
 }
 
 .resonator__image {
-	transition: transform 0.5s, scale 0.3s, background 0.3s;
-
 	object-fit: contain;
 
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-webkit-user-drag: none;
+
+	opacity: 0;
+
+	transition: transform 0.5s, scale 0.3s, background 0.3s, opacity 0.5s;
 }
 
 .resonator__image-fade {

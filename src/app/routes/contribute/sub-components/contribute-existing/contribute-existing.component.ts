@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
+import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CardModule } from 'primeng/card';
-import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { SkeletonModule } from 'primeng/skeleton';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { DisplayResonator } from '@routes/resonators/resonators.component';
 import { ResonatorsService } from '@routes/resonators/resonators.service';
-import { SimpleResonator } from '@core/types/resonator.type';
 
 @Component({
 	selector: 'abby-contribute-existing',
@@ -24,49 +25,55 @@ import { SimpleResonator } from '@core/types/resonator.type';
 		BreadcrumbModule,
 		CardModule,
 		ButtonModule,
+		SkeletonModule,
+		DropdownModule,
 	],
 	templateUrl: './contribute-existing.component.html',
 	styleUrl: './contribute-existing.component.scss',
 })
-export class ContributeExistingComponent {
+export class ContributeExistingComponent implements OnInit {
 	constructor(private resonatorService: ResonatorsService) {
 		this.createBreadcrumbs();
 	}
 
+	public readonly updateTypeOptions: { label: string; value: string }[] = [
+		{ label: 'Resonators', value: 'Resonator' },
+		{ label: 'Weapons', value: 'Weapon' },
+		{ label: 'Banners', value: 'Banner' },
+	];
+
 	public breadcrumbs: MenuItem[] = [];
-	public updateType?: 'resonator' | 'weapon';
+	public updateType!: 'Resonator' | 'Weapon' | 'Banner';
 
-	public resonators: SimpleResonator[] = [];
-	public weapons: DisplayResonator[] = [];
+	public resonators: DisplayResonator[] = [];
+	public weapons: any[] = [];
+	public banners: any[] = [];
 
-	public get resonatorUpdateClass() {
-		if (!this.updateType || this.updateType !== 'resonator') return;
-
-		return 'border border-100';
+	ngOnInit(): void {
+		this.changeUpdateType('Resonator');
 	}
 
-	public get weaponUpdateClass() {
-		if (!this.updateType || this.updateType !== 'weapon') return;
-
-		return 'border border-100';
-	}
-
-	public changeUpdateType(type: 'resonator' | 'weapon') {
+	public changeUpdateType(type: 'Resonator' | 'Weapon' | 'Banner') {
 		this.updateType = type;
 
-		if (type === 'resonator') {
+		if (type === 'Resonator' && !this.resonators.length) {
 			this.resonatorService.getResonators().subscribe({
 				next: (resonators) => {
-					this.resonators = resonators;
+					this.resonators = resonators
+						.map(
+							(r) =>
+								({
+									...r,
+									imageName: r.name.replace(/ /g, '-').toLowerCase(),
+								} as DisplayResonator)
+						)
+						.sort((a, b) => a.name.localeCompare(b.name))
+						.sort((a, b) => b.rarity - a.rarity);
 				},
 				error: (error) => {
 					console.error('Error getting resonators', error);
 				},
 			});
-		} else {
-			// this.resonatorService.getWeapons().then((weapons) => {
-			// 	this.weapons = weapons;
-			// });
 		}
 	}
 
