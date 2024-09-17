@@ -1,14 +1,54 @@
-<p-breadcrumb [model]="breadcrumbs" styleClass="mt-4 mb-0" />
+<form [formGroup]="updateForm">
+    <div class="page__title py-4 sticky-top surface-ground">
+        <p-breadcrumb [model]="breadcrumbs" styleClass="mb-0" />
 
-<div class="page__title flex justify-content-between align-items-center mt-0">
-    <div class="text-5xl">Update
-        <span class="text-{{resonatorDetail.value?.attribute}}">
-            {{resonatorDetail.value?.name}}
-        </span>
+        <div class="sm:block md:flex justify-content-between align-items-center ">
+            @if(!resonatorDetail.error) {
+            <div class="text-5xl">Update Resonator</div>
+            }
+            @else {
+            <div class="text-5xl">{{resonatorDetail.message}}</div>
+            }
+            <div class="flex align-items-center gap-2">
+                <p-button label="Suggest changes" icon="pi pi-check" severity="primary" [disabled]="true" />
+                <p-button label="Go back" icon="pi pi-arrow-left" routerLink="../.." severity="secondary" />
+            </div>
+        </div>
     </div>
-    <p-button label="Go back" icon="pi pi-arrow-left" routerLink="../.." />
-</div>
 
-<div class="page__content mt-2">
-    {{resonatorDetail|json}}
-</div>
+    <div class="page__content mt-2">
+        <div class="formgrid grid">
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="flex flex-column gap-2">
+                    <label for="resonator-name">Name</label>
+                    <input class="outline-none focus:border-primary" pInputText id="resonator-name"
+                        aria-describedby="resonator-name-help" formControlName="name" />
+                    <small id="resonator-name-help">
+                        The name of the resonator. Please raise an issue if you think the name should be changed.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="flex flex-column gap-2">
+                    <label for="resonator-nickname">Nickname</label>
+                    <input class="outline-none focus:border-primary" pInputText id="resonator-nickname"
+                        aria-describedby="resonator-nickname-help" formControlName="nickname" />
+                    <small id="resonator-nickname-help">
+                        The nickname of the resonator. This is the name that will be displayed on the detail page.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="flex flex-column gap-2">
+                    <label for="resonator-birthday">Birthday</label>
+                    <input class="outline-none focus:border-primary" pInputText id="resonator-birthday"
+                        aria-describedby="resonator-birthday-help" placeholder="January 1st"
+                        formControlName="birthday" />
+                    <small id="resonator-birthday-help">
+                        The nickname of the resonator. This is the name that will be displayed on the detail page.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

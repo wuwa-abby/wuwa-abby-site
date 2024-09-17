@@ -23,6 +23,9 @@ export class ResonatorsService {
 			.get<ItemDetail>(`raw/resonators/${resonatorName.toLowerCase()}.json`)
 			.pipe(
 				map((resonator) => {
+					resonator.imageName =
+						resonator.imageName ||
+						resonator.name.toLowerCase().replace(/ /g, '-');
 					return ErrorOr.value<ItemDetail>(resonator);
 				}),
 				catchError((error) => {
