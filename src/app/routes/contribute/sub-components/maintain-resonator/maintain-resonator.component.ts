@@ -1,6 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { MenuItem } from 'primeng/api';
@@ -10,6 +10,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import {
+	ToggleButtonChangeEvent,
+	ToggleButtonModule,
+} from 'primeng/togglebutton';
 
 import { ErrorOr } from '@core/types/error-or.type';
 import { ItemDetail } from '@core/types/item-detail.type';
@@ -29,13 +35,20 @@ import { ItemDetail } from '@core/types/item-detail.type';
 		InputMaskModule,
 		InputTextareaModule,
 		SelectButtonModule,
+		DialogModule,
+		PanelModule,
+		ToggleButtonModule,
 	],
 	templateUrl: './maintain-resonator.component.html',
 	styleUrl: './maintain-resonator.component.scss',
 	host: { ngSkipHydration: 'true' },
 })
 export class MaintainResonatorComponent implements OnInit {
-	constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder) {
+	constructor(
+		private activatedRoute: ActivatedRoute,
+		private fb: FormBuilder,
+		private router: Router
+	) {
 		this.createBreadcrumbs();
 		this.createForm();
 		this.createOptions();
@@ -47,11 +60,15 @@ export class MaintainResonatorComponent implements OnInit {
 	public genderOptions!: { label: string; value: string }[];
 	public rarityOptions!: { label: string; value: number }[];
 	public filterWeaponTypes!: { label: string; value: string }[];
+	public isSubmitting: boolean = false;
 
 	public ngOnInit(): void {
 		this.resonatorDetail = this.activatedRoute.snapshot.data['resonator'];
-		console.debug('MaintainResonatorComponent.ngOnInit', this.resonatorDetail);
 		this.fillForm(this.resonatorDetail.value);
+	}
+
+	public onDataCollectionConsentChanged(event: ToggleButtonChangeEvent) {
+		if (!event.checked) this.router.navigate(['/contribute/existing']);
 	}
 
 	private createBreadcrumbs() {
@@ -82,6 +99,7 @@ export class MaintainResonatorComponent implements OnInit {
 				EN: this.fb.nonNullable.control<string | undefined>(undefined),
 				KO: this.fb.nonNullable.control<string | undefined>(undefined),
 			}),
+			agreeToDataCollection: this.fb.nonNullable.control<boolean>(true),
 		});
 	}
 

@@ -1,5 +1,5 @@
 <form [formGroup]="updateForm">
-    <div class="page__title py-4 sticky-top surface-ground">
+    <div class="page__title py-4">
         <p-breadcrumb [model]="breadcrumbs" styleClass="mb-0" />
 
         <div class="sm:block md:flex justify-content-between align-items-center ">
@@ -10,9 +10,10 @@
             <div class="text-5xl">{{resonatorDetail.message}}</div>
             }
             <div class="flex align-items-center gap-2">
-                <p-button label="Suggest changes" icon="pi pi-check" severity="primary"
-                    [disabled]="updateForm.invalid || updateForm.pristine" />
-                <p-button label="Go back" icon="pi pi-arrow-left" routerLink="../.." severity="secondary" />
+                <p-button label="Suggest changes" icon="pi pi-check" iconPos="right" severity="primary"
+                    [disabled]="updateForm.invalid || updateForm.pristine" (onClick)="isSubmitting = true" />
+                <p-button label="Go back" icon="pi pi-arrow-left" iconPos="right" routerLink="../.."
+                    severity="secondary" />
             </div>
         </div>
     </div>
@@ -168,8 +169,45 @@
                 </form>
             </div>
             <div class="col-12 fst-italic">
-                More fields will be added in the future.
+                <p>More fields will be added in the future.</p>
             </div>
         </div>
     </div>
+
+    @defer (when updateForm.dirty && updateForm.valid) {
+    <p-dialog header="Are you sure you want to submit these changes?" [modal]="true" [closable]="false"
+        [focusOnShow]="true" [focusTrap]="true" [(visible)]="isSubmitting" [keepInViewport]="true"
+        [style]="{ width: '85vw'}">
+        <p>
+            By submitting these changes, you agree to the terms and conditions of our platform. Please review the
+            changes you have made before proceeding.
+        </p>
+
+        <p-panel header="Protecting Our Platform" [toggleable]="true" toggler="header" styleClass="mb-2 md:mb-3"
+            [collapsed]="true">
+            <p class="text-2xl my-1">Data Collection</p>
+            <p>
+                To protect our service from harmful activities like spam, we will collect some basic device and network
+                information when you submit your changes. This information helps us maintain the security and integrity
+                of our platform. By proceeding, you agree to this collection.
+            </p>
+
+            <p class="text-warning">Misuse of this platform will result in a permanent ban from using our services.</p>
+
+            <div class="mt-2">
+                <p-toggleButton [onLabel]="'Okay!'" [offLabel]="'Take me back!'" [onIcon]="'pi pi-thumbs-up-fill'"
+                    [offIcon]="'pi pi-thumbs-down-fill'" ariaLabel="Data Collection Agreement"
+                    (onChange)="onDataCollectionConsentChanged($event)" formControlName="agreeToDataCollection" />
+            </div>
+        </p-panel>
+
+        <ng-template pTemplate="footer">
+            <div class="flex flex-row gap-2 justify-content-end">
+                <p-button label="I need to check something" icon="pi pi-arrow-left" iconPos="right" severity="secondary"
+                    (onClick)="isSubmitting = false" />
+                <p-button label="Good to go" icon="pi pi-thumbs-up" iconPos="right" />
+            </div>
+        </ng-template>
+    </p-dialog>
+    }
 </form>
