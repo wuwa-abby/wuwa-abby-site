@@ -10,44 +10,165 @@
             <div class="text-5xl">{{resonatorDetail.message}}</div>
             }
             <div class="flex align-items-center gap-2">
-                <p-button label="Suggest changes" icon="pi pi-check" severity="primary" [disabled]="true" />
+                <p-button label="Suggest changes" icon="pi pi-check" severity="primary"
+                    [disabled]="updateForm.invalid || updateForm.pristine" />
                 <p-button label="Go back" icon="pi pi-arrow-left" routerLink="../.." severity="secondary" />
             </div>
         </div>
     </div>
 
     <div class="page__content mt-2">
-        <div class="formgrid grid">
+        <div class="formgrid grid row-gap-2">
             <div class="col-12 md:col-6 lg:col-4">
-                <div class="flex flex-column gap-2">
+                <div class="resonator__data-container flex flex-column gap-2">
                     <label for="resonator-name">Name</label>
                     <input class="outline-none focus:border-primary" pInputText id="resonator-name"
                         aria-describedby="resonator-name-help" formControlName="name" />
-                    <small id="resonator-name-help">
+                    <small class="resonator__data-additional-info" id="resonator-name-help">
                         The name of the resonator. Please raise an issue if you think the name should be changed.
                     </small>
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
-                <div class="flex flex-column gap-2">
+                <div class="resonator__data-container flex flex-column gap-2">
                     <label for="resonator-nickname">Nickname</label>
                     <input class="outline-none focus:border-primary" pInputText id="resonator-nickname"
                         aria-describedby="resonator-nickname-help" formControlName="nickname" />
-                    <small id="resonator-nickname-help">
+                    <small class="resonator__data-additional-info" id="resonator-nickname-help">
                         The nickname of the resonator. This is the name that will be displayed on the detail page.
                     </small>
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
-                <div class="flex flex-column gap-2">
+                <div class="resonator__data-container flex flex-column gap-2">
+                    <label for="resonator-gender">Gender</label>
+                    <p-selectButton [options]="genderOptions" formControlName="sex" optionLabel="label"
+                        optionValue="value" id="resonator-gender" />
+                    <small class="resonator__data-additional-info" id="resonator-gender-help">
+                        The gender of the resonator. This will be displayed on multiple places.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="resonator__data-container flex flex-column gap-2">
+                    <label for="resonator-quality">Rarity</label>
+                    <p-selectButton [options]="rarityOptions" formControlName="rarity" optionLabel="label"
+                        optionValue="value" id="resonator-quality">
+                        <ng-template let-item pTemplate>
+                            <div class="p-button-label">
+                                <div class="text-{{item.value}}-star">
+                                    {{ item.label }}
+                                </div>
+                                <div>{{item.value}} Star</div>
+                            </div>
+                        </ng-template>
+                    </p-selectButton>
+                    <small class="resonator__data-additional-info" id="resonator-quality-help">
+                        The rarity of the resonator. This will be displayed on multiple places.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="resonator__data-container flex flex-column gap-2">
+                    <label for="resonator-weaponOfChoice">Weapon Of Choice</label>
+                    <p-selectButton [options]="filterWeaponTypes" formControlName="weaponOfChoice" optionLabel="label"
+                        optionValue="value" id="resonator-weaponOfChoice">
+                        <ng-template let-item pTemplate>
+                            <div class="p-button-label">
+                                <img class="filter__weapon-icon"
+                                    [ngSrc]="'images/weapons/weapons-type/T_IconNor' + item.label + '.png'"
+                                    [alt]="item.label" height="24" width="24" />
+                                <div>{{ item.label }}</div>
+                            </div>
+                        </ng-template>
+                    </p-selectButton>
+                    <small class="resonator__data-additional-info" id="resonator-weaponOfChoice-help">
+                        The weapon of choice of the resonator. This will be displayed on multiple places.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="resonator__data-container flex flex-column gap-2">
                     <label for="resonator-birthday">Birthday</label>
                     <input class="outline-none focus:border-primary" pInputText id="resonator-birthday"
                         aria-describedby="resonator-birthday-help" placeholder="January 1st"
                         formControlName="birthday" />
-                    <small id="resonator-birthday-help">
-                        The nickname of the resonator. This is the name that will be displayed on the detail page.
+                    <small class="resonator__data-additional-info" id="resonator-birthday-help">
+                        The birthday of the resonator. This will be displayed on the detail page.
                     </small>
                 </div>
+            </div>
+            <div id="resonator-bio-container" class="col-12">
+                <div class="resonator__data-container flex flex-column gap-2">
+                    <label for="resonator-bio">Bio</label>
+                    <textarea rows="5" pInputTextarea id="resonator-bio" aria-describedby="resonator-bio-help"
+                        placeholder="January 1st" formControlName="bio">
+                            </textarea>
+                    <small class="resonator__data-additional-info" id="resonator-bio-help">
+                        Biography of the resonator. This is the description that will be displayed on the detail page.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12">
+                <form formGroupName="voiceActors">
+                    <div class="resonator__data-container grid">
+                        <div class="col-12">
+                            <label>Voice Actors</label>
+                        </div>
+
+                        <!-- CN, JP, EN, KO -->
+                        <div class="col-12 md:col-6 lg:col-3">
+                            <div class="resonator__data-container flex flex-column gap-2">
+                                <label for="resonator-voice-actor-cn">Chinese</label>
+                                <input class="outline-none focus:border-primary" pInputText
+                                    id="resonator-voice-actor-cn" aria-describedby="resonator-voice-actor-cn-help"
+                                    formControlName="CN" />
+                                <small class="resonator__data-additional-info" id="resonator-voice-actor-cn-help">
+                                    The Chinese voice actor of the resonator.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6 lg:col-3">
+                            <div class="resonator__data-container flex flex-column gap-2">
+                                <label for="resonator-voice-actor-jp">Japanese</label>
+                                <input class="outline-none focus:border-primary" pInputText
+                                    id="resonator-voice-actor-jp" aria-describedby="resonator-voice-actor-jp-help"
+                                    formControlName="JP" />
+                                <small class="resonator__data-additional-info" id="resonator-voice-actor-jp-help">
+                                    The Japanese voice actor of the resonator.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6 lg:col-3">
+                            <div class="resonator__data-container flex flex-column gap-2">
+                                <label for="resonator-voice-actor-en">English</label>
+                                <input class="outline-none focus:border-primary" pInputText
+                                    id="resonator-voice-actor-en" aria-describedby="resonator-voice-actor-en-help"
+                                    formControlName="EN" />
+                                <small class="resonator__data-additional-info" id="resonator-voice-actor-en-help">
+                                    The English voice actor of the resonator.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6 lg:col-3">
+                            <div class="resonator__data-container flex flex-column gap-2">
+                                <label for="resonator-voice-actor-ko">Korean</label>
+                                <input class="outline-none focus:border-primary" pInputText
+                                    id="resonator-voice-actor-ko" aria-describedby="resonator-voice-actor-ko-help"
+                                    formControlName="KO" />
+                                <small class="resonator__data-additional-info" id="resonator-voice-actor-ko-help">
+                                    The Korean voice actor of the resonator.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 fst-italic">
+                More fields will be added in the future.
             </div>
         </div>
     </div>

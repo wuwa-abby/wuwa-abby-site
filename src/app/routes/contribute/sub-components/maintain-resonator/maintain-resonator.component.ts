@@ -8,6 +8,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { ErrorOr } from '@core/types/error-or.type';
 import { ItemDetail } from '@core/types/item-detail.type';
@@ -25,25 +27,31 @@ import { ItemDetail } from '@core/types/item-detail.type';
 		ButtonModule,
 		InputTextModule,
 		InputMaskModule,
+		InputTextareaModule,
+		SelectButtonModule,
 	],
 	templateUrl: './maintain-resonator.component.html',
 	styleUrl: './maintain-resonator.component.scss',
+	host: { ngSkipHydration: 'true' },
 })
 export class MaintainResonatorComponent implements OnInit {
 	constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder) {
 		this.createBreadcrumbs();
 		this.createForm();
+		this.createOptions();
 	}
 
 	public breadcrumbs: MenuItem[] = [];
 	public resonatorDetail!: ErrorOr<ItemDetail>;
 	public updateForm!: FormGroup;
+	public genderOptions!: { label: string; value: string }[];
+	public rarityOptions!: { label: string; value: number }[];
+	public filterWeaponTypes!: { label: string; value: string }[];
 
 	public ngOnInit(): void {
 		this.resonatorDetail = this.activatedRoute.snapshot.data['resonator'];
 		console.debug('MaintainResonatorComponent.ngOnInit', this.resonatorDetail);
-		if (this.resonatorDetail.value)
-			this.updateForm.patchValue(this.resonatorDetail.value);
+		this.fillForm(this.resonatorDetail.value);
 	}
 
 	private createBreadcrumbs() {
@@ -74,6 +82,67 @@ export class MaintainResonatorComponent implements OnInit {
 				EN: this.fb.nonNullable.control<string | undefined>(undefined),
 				KO: this.fb.nonNullable.control<string | undefined>(undefined),
 			}),
+		});
+	}
+
+	private createOptions() {
+		this.genderOptions = [
+			{ label: 'Male', value: 'Male' },
+			{ label: 'Female', value: 'Female' },
+			// { label: 'Unknown', value: 'Unknown' },
+		];
+
+		this.rarityOptions = [
+			{ label: '★★★', value: 3 },
+			{ label: '★★★★', value: 4 },
+			{ label: '★★★★★', value: 5 },
+		];
+
+		this.filterWeaponTypes = [
+			{
+				label: 'Broadblade',
+				value: 'Broadblade',
+			},
+			{
+				label: 'Sword',
+				value: 'Sword',
+			},
+			{
+				label: 'Pistols',
+				value: 'Pistols',
+			},
+			{
+				label: 'Gauntlets',
+				value: 'Gauntlets',
+			},
+			{
+				label: 'Rectifier',
+				value: 'Rectifier',
+			},
+		];
+	}
+
+	private fillForm(data?: ItemDetail) {
+		if (!data) return;
+
+		this.updateForm.patchValue(data);
+
+		this.updateForm.patchValue({
+			voiceActors: data.voice_actors,
+		});
+
+		data.combo_teaching?.forEach((teaching, index) => {
+			this.updateForm.addControl(
+				`combo-${index}`,
+				this.fb.nonNullable.group({
+					title: this.fb.nonNullable.control<string | undefined>(
+						teaching.title
+					),
+					description: this.fb.nonNullable.control<string | undefined>(
+						teaching.description
+					),
+				})
+			);
 		});
 	}
 }

@@ -1,7 +1,10 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideClientHydration } from '@angular/platform-browser';
+import {
+	provideClientHydration,
+	withEventReplay,
+} from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideImgixLoader } from '@angular/common';
 
@@ -15,7 +18,7 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		provideRouter(routes),
-		provideClientHydration(),
+		provideClientHydration(withEventReplay()),
 		MessageService,
 		provideAnimations(),
 		provideHighlightOptions({

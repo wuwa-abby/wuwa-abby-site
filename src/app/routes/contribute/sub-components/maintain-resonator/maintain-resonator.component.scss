@@ -5,3 +5,31 @@
 		padding: 0 0 1rem 0;
 	}
 }
+
+#resonator-bio {
+	min-height: 10rem;
+}
+
+.resonator__data-container {
+	&:hover {
+		.resonator__data-additional-info {
+			opacity: 1;
+
+			transition: opacity 0.5s;
+		}
+	}
+
+	*:focus {
+		.resonator__data-additional-info {
+			opacity: 1;
+
+			transition: opacity 0.5s;
+		}
+	}
+}
+
+.resonator__data-additional-info {
+	opacity: 0;
+
+	transition: opacity 0.5s;
+}
