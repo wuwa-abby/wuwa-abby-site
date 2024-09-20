@@ -47,13 +47,17 @@ const processBanners = (banners) => {
 	const ignoreBannerInUIRegex = /-standard(?!-permanent)/;
 	const sortedBanners = banners
 		.filter(banner => banner.key)
-		.map((banner) => ({
-			...banner,
-			showUI: !ignoreBannerInUIRegex.test(banner.key) &&
-				new Date(banner.from) < now &&
-				new Date(banner.to) > now,
-		}))
-		.sort((a, b) => new Date(b.to) - new Date(a.to));
+		.map(function (banner) {
+			// console.debug('Processing banner:', banner.key, 'from', banner.from, 'to', banner.to, 'showUI', !ignoreBannerInUIRegex.test(banner.key) && new Date(banner.from) < now && new Date(banner.to) > now);
+			return {
+				...banner,
+				showUI: !ignoreBannerInUIRegex.test(banner.key) &&
+					new Date(banner.from) < now &&
+					new Date(banner.to) > now,
+			}
+		})
+		.sort((a, b) => new Date(b.to) - new Date(a.to))
+		.sort((a, b) => a.type - b.type);
 
 	return sortedBanners;
 };
