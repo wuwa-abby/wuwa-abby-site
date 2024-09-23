@@ -42,9 +42,27 @@
             </div>
             <div class="col-12 md:col-6 lg:col-4">
                 <div class="resonator__data-container flex flex-column gap-2">
+                    <label for="resonator-birthday">Birthday</label>
+                    <input class="outline-none focus:border-primary" pInputText id="resonator-birthday"
+                        aria-describedby="resonator-birthday-help" placeholder="January 1st"
+                        formControlName="birthday" />
+                    <small class="resonator__data-additional-info" id="resonator-birthday-help">
+                        The birthday of the resonator. This will be displayed on the detail page.
+                    </small>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <div class="resonator__data-container flex flex-column gap-2">
                     <label for="resonator-gender">Gender</label>
                     <p-selectButton [options]="genderOptions" formControlName="sex" optionLabel="label"
-                        optionValue="value" id="resonator-gender" />
+                        optionValue="value" id="resonator-gender">
+                        <ng-template let-item pTemplate>
+                            <div class="p-button-label">
+                                <div class="p-1"><i [class]="item.icon"></i></div>
+                                <div>{{item.value}}</div>
+                            </div>
+                        </ng-template>
+                    </p-selectButton>
                     <small class="resonator__data-additional-info" id="resonator-gender-help">
                         The gender of the resonator. This will be displayed on multiple places.
                     </small>
@@ -85,17 +103,6 @@
                     </p-selectButton>
                     <small class="resonator__data-additional-info" id="resonator-weaponOfChoice-help">
                         The weapon of choice of the resonator. This will be displayed on multiple places.
-                    </small>
-                </div>
-            </div>
-            <div class="col-12 md:col-6 lg:col-4">
-                <div class="resonator__data-container flex flex-column gap-2">
-                    <label for="resonator-birthday">Birthday</label>
-                    <input class="outline-none focus:border-primary" pInputText id="resonator-birthday"
-                        aria-describedby="resonator-birthday-help" placeholder="January 1st"
-                        formControlName="birthday" />
-                    <small class="resonator__data-additional-info" id="resonator-birthday-help">
-                        The birthday of the resonator. This will be displayed on the detail page.
                     </small>
                 </div>
             </div>

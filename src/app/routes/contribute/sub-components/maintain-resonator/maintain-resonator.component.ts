@@ -57,7 +57,7 @@ export class MaintainResonatorComponent implements OnInit {
 	public breadcrumbs: MenuItem[] = [];
 	public resonatorDetail!: ErrorOr<ItemDetail>;
 	public updateForm!: FormGroup;
-	public genderOptions!: { label: string; value: string }[];
+	public genderOptions!: { label: string; value: string; icon: string }[];
 	public rarityOptions!: { label: string; value: number }[];
 	public filterWeaponTypes!: { label: string; value: string }[];
 	public isSubmitting: boolean = false;
@@ -105,8 +105,8 @@ export class MaintainResonatorComponent implements OnInit {
 
 	private createOptions() {
 		this.genderOptions = [
-			{ label: 'Male', value: 'Male' },
-			{ label: 'Female', value: 'Female' },
+			{ label: 'Male', value: 'Male', icon: 'pi pi-mars text-blue-500' },
+			{ label: 'Female', value: 'Female', icon: 'pi pi-venus text-pink-500' },
 			// { label: 'Unknown', value: 'Unknown' },
 		];
 
